@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShelter_WebAPI.Data;
 
@@ -11,9 +12,11 @@ using SmartShelter_WebAPI.Data;
 namespace SmartShelter_WebAPI.Migrations
 {
     [DbContext(typeof(SmartShelterDBContext))]
-    partial class SmartShelterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240402092953_AddFKToAviaryToAviaryCondition")]
+    partial class AddFKToAviaryToAviaryCondition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace SmartShelter_WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnimalId")
+                    b.Property<int>("AnimalId")
                         .HasColumnType("int");
 
                     b.Property<int>("AviaryConditionId")
@@ -157,9 +160,6 @@ namespace SmartShelter_WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnimalId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -176,32 +176,7 @@ namespace SmartShelter_WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnimalId");
-
                     b.ToTable("Diseases");
-                });
-
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.DiseaseTreatments", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DiseaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TreatmentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiseaseId");
-
-                    b.HasIndex("TreatmentId");
-
-                    b.ToTable("DiseasesTreatments");
                 });
 
             modelBuilder.Entity("SmartShelter_WebAPI.Models.MealPlan", b =>
@@ -494,6 +469,9 @@ namespace SmartShelter_WebAPI.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DiseaseId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
@@ -512,6 +490,8 @@ namespace SmartShelter_WebAPI.Migrations
 
                     b.HasIndex("AnimalId");
 
+                    b.HasIndex("DiseaseId");
+
                     b.HasIndex("StaffId");
 
                     b.ToTable("Treatments");
@@ -521,7 +501,9 @@ namespace SmartShelter_WebAPI.Migrations
                 {
                     b.HasOne("SmartShelter_WebAPI.Models.Animal", "Animal")
                         .WithMany()
-                        .HasForeignKey("AnimalId");
+                        .HasForeignKey("AnimalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SmartShelter_WebAPI.Models.AviaryCondition", "AviaryCondition")
                         .WithMany()
@@ -551,35 +533,6 @@ namespace SmartShelter_WebAPI.Migrations
                     b.Navigation("Aviary");
 
                     b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.Disease", b =>
-                {
-                    b.HasOne("SmartShelter_WebAPI.Models.Animal", "Animal")
-                        .WithMany()
-                        .HasForeignKey("AnimalId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Animal");
-                });
-
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.DiseaseTreatments", b =>
-                {
-                    b.HasOne("SmartShelter_WebAPI.Models.Disease", "Disease")
-                        .WithMany()
-                        .HasForeignKey("DiseaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SmartShelter_WebAPI.Models.Treatment", "Treatment")
-                        .WithMany()
-                        .HasForeignKey("TreatmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Disease");
-
-                    b.Navigation("Treatment");
                 });
 
             modelBuilder.Entity("SmartShelter_WebAPI.Models.MealPlan", b =>
@@ -673,6 +626,12 @@ namespace SmartShelter_WebAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SmartShelter_WebAPI.Models.Disease", "Disease")
+                        .WithMany()
+                        .HasForeignKey("DiseaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SmartShelter_WebAPI.Models.Staff", "Staff")
                         .WithMany()
                         .HasForeignKey("StaffId")
@@ -680,6 +639,8 @@ namespace SmartShelter_WebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Animal");
+
+                    b.Navigation("Disease");
 
                     b.Navigation("Staff");
                 });

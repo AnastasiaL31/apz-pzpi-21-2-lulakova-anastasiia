@@ -9,10 +9,7 @@
         public float MaxTemperature { get; set; }
         public float MinHumidity { get; set; }
         public float MaxHumidity { get; set; }
-        public int AviaryId { get; set; }
-
-
-        public Aviary Aviary { get; set; }
+        
 
     }
 }
