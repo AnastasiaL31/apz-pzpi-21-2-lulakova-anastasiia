@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using SmartShelter_WebAPI.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Task = SmartShelter_WebAPI.Models.Task;
 
 namespace SmartShelter_WebAPI.Data
 {
-    public class SmartShelterDBContext: DbContext
+    public class SmartShelterDBContext: IdentityDbContext
     {
         public SmartShelterDBContext(DbContextOptions<SmartShelterDBContext> options) : base(options)
         {
@@ -32,6 +33,15 @@ namespace SmartShelter_WebAPI.Data
         public DbSet<DiseaseTreatments> DiseasesTreatments { get; set;}
 
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
+            builder.Entity<Staff>()
+                .HasOne(u => u.IdentityUser)
+                .WithOne()
+                .HasForeignKey<Staff>(u => u.IdentityUserId)
+                .IsRequired();
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SmartShelter_WebAPI.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace SmartShelter_WebAPI.Models
 {
     public class Staff
     {
@@ -9,7 +11,8 @@
         public string Position { get; set; }
         public DateTime AcceptanceDate { get; set; }
         public DateTime? DismissialDate { get; set; }
+        public string IdentityUserId { get; set; }
 
-
+        public IdentityUser IdentityUser { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShelter_WebAPI.Data;
 
@@ -11,9 +12,11 @@ using SmartShelter_WebAPI.Data;
 namespace SmartShelter_WebAPI.Migrations
 {
     [DbContext(typeof(SmartShelterDBContext))]
-    partial class SmartShelterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240404074222_AddIdentity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -555,10 +558,6 @@ namespace SmartShelter_WebAPI.Migrations
                     b.Property<DateTime?>("DismissialDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("IdentityUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -572,9 +571,6 @@ namespace SmartShelter_WebAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdentityUserId")
-                        .IsUnique();
 
                     b.ToTable("Staff");
                 });
@@ -880,17 +876,6 @@ namespace SmartShelter_WebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Sensor");
-                });
-
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.Staff", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithOne()
-                        .HasForeignKey("SmartShelter_WebAPI.Models.Staff", "IdentityUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("SmartShelter_WebAPI.Models.Storage", b =>
