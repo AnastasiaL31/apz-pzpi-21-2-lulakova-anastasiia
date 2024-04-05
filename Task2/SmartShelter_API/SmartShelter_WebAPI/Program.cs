@@ -21,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAviaryService, AviaryService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SmartShelterDBContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"))
