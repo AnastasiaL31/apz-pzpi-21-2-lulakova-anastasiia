@@ -12,7 +12,7 @@ namespace SmartShelter_WebAPI.Models
         [ForeignKey(nameof(Staff))]
         public  int StaffId { get; set; }
         [ForeignKey(nameof(Aviary))]
-        public int AviaryId { get;}
+        public int AviaryId { get; set; }
 
 
         public Staff Staff { get; set; }

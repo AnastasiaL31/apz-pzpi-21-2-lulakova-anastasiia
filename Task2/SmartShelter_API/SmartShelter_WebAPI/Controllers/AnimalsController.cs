@@ -8,7 +8,7 @@ namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AnimalsController : ControllerBase
     {
         private readonly IAnimalService _animalService;
@@ -41,7 +41,7 @@ namespace SmartShelter_WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("{id:int}")]
-        public ActionResult GetAnimalById(int id)
+        public ActionResult<Animal> GetAnimalById(int id)
         {
             if (id <= 0)
             {

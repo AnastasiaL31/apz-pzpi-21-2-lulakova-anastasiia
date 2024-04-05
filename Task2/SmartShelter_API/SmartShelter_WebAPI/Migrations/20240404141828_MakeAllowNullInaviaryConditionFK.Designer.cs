@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShelter_WebAPI.Data;
 
@@ -11,9 +12,11 @@ using SmartShelter_WebAPI.Data;
 namespace SmartShelter_WebAPI.Migrations
 {
     [DbContext(typeof(SmartShelterDBContext))]
-    partial class SmartShelterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240404141828_MakeAllowNullInaviaryConditionFK")]
+    partial class MakeAllowNullInaviaryConditionFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -579,51 +582,6 @@ namespace SmartShelter_WebAPI.Migrations
                     b.ToTable("Staff");
                 });
 
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.StaffTask", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AimStaffId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ByStaffId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StaffRole")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AimStaffId");
-
-                    b.HasIndex("ByStaffId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("Tasks");
-                });
-
             modelBuilder.Entity("SmartShelter_WebAPI.Models.Storage", b =>
                 {
                     b.Property<int>("Id")
@@ -694,6 +652,40 @@ namespace SmartShelter_WebAPI.Migrations
                     b.HasIndex("TreatmentId");
 
                     b.ToTable("Supplies");
+                });
+
+            modelBuilder.Entity("SmartShelter_WebAPI.Models.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StaffId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("SmartShelter_WebAPI.Models.Treatment", b =>
@@ -902,27 +894,6 @@ namespace SmartShelter_WebAPI.Migrations
                     b.Navigation("IdentityUser");
                 });
 
-            modelBuilder.Entity("SmartShelter_WebAPI.Models.StaffTask", b =>
-                {
-                    b.HasOne("SmartShelter_WebAPI.Models.Staff", "AimStaff")
-                        .WithMany()
-                        .HasForeignKey("AimStaffId");
-
-                    b.HasOne("SmartShelter_WebAPI.Models.Staff", "ByStaff")
-                        .WithMany()
-                        .HasForeignKey("ByStaffId");
-
-                    b.HasOne("SmartShelter_WebAPI.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.Navigation("AimStaff");
-
-                    b.Navigation("ByStaff");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("SmartShelter_WebAPI.Models.Storage", b =>
                 {
                     b.HasOne("SmartShelter_WebAPI.Models.Staff", "Staff")
@@ -943,6 +914,23 @@ namespace SmartShelter_WebAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Treatment");
+                });
+
+            modelBuilder.Entity("SmartShelter_WebAPI.Models.Task", b =>
+                {
+                    b.HasOne("SmartShelter_WebAPI.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("SmartShelter_WebAPI.Models.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("SmartShelter_WebAPI.Models.Treatment", b =>

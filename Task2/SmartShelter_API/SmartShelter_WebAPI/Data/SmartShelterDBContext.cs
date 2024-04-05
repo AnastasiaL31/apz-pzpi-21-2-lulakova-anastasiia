@@ -4,7 +4,7 @@ using Microsoft.Identity.Client;
 using SmartShelter_WebAPI.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Task = SmartShelter_WebAPI.Models.Task;
+using StaffTask = SmartShelter_WebAPI.Models.StaffTask;
 
 namespace SmartShelter_WebAPI.Data
 {
@@ -27,7 +27,7 @@ namespace SmartShelter_WebAPI.Data
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Storage> Storage { get; set; }
         public DbSet<Supply> Supplies { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<StaffTask> Tasks { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
 
         public DbSet<DiseaseTreatments> DiseasesTreatments { get; set;}

@@ -62,7 +62,7 @@ namespace SmartShelter_WebAPI.Services
             var roles = await GetUserRole(user);
             if (!roles.Any())
             {
-                roles[0] = "";
+                roles.Add("Guest");
             }
             IEnumerable<Claim> claims = new List<Claim>()
             {
