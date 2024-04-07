@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartShelter_WebAPI.Dtos;
 
 namespace SmartShelter_WebAPI.Controllers
 {
@@ -53,9 +54,9 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddAviary([FromBody] Aviary aviary)
+        public ActionResult AddAviary([FromBody] AddAviaryDto aviaryDto)
         {
-            var result = _aviaryService.AddAviary(aviary);
+            var result = _aviaryService.AddAviary(aviaryDto);
             if (result)
             {
                 return Ok();
@@ -122,6 +123,20 @@ namespace SmartShelter_WebAPI.Controllers
             return Ok(condition);
         }
 
+        [HttpPost("/add/condition")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult AddAviaryCondition([FromQuery] int aviaryId ,[FromBody] AviaryCondition condition)
+        {
+            var result = _aviaryService.AddAviaryCondition(condition, aviaryId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
 
         [HttpPut("/condition/change")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -145,14 +160,14 @@ namespace SmartShelter_WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Sensor))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Route("sensor/{sensorId:int}")]
-        public ActionResult<Sensor> GetAviarySensor(int sensorId)
+        [Route("sensor/{aviaryId:int}")]
+        public ActionResult<Sensor> GetAviarySensor(int aviaryId)
         {
-            if (sensorId <= 0)
+            if (aviaryId <= 0)
             {
                 return BadRequest();
             }
-            var sensor = _aviaryService.GetSensor(sensorId);
+            var sensor = _aviaryService.GetAviarySensor(aviaryId);
             if (sensor == null)
             {
                 return NotFound("");
@@ -163,13 +178,13 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("/add/sensor")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddSensor([FromBody] Sensor sensor)
+        public ActionResult AddSensor([FromBody] AddSensorDto sensorDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var result = _aviaryService.AddSensor(sensor);
+            var result = _aviaryService.AddSensor(sensorDto);
             if (result)
             {
                 return Ok();
@@ -209,7 +224,7 @@ namespace SmartShelter_WebAPI.Controllers
                 return BadRequest();
             }
             var sensorData = _aviaryService.GetSensorData(sensorId);
-            if (sensorData != null || !sensorData.Any())
+            if (sensorData == null || !sensorData.Any())
             {
                 return NotFound("");
             }
@@ -220,9 +235,9 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("/add/sensordata")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddSensorData([FromBody] SensorData sensorData)
+        public ActionResult AddSensorData([FromBody] AddSensorDataDto sensorDataDto)
         {
-            var result = _aviaryService.AddSensorData(sensorData);
+            var result = _aviaryService.AddSensorData(sensorDataDto);
             if (result)
             {
                 return Ok();
@@ -235,7 +250,7 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("addRecharges")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddAviaryRecharges(int aviaryId, int staffId, [FromBody] List<AviaryRecharge> list)
+        public ActionResult AddAviaryRecharges(int aviaryId, int staffId, [FromBody] List<AddAviaryRechargeDto> list)
         {
             var result = _aviaryService.AddRecharges(list, staffId, aviaryId);
             if (result)

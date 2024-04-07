@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using SmartShelter_WebAPI.Dtos;
-
-namespace SmartShelter_WebAPI.Models
+﻿namespace SmartShelter_WebAPI.Dtos
 {
-    public class StaffTask
+    public class GetStaffTaskDto
     {
         public int Id { get; set; }
         public string Type { get; set; }
@@ -16,11 +13,8 @@ namespace SmartShelter_WebAPI.Models
         public bool IsAccepted { get; set; } = false;
 
 
-        public Staff AimStaff { get; set; }
-        public Staff ByStaff { get; set; }
-        public Order Order { get; set; }
-
-
-       
+        public AddStaffDto AimStaff { get; set; }
+        public AddStaffDto ByStaff { get; set; }
+        public OrderDto Order { get; set; }
     }
 }

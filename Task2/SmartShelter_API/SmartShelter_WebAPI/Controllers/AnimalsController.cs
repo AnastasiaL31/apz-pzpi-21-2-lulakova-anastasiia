@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartShelter_WebAPI.Data;
 using System.Data;
+using SmartShelter_WebAPI.Dtos;
 
 namespace SmartShelter_WebAPI.Controllers
 {
@@ -58,9 +59,9 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddAnimal([FromBody] Animal animal)
+        public ActionResult AddAnimal([FromBody] AddAnimalDto animalDto)
         {
-            var result = _animalService.AddAnimal(animal);
+            var result = _animalService.AddAnimal(animalDto);
             if (result)
             {
                 return Ok();

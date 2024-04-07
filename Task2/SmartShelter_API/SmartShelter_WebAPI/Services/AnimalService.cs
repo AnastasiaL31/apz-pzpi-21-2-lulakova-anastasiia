@@ -1,4 +1,6 @@
 ﻿
+using AutoMapper;
+using SmartShelter_WebAPI.Dtos;
 using SmartShelter_WebAPI.Models;
 
 namespace SmartShelter_WebAPI.Services
@@ -6,10 +8,12 @@ namespace SmartShelter_WebAPI.Services
     public class AnimalService : IAnimalService
     {
         private readonly SmartShelterDBContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public AnimalService(SmartShelterDBContext dbContext)
+        public AnimalService(SmartShelterDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
         public List<Animal> GetAll()
         {
@@ -21,8 +25,10 @@ namespace SmartShelter_WebAPI.Services
             var animal = _dbContext.Animals.Find(id);
             return animal;
         }
-        public bool AddAnimal(Animal animal)
+        public bool AddAnimal(AddAnimalDto animalDto)
         {
+            var animal = _mapper.Map<Animal>(animalDto);
+            animal.AcceptanceDate = DateTime.Now;
             _dbContext.Add(animal);
             return _dbContext.SaveChanges() != 0;
         }
@@ -39,8 +45,6 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-
-
         public List<Treatment> GetAllTreatments(int id)
         {
             var diseases = _dbContext.Diseases.Where(x => x.AnimalId == id).ToList();
@@ -51,14 +55,18 @@ namespace SmartShelter_WebAPI.Services
             }
             return treatments;
         }
-        public bool AddTreatment(Treatment treatment)
+        public bool AddTreatment(AddTreatmentDto treatmentDto)
         {
+            var treatment = _mapper.Map<Treatment>(treatmentDto);
+            treatment.Date = DateTime.Now;
             _dbContext.Add(treatment);
             return _dbContext.SaveChanges() != 0;
         }
 
-        public bool AddDiseaseTreatment(Treatment treatment, int diseaseId)
+        public bool AddDiseaseTreatment(AddTreatmentDto treatmentDto, int diseaseId)
         {
+            var treatment = _mapper.Map<Treatment>(treatmentDto);
+            treatment.Date = DateTime.Now;
             var addedTreatment = _dbContext.Add(treatment);
             addedTreatment.State = EntityState.Detached;
             _dbContext.Add(new DiseaseTreatments()
@@ -69,8 +77,9 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-        public bool AddDisease(Disease disease)
+        public bool AddDisease(AddDiseaseDto diseaseDto)
         {
+            var disease = _mapper.Map<Disease>(diseaseDto);
             _dbContext.Add(disease);
             return _dbContext.SaveChanges() != 0;
         }
@@ -79,11 +88,11 @@ namespace SmartShelter_WebAPI.Services
             var diseasesList = _dbContext.Diseases.Where(x => x.AnimalId == animalId).ToList();
             return diseasesList;
         }
-        public bool AddTreatmentSupplies(int treatmentId, List<Supply> supplyList)
+        public bool AddTreatmentSupplies(int treatmentId, List<AddSupplyDto> supplyList)
         {
             if (supplyList.Count > 0 && treatmentId > 0)
             {
-                foreach (var supply in supplyList)
+                foreach (var supply in _mapper.Map<List<Supply>>(supplyList))
                 {
                     supply.TreatmentId = treatmentId;
                     _dbContext.Add(supply);
@@ -107,8 +116,6 @@ namespace SmartShelter_WebAPI.Services
             return supplies;
         }
 
-
-
         public List<MealPlan> GetAnimalMealPlan(int animalId)
         {
             var mealPlans = _dbContext.MealPlans.Where(x => x.AnimalId == animalId).ToList();
@@ -126,8 +133,9 @@ namespace SmartShelter_WebAPI.Services
 
             return false;
         }
-        public bool AddMealPlan(MealPlan mealPlan)
+        public bool AddMealPlan(AddMealPlanDto mealPlanDto)
         {
+            var mealPlan = _mapper.Map<MealPlan>(mealPlanDto);
             _dbContext.Add(mealPlan);
             return _dbContext.SaveChanges() != 0;
         }

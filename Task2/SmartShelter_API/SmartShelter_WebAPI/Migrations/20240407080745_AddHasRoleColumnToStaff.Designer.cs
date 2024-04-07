@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShelter_WebAPI.Data;
 
@@ -11,9 +12,11 @@ using SmartShelter_WebAPI.Data;
 namespace SmartShelter_WebAPI.Migrations
 {
     [DbContext(typeof(SmartShelterDBContext))]
-    partial class SmartShelterDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240407080745_AddHasRoleColumnToStaff")]
+    partial class AddHasRoleColumnToStaff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

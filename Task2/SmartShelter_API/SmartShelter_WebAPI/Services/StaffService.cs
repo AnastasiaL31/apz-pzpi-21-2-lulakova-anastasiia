@@ -1,7 +1,10 @@
 ﻿using System.Data;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using SmartShelter_WebAPI.Dtos;
 using SmartShelter_WebAPI.Models;
 
 namespace SmartShelter_WebAPI.Services
@@ -10,13 +13,46 @@ namespace SmartShelter_WebAPI.Services
     {
         private readonly SmartShelterDBContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
-        
+        private readonly IMapper _mapper;
 
-        public StaffService(SmartShelterDBContext dbContext, UserManager<IdentityUser> userManager)
+
+        public StaffService(SmartShelterDBContext dbContext, UserManager<IdentityUser> userManager, IMapper mapper)
         {
             _dbContext = dbContext;
             _userManager = userManager;
-            
+            _mapper = mapper;
+        }
+
+        public async Task<bool> AddStaff(AddStaffDto newStaffDto, string username)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(username);
+            if (identityUser == null)
+            {
+                return false;
+            }
+
+            var staff = _mapper.Map<Staff>(newStaffDto);
+            if (staff != null)
+            {
+                staff.AcceptanceDate = DateTime.UtcNow;
+                staff.IdentityUserId = identityUser.Id;
+                _dbContext.Add(staff);
+            }
+
+            return Save();
+        }
+
+        public async Task<bool> UpdateStaff(StaffDto staffDto, string senderUsername)
+        {
+            var access = await CheckAccess(null, "Admin", senderUsername);
+            if (!access)
+            {
+                return false;
+            }
+
+            var staff = _mapper.Map<Staff>(staffDto);
+            _dbContext.Update(staff);
+            return Save();
         }
 
         public async Task<bool> AddRole(int staffId, string roleName, string senderUsername)
@@ -31,13 +67,14 @@ namespace SmartShelter_WebAPI.Services
             var identityUser = await _userManager.FindByIdAsync(identityUserId);
             if (identityUser != null)
             {
-                var result = _userManager.AddToRoleAsync(identityUser, roleName);
-                if (result.IsCompletedSuccessfully)
+                var result = await _userManager.AddToRoleAsync(identityUser, roleName);
+                if (result.Succeeded)
                 {
                     var user = _dbContext.Staff.FirstOrDefault(x => x.Id == staffId);
                     if (user != null)
                     {
                         user.HasRole = true;
+                        _dbContext.Update(user);
                         return Save();
                     }
                 }
@@ -46,7 +83,7 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-        public async Task<Staff?> GetById(int id, string senderUsername)
+        public async Task<StaffDto?> GetById(int id, string senderUsername)
         {
             var userId = GetIdentityId(id);
             if (userId.IsNullOrEmpty())
@@ -56,24 +93,42 @@ namespace SmartShelter_WebAPI.Services
             if (await CheckAccess(userId, "", senderUsername))
             {
                 var user = _dbContext.Staff.FirstOrDefault(x => x.Id == id);
-                return user;
+                var mappedUser = _mapper.Map<StaffDto>(user);
+                return mappedUser;
             }
             return null;
         }
 
-        public async Task<List<StaffTask>?> GetRoleTask(string role, string username)
+        public async Task<List<GetStaffTaskDto>?> GetRoleTask(string role, string username)
         {
             var access = await CheckAccess(null, role, username);
             if (access)
             {
-                var tasks = _dbContext.Tasks.Where(x => x.StaffRole == role).Include(x => x.Order).ToList();
-                return tasks;
+                var tasks = _dbContext.Tasks.Where(x => x.StaffRole == role)
+                    .Include(x => x.Order)
+                    .Include(x => x.AimStaff)
+                    .Include(x => x.ByStaff)
+                    .ToList();
+
+                var tasksDto = new List<GetStaffTaskDto>();
+                //var mapper = StaffTask.InitializeMapper();//_mapper.Map<List<GetStaffTaskDto>>(tasks);
+                foreach (var task in tasks)
+                {
+                    //tasksDto.Add(mapper.Map<GetStaffTaskDto>(tasks));
+                    var mappedTask = _mapper.Map<GetStaffTaskDto>(task);
+                    mappedTask.AimStaff = _mapper.Map<AddStaffDto>(task.AimStaff);
+                    mappedTask.ByStaff = _mapper.Map<AddStaffDto>(task.ByStaff);
+                    mappedTask.Order = _mapper.Map<OrderDto>(task.Order);
+                    tasksDto.Add(mappedTask);
+                }
+
+                return tasksDto;
             }
 
             return null;
         }
 
-        public async Task<List<StaffTask>?> GetUserTasks(int staffId, string senderUsername)
+        public async Task<List<GetStaffTaskDto>?> GetUserTasks(int staffId, string senderUsername)
         {
             var userId = GetIdentityId(staffId);
             if (userId.IsNullOrEmpty())
@@ -84,20 +139,35 @@ namespace SmartShelter_WebAPI.Services
             if (access)
             {
                 var tasks = _dbContext.Tasks.Where(x => x.AimStaffId == staffId).Include(x => x.Order).ToList();
-                return tasks;
+                var tasksDto = _mapper.Map<List<GetStaffTaskDto>>(tasks);
+                //foreach (var task in tasks)
+                //{
+                //    tasksDto.Add(new GetStaffTaskDto()
+                //    {
+
+                //    });
+                //}
+
+                return tasksDto;
             }
             return null;
         }
 
-        public bool CreateTask(StaffTask task, int staffId)
+        public bool CreateTask(AddStaffTaskDto taskDto, int staffId)
         {
+            var task = _mapper.Map<StaffTask>(taskDto);
             task.ByStaffId = staffId;
             _dbContext.Add(task);
             return Save();
         }
 
-        public async Task<bool> DeleteTask(StaffTask task, string senderUsername)
+        public async Task<bool> DeleteTask(int taskId, string senderUsername)
         {
+            var task = _dbContext.Tasks.FirstOrDefault(x => x.Id == taskId);
+            if (task == null)
+            {
+                return false;
+            }
             var creatorId = GetIdentityId(task.ByStaffId);
             if (creatorId.IsNullOrEmpty())
             {
@@ -133,32 +203,35 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-        public async Task<List<Staff>?> GetStaffList(string username)
+        public async Task<List<StaffDto>?> GetStaffList(string username)
         {
             var access = await CheckAccess(null, "Admin", username);
             if (access)
             {
                 var staffList = _dbContext.Staff.ToList();
-                return staffList;
+                var mappedStaffList = _mapper.Map<List<StaffDto>>(staffList);
+                return mappedStaffList;
             }
 
             return null;
         }
-        public async Task<List<Staff>?> GetStaffToAcceptList(string username)
+        public async Task<List<StaffDto>?> GetStaffToAcceptList(string username)
         {
             var access = await CheckAccess(null, "Admin", username);
             if (access)
             {
                 var staffList = _dbContext.Staff.Where(x => x.HasRole == false).ToList();
-                return staffList;
+                var mappedStaffList = _mapper.Map<List<StaffDto>>(staffList);
+                return mappedStaffList;
             }
 
             return null;
         }
 
-        public async Task<bool> AcceptTask(StaffTask task, string senderUsername)
+        public async Task<bool> AcceptTask(int taskId, string senderUsername)
         {
-            if (task.AimStaffId == null)
+            var task = _dbContext.Tasks.FirstOrDefault(x => x.Id == taskId);
+            if (task == null || task.AimStaffId == null)
             {
                 return false;
             }
@@ -192,6 +265,8 @@ namespace SmartShelter_WebAPI.Services
 
             return user.IdentityUserId;
         }
+
+
 
         //neededRole is empty when getting info about yourself
         //id is not null when accessing info about staff with id

@@ -17,11 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAnimalService, AnimalService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAviaryService, AviaryService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IStorageService, StorageService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SmartShelterDBContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"))

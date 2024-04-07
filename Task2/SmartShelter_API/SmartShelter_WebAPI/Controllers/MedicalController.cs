@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartShelter_WebAPI.Dtos;
 
 namespace SmartShelter_WebAPI.Controllers
 {
@@ -35,16 +36,16 @@ namespace SmartShelter_WebAPI.Controllers
         [Route("/addTreatment/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddTreatment([FromBody] Treatment treatment, int? diseaseId)
+        public ActionResult AddTreatment([FromBody] AddTreatmentDto treatmentDto, int? diseaseId)
         {
             var result = false;
             if (diseaseId != null && diseaseId > 0)
             {
-                result = _animalService.AddDiseaseTreatment(treatment, (int)diseaseId);
+                result = _animalService.AddDiseaseTreatment(treatmentDto, (int)diseaseId);
             }
             else
             {
-                result = _animalService.AddTreatment(treatment);
+                result = _animalService.AddTreatment(treatmentDto);
             }
 
             if (result)
@@ -60,7 +61,7 @@ namespace SmartShelter_WebAPI.Controllers
         [Route("/addSupplies/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddTreatmentSupplies(int treatmentId, [FromBody] List<Supply> supplyList)
+        public ActionResult AddTreatmentSupplies([FromQuery]int treatmentId, [FromBody] List<AddSupplyDto> supplyList)
         {
             if (treatmentId <= 0 || !supplyList.Any())
             {
@@ -80,9 +81,9 @@ namespace SmartShelter_WebAPI.Controllers
         [Route("/addDisease/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddDisease([FromBody] Disease disease)
+        public ActionResult AddDisease([FromBody] AddDiseaseDto diseaseDto)
         {
-            var result = _animalService.AddDisease(disease);
+            var result = _animalService.AddDisease(diseaseDto);
             if (result)
             {
                 return Ok();

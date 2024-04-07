@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartShelter_WebAPI.Dtos;
 
 namespace SmartShelter_WebAPI.Controllers
 {
@@ -56,10 +57,10 @@ namespace SmartShelter_WebAPI.Controllers
         [Route("/addMealPlan/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddMealPlan([FromBody] MealPlan mealPlan)
+        public ActionResult AddMealPlan([FromBody] AddMealPlanDto mealPlanDto)
         {
             
-            var result = _animalService.AddMealPlan(mealPlan);
+            var result = _animalService.AddMealPlan(mealPlanDto);
             if (result)
             {
                 return Ok();

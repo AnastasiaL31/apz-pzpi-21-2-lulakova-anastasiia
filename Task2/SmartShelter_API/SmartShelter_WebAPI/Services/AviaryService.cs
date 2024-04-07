@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using SmartShelter_WebAPI.Dtos;
 using SmartShelter_WebAPI.Models;
 
 namespace SmartShelter_WebAPI.Services
@@ -6,9 +8,12 @@ namespace SmartShelter_WebAPI.Services
     public class AviaryService: IAviaryService
     {
         private readonly SmartShelterDBContext _dbContext;
-        public AviaryService(SmartShelterDBContext dbContext)
+        private readonly IMapper _mapper;
+
+        public AviaryService(SmartShelterDBContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
         public Aviary? GetAnimalAviary(int animalId)
         {
@@ -42,8 +47,9 @@ namespace SmartShelter_WebAPI.Services
             return Save();
         }
 
-        public bool AddAviary(Aviary aviary)
+        public bool AddAviary(AddAviaryDto aviaryDto)
         {
+            var aviary = _mapper.Map<Aviary>(aviaryDto);
             _dbContext.Add(aviary);
             return Save();
         }
@@ -71,9 +77,23 @@ namespace SmartShelter_WebAPI.Services
             return null;
         }
 
-        public Sensor? GetSensor(int id)
+        public bool AddAviaryCondition(AviaryCondition condition, int aviaryId)
         {
-            var sensor = _dbContext.Sensors.FirstOrDefault(x => x.AviaryId == id);
+            var addedCondition = _dbContext.Add(condition);
+            _dbContext.SaveChanges();
+            //addedCondition.State = EntityState.Detached;
+            var aviary = _dbContext.Aviaries.FirstOrDefault(x => x.Id == aviaryId);
+            if (aviary != null && aviary.AviaryConditionId == null)
+            {
+                aviary.AviaryConditionId = addedCondition.Entity.Id;
+                _dbContext.Update(aviary);
+            }
+            return _dbContext.SaveChanges() != 0;
+        }
+
+        public Sensor? GetAviarySensor(int aviaryId)
+        {
+            var sensor = _dbContext.Sensors.FirstOrDefault(x => x.AviaryId == aviaryId);
             if (sensor != null)
             {
                 return sensor;
@@ -82,8 +102,9 @@ namespace SmartShelter_WebAPI.Services
             return null;
         }
 
-        public bool AddSensor(Sensor sensor)
+        public bool AddSensor(AddSensorDto sensorDto)
         {
+            var sensor = _mapper.Map<Sensor>(sensorDto);
             _dbContext.Add(sensor);
             return Save();
         }
@@ -94,9 +115,9 @@ namespace SmartShelter_WebAPI.Services
             return recharges;
         }
 
-        public bool AddRecharges(List<AviaryRecharge> list, int staffId, int aviaryId)
+        public bool AddRecharges(List<AddAviaryRechargeDto> list, int staffId, int aviaryId)
         {
-            foreach (var recharge in list)
+            foreach (var recharge in _mapper.Map<List<AviaryRecharge>>(list))
             {
                 recharge.StaffId = staffId;
                 recharge.AviaryId = aviaryId;
@@ -111,8 +132,9 @@ namespace SmartShelter_WebAPI.Services
             return sensorData;
         }
 
-        public bool AddSensorData(SensorData sensorData)
+        public bool AddSensorData(AddSensorDataDto sensorDataDto)
         {
+            var sensorData = _mapper.Map<SensorData>(sensorDataDto);
             _dbContext.Add(sensorData);
             return Save();
         }

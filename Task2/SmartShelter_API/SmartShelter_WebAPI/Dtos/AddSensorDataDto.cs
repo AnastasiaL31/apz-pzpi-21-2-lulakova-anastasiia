@@ -1,8 +1,7 @@
-﻿namespace SmartShelter_WebAPI.Models
+﻿namespace SmartShelter_WebAPI.Dtos
 {
-    public class SensorData
+    public class AddSensorDataDto
     {
-        public int Id { get; set; }
         public float Water { get; set; }
         public float Food { get; set; }
         public float Temperature { get; set; }
@@ -12,7 +11,5 @@
         public float AvgConsumption { get; set; }
         public float Forecast { get; set; }
         public int SensorId { get; set; }
-
-        public Sensor? Sensor { get; set; }
     }
 }
