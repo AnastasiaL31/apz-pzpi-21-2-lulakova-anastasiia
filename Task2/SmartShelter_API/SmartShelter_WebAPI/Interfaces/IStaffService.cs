@@ -15,7 +15,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public bool CreateTask(AddStaffTaskDto taskDto, int staffId);
         public Task<bool> AcceptTask(int taskId, string senderUsername);
         public Task<bool> DeleteTask(int taskId, string senderUsername);
-        public Task<bool> UpdateTask(StaffTask task, string senderUsername);
+        public Task<bool> UpdateTask(UpdateStaffTaskDto taskDto, string senderUsername);
         
     }
 }

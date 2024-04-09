@@ -121,6 +121,22 @@ namespace SmartShelter_WebAPI.Controllers
             return Ok(staff);
         }
 
+        [HttpGet("{staffId:int}/tasks")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<GetStaffTaskDto>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetStaffTaskDto>> GetUserTasks(int staffId, string senderUsername)
+        {
+            var staff = await _staffService.GetUserTasks(staffId, senderUsername);
+            if (staff == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(staff);
+        }
+
+
+
         [HttpPost("add/task")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -136,5 +152,48 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
 
+
+        [HttpPost("accept/task/{taskId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> AcceptTask(int taskId, string senderUsername)
+        {
+            var result = await _staffService.AcceptTask(taskId, senderUsername);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+
+        [HttpDelete("delete/task/{taskId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> DeleteTask(int taskId, string senderUsername)
+        {
+            var result = await _staffService.DeleteTask(taskId, senderUsername);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("update/task")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> UpdateTask(string senderUsername, [FromBody] UpdateStaffTaskDto taskDto)
+        {
+            var result = await _staffService.UpdateTask(taskDto, senderUsername);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

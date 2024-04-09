@@ -111,14 +111,14 @@ namespace SmartShelter_WebAPI.Services
                     .ToList();
 
                 var tasksDto = new List<GetStaffTaskDto>();
-                //var mapper = StaffTask.InitializeMapper();//_mapper.Map<List<GetStaffTaskDto>>(tasks);
                 foreach (var task in tasks)
                 {
-                    //tasksDto.Add(mapper.Map<GetStaffTaskDto>(tasks));
-                    var mappedTask = _mapper.Map<GetStaffTaskDto>(task);
-                    mappedTask.AimStaff = _mapper.Map<AddStaffDto>(task.AimStaff);
-                    mappedTask.ByStaff = _mapper.Map<AddStaffDto>(task.ByStaff);
-                    mappedTask.Order = _mapper.Map<OrderDto>(task.Order);
+                    var mappedTask = GetStaffTaskDto.MapStaffTaskToGetStaffTaskDto(task);
+                    if (task.Order != null)
+                    {
+                        mappedTask.Order = _mapper.Map<OrderDto>(task.Order);
+                    }
+
                     tasksDto.Add(mappedTask);
                 }
 
@@ -138,15 +138,22 @@ namespace SmartShelter_WebAPI.Services
             var access = await CheckAccess(userId, "", senderUsername);
             if (access)
             {
-                var tasks = _dbContext.Tasks.Where(x => x.AimStaffId == staffId).Include(x => x.Order).ToList();
-                var tasksDto = _mapper.Map<List<GetStaffTaskDto>>(tasks);
-                //foreach (var task in tasks)
-                //{
-                //    tasksDto.Add(new GetStaffTaskDto()
-                //    {
+                var tasks = _dbContext.Tasks.Where(x => x.AimStaffId == staffId)
+                    .Include(x => x.Order)
+                    .Include(x => x.AimStaff)
+                    .Include(x => x.ByStaff)
+                    .ToList();
+                var tasksDto = new List<GetStaffTaskDto>();
+                foreach (var task in tasks)
+                {
+                    var mappedTask = GetStaffTaskDto.MapStaffTaskToGetStaffTaskDto(task);
+                    if (task.Order != null)
+                    {
+                        mappedTask.Order = _mapper.Map<OrderDto>(task.Order);
+                    }
 
-                //    });
-                //}
+                    tasksDto.Add(mappedTask);
+                }
 
                 return tasksDto;
             }
@@ -183,8 +190,13 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-        public async Task<bool> UpdateTask(StaffTask task, string senderUsername)
+        public async Task<bool> UpdateTask(UpdateStaffTaskDto taskDto, string senderUsername)
         {
+            var task = _dbContext.Tasks.FirstOrDefault(x => x.Id == taskDto.Id);
+            if (task == null)
+            {
+                return false;
+            }
             if (task.IsAccepted)
             {
                 return false;
@@ -197,6 +209,8 @@ namespace SmartShelter_WebAPI.Services
             var access = await CheckAccess(creatorId, "", senderUsername);
             if (access)
             {
+                var taskToUpdate = _mapper.Map<StaffTask>(taskDto);
+                taskToUpdate.ByStaffId = task.ByStaffId;
                 _dbContext.Update(task);
                 return Save();
             }

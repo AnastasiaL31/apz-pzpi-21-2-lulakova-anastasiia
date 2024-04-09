@@ -16,9 +16,9 @@ namespace SmartShelter_WebAPI.Models
         public bool IsAccepted { get; set; } = false;
 
 
-        public Staff AimStaff { get; set; }
+        public Staff? AimStaff { get; set; }
         public Staff ByStaff { get; set; }
-        public Order Order { get; set; }
+        public Order? Order { get; set; }
 
 
        

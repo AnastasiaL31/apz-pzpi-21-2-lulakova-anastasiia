@@ -21,9 +21,14 @@ namespace SmartShelter_WebAPI.Dtos
             CreateMap<AddStaffTaskDto, StaffTask>();
             CreateMap<GetStaffTaskDto, StaffTask>();
             CreateMap<StaffTask, GetStaffTaskDto>();
+            CreateMap<UpdateStaffTaskDto, StaffTask>();
+            CreateMap<StaffTask, UpdateStaffTaskDto>();
             CreateMap<OrderDto, Order>();
+            CreateMap<Order, OrderDto>();
+            CreateMap<Order, UpdateOrderDto > ();
+            CreateMap<UpdateOrderDto, Order>();
             //CreateMap();
-            //CreateMap<>();
+            CreateMap<AddOrderDto, Order>();
 
         }
     }

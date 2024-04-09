@@ -16,6 +16,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public List<Treatment> GetDiseaseTreatments(int diseaseId);
         public bool AddTreatment(AddTreatmentDto treatmentDto);
         public bool AddDiseaseTreatment(AddTreatmentDto treatmentDto, int diseaseId);
+        public bool UpdateDisease(AddDiseaseDto diseaseDto, int diseaseId);
         public bool AddDisease(AddDiseaseDto diseaseDto);
         public List<Disease> GetAnimalDiseases(int animalId);
         public List<Supply> GetTreatmentSupplies(int treatmentId);

@@ -1,35 +1,93 @@
-﻿namespace SmartShelter_WebAPI.Services
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SmartShelter_WebAPI.Dtos;
+
+namespace SmartShelter_WebAPI.Services
 {
     public class StorageService : IStorageService
     {
-        public bool CreateOrder(Order order, int creatorId)
+        private readonly SmartShelterDBContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public StorageService(SmartShelterDBContext dbContext,IMapper mapper)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+        public bool CreateOrder(AddOrderDto orderDto, int creatorId)
+        {
+            var order = _mapper.Map<Order>(orderDto);
+            order.StaffId = creatorId;
+            _dbContext.Add(order);
+            return Save();
         }
 
-        public bool UpdateOrder(Order order, int userId)
+        public bool UpdateOrder(UpdateOrderDto orderDto, int staffId)
         {
-            throw new NotImplementedException();
+            var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderDto.Id);
+            if (order == null)
+            {
+                return false;
+            }
+
+            _mapper.Map(orderDto, order);
+            order.StaffId = staffId;
+            if (_dbContext.Entry(order).State == EntityState.Detached)
+            {
+                _dbContext.Attach(order);
+            }
+
+            _dbContext.Entry(order).State = EntityState.Modified;
+
+            return Save();
         }
 
-        public bool DeleteOrder(Order order, int userId)
+        public bool DeleteOrder(int orderId, int staffId)
         {
-            throw new NotImplementedException();
+            var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+            if (order == null)
+            {
+                return false;
+            }
+
+            if (order.StaffId != staffId || staffId != 1)
+            {
+                return false;
+            }
+            _dbContext.Remove(order);
+            return Save();
         }
 
-        public List<Order> GetOrderList(int userId)
+        public List<OrderDto>? GetOrderList() //for admin
         {
-            throw new NotImplementedException();
+            var orders = _dbContext.Orders.ToList();
+            var ordersDto = _mapper.Map<List<OrderDto>>(orders);
+            return ordersDto;
         }
 
-        public List<Order> GetApprovedOrders(int userId)
+        public List<OrderDto> GetApprovedOrders(int staffId)
         {
-            throw new NotImplementedException();
+            var orders = _dbContext.Orders.Where(x => x.StaffId == staffId && x.IsApproved == true).ToList();
+            var ordersDto = _mapper.Map<List<OrderDto>>(orders);
+            return ordersDto;
         }
 
-        public bool ApproveOrder(Order order, int userId)
+        public bool ApproveOrder(int orderId) //for admin
         {
-            throw new NotImplementedException();
+            var order = _dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+            if (order == null)
+            {
+                return false;
+            }
+
+            order.IsApproved = true;
+            _dbContext.Update(order);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            return _dbContext.SaveChanges() != 0;
         }
     }
 }

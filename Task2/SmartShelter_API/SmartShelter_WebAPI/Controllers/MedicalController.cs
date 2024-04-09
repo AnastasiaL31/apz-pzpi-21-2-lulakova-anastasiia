@@ -92,6 +92,21 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        [Route("/updateDisease/")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult UpdateDisease(int diseaseId, [FromBody] AddDiseaseDto diseaseDto)
+        {
+            var result = _animalService.UpdateDisease(diseaseDto, diseaseId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Treatment>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

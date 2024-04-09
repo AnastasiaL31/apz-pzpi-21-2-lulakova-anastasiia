@@ -77,6 +77,14 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
+        public bool UpdateDisease(AddDiseaseDto diseaseDto, int diseaseId)
+        {
+            var disease = _mapper.Map<Disease>(diseaseDto);
+            disease.Id = diseaseId;
+            _dbContext.Update(disease);
+            return _dbContext.SaveChanges() != 0;
+        }
+
         public bool AddDisease(AddDiseaseDto diseaseDto)
         {
             var disease = _mapper.Map<Disease>(diseaseDto);
