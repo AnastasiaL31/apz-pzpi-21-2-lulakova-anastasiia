@@ -8,7 +8,6 @@
         public float Humidity { get; set; }
         public float IHS { get; set; }
         public DateTime Date { get; set; }
-        public float AvgConsumption { get; set; }
         public float Forecast { get; set; }
         public int SensorId { get; set; }
     }

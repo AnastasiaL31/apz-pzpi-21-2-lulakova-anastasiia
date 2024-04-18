@@ -28,8 +28,6 @@ namespace SmartShelter_WebAPI.Services
             };
             
            var result = await  _userManager.CreateAsync(identityUser, user.Password);
-           //var res = await _roleManager.CreateAsync(new IdentityRole("Admin"));
-           
            return result.Succeeded;
         }
 

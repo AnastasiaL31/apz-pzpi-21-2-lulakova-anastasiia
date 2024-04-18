@@ -18,7 +18,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public bool AddRecharges(List<AddAviaryRechargeDto> list, int staffId, int aviaryId);
         public List<SensorData>? GetSensorData(int sensorId);
         public bool AddSensorData(AddSensorDataDto sensorDataDto);
-
-
+        bool SendExtremeConditions(float ihs, int sensorId);
+        int GetSensorFrequency(int sensorId);
     }
 }

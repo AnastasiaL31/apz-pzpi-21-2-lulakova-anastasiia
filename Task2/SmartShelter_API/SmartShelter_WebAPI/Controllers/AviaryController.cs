@@ -261,6 +261,41 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
+
+
+        [HttpPost("/extreme/")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult SendExtremeConditions([FromQuery] int sensorId, float ihs)
+        {
+            var result = _aviaryService.SendExtremeConditions(ihs, sensorId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("time/{sensorId}")]
+        public ActionResult<int> GetSensorFrequency(int sensorId)
+        {
+            if (sensorId <= 0)
+            {
+                return BadRequest();
+            }
+            var frequency = _aviaryService.GetSensorFrequency(sensorId);
+            if (frequency == 0)
+            {
+                return NotFound("");
+            }
+            return Ok(frequency);
+        }
     }
 }
 

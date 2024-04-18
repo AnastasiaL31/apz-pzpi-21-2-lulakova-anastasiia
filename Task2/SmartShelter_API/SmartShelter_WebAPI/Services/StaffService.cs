@@ -14,13 +14,15 @@ namespace SmartShelter_WebAPI.Services
         private readonly SmartShelterDBContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
 
-        public StaffService(SmartShelterDBContext dbContext, UserManager<IdentityUser> userManager, IMapper mapper)
+        public StaffService(SmartShelterDBContext dbContext, UserManager<IdentityUser> userManager, IMapper? mapper, RoleManager<IdentityRole> roleManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
             _mapper = mapper;
+            _roleManager = roleManager;
         }
 
         public async Task<bool> AddStaff(AddStaffDto newStaffDto, string username)
@@ -62,12 +64,19 @@ namespace SmartShelter_WebAPI.Services
             {
                 return false;
             }
-
             var identityUserId = GetIdentityId(staffId);
             var identityUser = await _userManager.FindByIdAsync(identityUserId);
             if (identityUser != null)
             {
-                var result = await _userManager.AddToRoleAsync(identityUser, roleName);
+                IdentityResult result;
+                var role = await _roleManager.FindByNameAsync(roleName);
+                if ( role == null)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+               
+                result = await _userManager.AddToRoleAsync(identityUser, roleName);
+
                 if (result.Succeeded)
                 {
                     var user = _dbContext.Staff.FirstOrDefault(x => x.Id == staffId);

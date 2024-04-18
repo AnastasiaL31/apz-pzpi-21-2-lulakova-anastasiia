@@ -172,6 +172,33 @@ namespace SmartShelter_WebAPI.Services
             return null;
         }
 
+
+        public string CheckIhs(float ihs)
+        {
+            string problem = string.Empty;
+            if (ihs >= 70)
+            {
+                problem += "- risk of heat stress is ";
+                
+
+                if (ihs <= 79)
+                {
+                    problem += "moderate";
+                }
+                else if (ihs >= 80 && ihs < 89)
+                {
+                    problem += "high";
+                    problem += "\nit is necessary to make temperature lower, give more water to pet";
+                }
+                else if (ihs >= 89)
+                {
+                    problem += "VERY HIGH\n";
+                    problem += "YOU NEED TO HURRY UP AND HELP";
+                }
+            }
+            return problem;
+        }
+
         public bool CheckConditions(SensorData sensorData)
         {
             var sensor = _dbContext.Sensors.FirstOrDefault(s => s.Id == sensorData.SensorId);
@@ -223,36 +250,18 @@ namespace SmartShelter_WebAPI.Services
                     aviaryProblem += "\nit is necessary to add more water, at least " + tenPercent;
                 }
 
-                if (sensorData.IHS >= 70)
-                {
-                    problem += "- risk of heat stress is ";
-                    aviaryProblem += "\nit is necessary to make temperature lower, give more water to pet";
-
-                    if (sensorData.IHS <= 79)
-                    {
-                        problem += "moderate";
-                    }else if (sensorData.IHS >= 80 && sensorData.IHS < 89)
-                    {
-                        problem += "high";
-                    }
-                    else if (sensorData.IHS >= 89)
-                    {
-                        problem += "VERY HIGH";
-                        aviaryProblem += "YOU NEED TO HURRY UP AND HELP";
-                    }
-                }
-
+                problem += CheckIhs(sensorData.IHS);
                 problem += CheckFood(sensorData.Food, sensorData.Date, aviary.Animal.Id);
 
                 if (problem.Length > 0)
                 {
                     problem = $"Your aviary {sensor.AviaryId} with {aviary.Animal.Name} has problems: \n" + problem;
 
-                    //var user = _dbContext.Users.FirstOrDefault(u => u.Id = id);
-                    //if (user != null)
-                    //{
+                        
+
+            
                         return SendEmail("n@gmail.com", problem + "\n\n" + aviaryProblem, $"Problem with pet aviary {aviary.Animal.Name}");
-                    //}
+                    
                 }
 
                 else
@@ -266,7 +275,7 @@ namespace SmartShelter_WebAPI.Services
         public bool SendEmail(string toEmail, string message, string header)
         {
             string fromEmail = "anastasiia.lulakova@nure.ua";
-            string password = "";
+            string password = "glsz imxn famy lhkh";
 
             MailAddress from = new MailAddress(fromEmail);
             MailAddress to = new MailAddress(toEmail);
@@ -299,29 +308,35 @@ namespace SmartShelter_WebAPI.Services
         }
 
 
-        //public bool SendExtremeConditions(int sensorId, float temperature, float dewPoint)
-        //{
-        //    Sensor sensor = _context.Sensors.Where(s => s.Id == sensorId).Include(s => s.Plant).FirstOrDefault();
-        //    if (sensor == null)
-        //    {
-        //        return false;
-        //    }
+        public bool SendExtremeConditions(float ihs, int sensorId)
+        {
+            var sensor = _dbContext.Sensors.Where(s => s.Id == sensorId).Include(x => x.Aviary).FirstOrDefault();
+            if (sensor == null)
+            {
+                return false; 
+            }
+            
+            string header = $"Aviary {sensor.Aviary.Id} has high heat stress index\n";
+            string message = CheckIhs(ihs);
+            //var user = _context.Users.FirstOrDefault(u => u.Id == sensor.Plant.UserId);
+            //if (user != null)
+            //{
+                return SendEmail("n@gmail.com", message, header);
+            //}
 
-        //    if (sensor.Plant == null)
-        //    {
-        //        return false;
-        //    }
-        //    string header = $"Plant {sensor.Plant.Name} close to condensation conditions";
-        //    string message =
-        //        $"Your plant {sensor.Plant.Name} has air temperature equal to {temperature}C which is close to dew point {dewPoint}C. Please, pay attention to this.";
-        //    var user = _context.Users.FirstOrDefault(u => u.Id == sensor.Plant.UserId);
-        //    if (user != null)
-        //    {
-        //        return SendEmail(user.Email, message, header);
-        //    }
+            return false;
+        }
 
-        //    return false;
-        //}
+        public int GetSensorFrequency(int sensorId)
+        {
+            var sensor = _dbContext.Sensors.FirstOrDefault(x => x.Id == sensorId);
+            if (sensor == null)
+            {
+
+                return 0;
+            }
+            return sensor.Frequency;
+        }
 
 
         public bool Save()
