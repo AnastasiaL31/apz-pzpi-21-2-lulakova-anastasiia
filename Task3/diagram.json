@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "author": "Anastasiia Lulakova",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": -129.7, "left": -177.8, "attrs": {} },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -162.9,
+      "left": 4.2,
+      "attrs": { "temperature": "15.9", "humidity": "18.5" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -3954.2518883889943,
+      "left": -10449.747987369712,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-ntc-temperature-sensor",
+      "id": "ntc1",
+      "top": -141.9,
+      "left": -346.1,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-slide-potentiometer",
+      "id": "pot1",
+      "top": 81.8,
+      "left": -404.2,
+      "attrs": { "travelLength": "30" }
+    },
+    { "type": "wokwi-potentiometer", "id": "pot2", "top": 113.9, "left": -29, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "ntc1:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "ntc1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v76.8", "h-96" ] ],
+    [ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "pot1:SIG", "esp:D34", "green", [ "h-19.2", "v-164", "h220.8", "v-57.4" ] ],
+    [ "pot1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "pot1:VCC", "esp:3V3", "red", [ "v-67.2", "h326.7" ] ],
+    [ "pot2:SIG", "esp:D35", "green", [ "v0" ] ],
+    [ "pot2:GND", "esp:GND.2", "black", [ "v-163.2", "h-163.2" ] ],
+    [ "pot2:VCC", "esp:3V3", "red", [ "v0" ] ],
+    [ "dht1:SDA", "esp:D15", "green", [ "v0" ] ],
+    [ "ntc1:OUT", "esp:VN", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
