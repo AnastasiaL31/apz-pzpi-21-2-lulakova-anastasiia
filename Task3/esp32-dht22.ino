@@ -226,15 +226,12 @@ void GetAndPrintSensorData(){
   IHS = calculateIHS();
   Serial.print("IHS: ");
   Serial.println(IHS);
-  //checkIHS();
+  checkIHS();
 
   forecast = calculateWaterForecast();
   Serial.print("Forecast water: ");
   Serial.println(forecast);
 
-  if(loopIteration > 0){
-    checkIHS();
-  }
 
   if(temperature > 30 || temperature < 10){
     sendPostRequest();
