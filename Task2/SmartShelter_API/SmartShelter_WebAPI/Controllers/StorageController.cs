@@ -8,6 +8,8 @@ namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Storekeeper")]
+    
     public class StorageController : ControllerBase
     {
         private readonly IStorageService _storageService;

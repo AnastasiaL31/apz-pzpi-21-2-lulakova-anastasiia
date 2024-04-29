@@ -31,6 +31,8 @@ namespace SmartShelter_WebAPI.Controllers
             if(await _authService.LoginUser(user))
             {
                 var tokenString = await _authService.GenerateToken(user);
+                var claims = _authService.CheckToken(tokenString);
+                _authService.GetTokenClaims(claims);
                 return Ok(tokenString);
             }
 

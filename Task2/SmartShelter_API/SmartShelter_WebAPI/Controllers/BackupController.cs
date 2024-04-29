@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Newtonsoft.Json;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class BackupController : ControllerBase
     {
 

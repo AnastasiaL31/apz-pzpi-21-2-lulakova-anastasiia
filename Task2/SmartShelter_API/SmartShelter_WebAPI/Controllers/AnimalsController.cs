@@ -9,7 +9,8 @@ namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Doctor")]
+
     public class AnimalsController : ControllerBase
     {
         private readonly IAnimalService _animalService;
@@ -57,6 +58,7 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult AddAnimal([FromBody] AddAnimalDto animalDto)
@@ -71,6 +73,7 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

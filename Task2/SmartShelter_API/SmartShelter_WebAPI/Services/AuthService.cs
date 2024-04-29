@@ -64,7 +64,7 @@ namespace SmartShelter_WebAPI.Services
             }
             IEnumerable<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Email, user.Username),
+                new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Role, roles[0]),
             };
 
@@ -82,6 +82,39 @@ namespace SmartShelter_WebAPI.Services
             string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
             return token;
+        }
+
+        public ClaimsPrincipal? CheckToken(string token)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Key").Value));
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                return principal;
+            }
+            catch (SecurityTokenException)
+            {
+                return null;
+            }
+        }
+
+        public void GetTokenClaims(ClaimsPrincipal principal)
+        {
+            var username = principal.Identity.Name;
+            var roles = principal.Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value)
+                .ToList();
         }
     }
 }

@@ -228,6 +228,7 @@ namespace SmartShelter_WebAPI.Services
 
         public async Task<List<StaffDto>?> GetStaffList(string username)
         {
+            
             var access = await CheckAccess(null, "Admin", username);
             if (access)
             {

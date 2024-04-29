@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartShelter_WebAPI.Dtos;
 
 namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,Doctor")]
     [ApiController]
     public class MedicalController : ControllerBase
     {

@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,6 +70,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    
 })
     .AddJwtBearer(options =>
     {
@@ -79,11 +81,23 @@ builder.Services.AddAuthentication(options =>
             ValidateAudience = true,
             RequireExpirationTime = true,
             ValidateIssuerSigningKey = true,
+            RoleClaimType = ClaimTypes.Role,
             ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
             ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value))
         };
     });
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("Doctor", policy =>
+            policy.RequireRole("Doctor"));
+        options.AddPolicy("Storekeeper", policy =>
+            policy.RequireRole("Storekeeper"));
+        options.AddPolicy("Admin", policy =>
+            policy.RequireRole("Admin"));
+    }
+);
 
 var app = builder.Build();
 

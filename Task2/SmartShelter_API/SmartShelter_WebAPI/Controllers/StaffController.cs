@@ -7,6 +7,7 @@ namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StaffController : ControllerBase
     {
         private readonly IStaffService _staffService;
@@ -20,9 +21,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpGet("all")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<StaffDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<StaffDto>>> GetAllStaff(string senderUsername)
+        public async Task<ActionResult<List<StaffDto>>> GetAllStaff()
         {
-            var staffList = await _staffService.GetStaffList(senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var staffList = await _staffService.GetStaffList(userName);
             if (staffList == null || staffList.Count == 0)
             {
                 return NotFound();
@@ -35,9 +41,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpGet("all/accept")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<StaffDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<StaffDto>>> GetAllStaffToAccept(string senderUsername)
+        public async Task<ActionResult<List<StaffDto>>> GetAllStaffToAccept()
         {
-            var staffList = await _staffService.GetStaffToAcceptList(senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var staffList = await _staffService.GetStaffToAcceptList(userName);
             if (staffList == null || staffList.Count == 0)
             {
                 return NotFound();
@@ -80,9 +91,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPut("addRole")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> AddRole(string senderUsername, string roleName, int staffId)
+        public async Task<ActionResult<bool>> AddRole(string roleName, int staffId)
         {
-            var result = await _staffService.AddRole(staffId, roleName, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var result = await _staffService.AddRole(staffId, roleName, userName);
             if (result)
             {
                 return Ok();
@@ -96,9 +112,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpGet("all/{staffId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Staff>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Staff>> GetStaffById(int staffId, string senderUsername)
+        public async Task<ActionResult<Staff>> GetStaffById(int staffId)
         {
-            var staff = await _staffService.GetById(staffId, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var staff = await _staffService.GetById(staffId, userName);
             if (staff == null)
             {
                 return NotFound();
@@ -112,7 +133,12 @@ namespace SmartShelter_WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetStaffTaskDto>> GetRoleTasks(string role, string senderUsername)
         {
-            var staff = await _staffService.GetRoleTask(role, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var staff = await _staffService.GetRoleTask(role, userName);
             if (staff == null)
             {
                 return NotFound();
@@ -126,7 +152,12 @@ namespace SmartShelter_WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetStaffTaskDto>> GetUserTasks(int staffId, string senderUsername)
         {
-            var staff = await _staffService.GetUserTasks(staffId, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var staff = await _staffService.GetUserTasks(staffId, userName);
             if (staff == null)
             {
                 return NotFound();
@@ -151,14 +182,17 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
-
-
         [HttpPost("accept/task/{taskId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> AcceptTask(int taskId, string senderUsername)
+        public async Task<ActionResult<bool>> AcceptTask(int taskId)
         {
-            var result = await _staffService.AcceptTask(taskId, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var result = await _staffService.AcceptTask(taskId, userName);
             if (result)
             {
                 return Ok();
@@ -171,9 +205,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpDelete("delete/task/{taskId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> DeleteTask(int taskId, string senderUsername)
+        public async Task<ActionResult<bool>> DeleteTask(int taskId)
         {
-            var result = await _staffService.DeleteTask(taskId, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var result = await _staffService.DeleteTask(taskId, userName);
             if (result)
             {
                 return Ok();
@@ -185,9 +224,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPut("update/task")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> UpdateTask(string senderUsername, [FromBody] UpdateStaffTaskDto taskDto)
+        public async Task<ActionResult<bool>> UpdateTask([FromBody] UpdateStaffTaskDto taskDto)
         {
-            var result = await _staffService.UpdateTask(taskDto, senderUsername);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var result = await _staffService.UpdateTask(taskDto, userName);
             if (result)
             {
                 return Ok();

@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartShelter_WebAPI.Dtos;
+using System.Data;
 
 namespace SmartShelter_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Storekeeper")]
+    
     public class AviaryController : ControllerBase
     {
         private readonly IAviaryService _aviaryService;
@@ -233,6 +237,7 @@ namespace SmartShelter_WebAPI.Controllers
 
 
         [HttpPost("/add/sensordata")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult AddSensorData([FromBody] AddSensorDataDto sensorDataDto)
@@ -264,6 +269,7 @@ namespace SmartShelter_WebAPI.Controllers
 
 
         [HttpPost("/extreme/")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult SendExtremeConditions([FromQuery] int sensorId, float ihs)
@@ -279,6 +285,7 @@ namespace SmartShelter_WebAPI.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
