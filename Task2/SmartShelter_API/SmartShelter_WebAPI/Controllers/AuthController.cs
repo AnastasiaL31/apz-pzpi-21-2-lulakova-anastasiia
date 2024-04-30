@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartShelter_Web.Models;
 
 namespace SmartShelter_WebAPI.Controllers
 {
@@ -25,15 +26,19 @@ namespace SmartShelter_WebAPI.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Wrong model");
             }
 
             if(await _authService.LoginUser(user))
             {
                 var tokenString = await _authService.GenerateToken(user);
                 var claims = _authService.CheckToken(tokenString);
-                _authService.GetTokenClaims(claims);
-                return Ok(tokenString);
+                var role = _authService.GetTokenClaims(claims);
+                return Ok(new UserData()
+                { 
+                    token = tokenString,
+                    role = role
+                });
             }
 
             return BadRequest();

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SmartShelter_Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
-
-
+builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -19,9 +21,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

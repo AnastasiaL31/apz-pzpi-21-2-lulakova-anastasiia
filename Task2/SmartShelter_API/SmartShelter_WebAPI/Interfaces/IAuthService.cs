@@ -8,6 +8,6 @@ namespace SmartShelter_WebAPI.Interfaces
          Task<bool> LoginUser(LoginUser user);
          Task<string> GenerateToken(LoginUser user);
          public ClaimsPrincipal? CheckToken(string token);
-         public void GetTokenClaims(ClaimsPrincipal principal);
+         public string GetTokenClaims(ClaimsPrincipal principal);
     }
 }

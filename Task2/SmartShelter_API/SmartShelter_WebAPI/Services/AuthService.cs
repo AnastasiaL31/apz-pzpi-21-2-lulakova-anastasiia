@@ -108,13 +108,19 @@ namespace SmartShelter_WebAPI.Services
             }
         }
 
-        public void GetTokenClaims(ClaimsPrincipal principal)
+        public string GetTokenClaims(ClaimsPrincipal principal)
         {
             var username = principal.Identity.Name;
             var roles = principal.Claims
                 .Where(c => c.Type == ClaimTypes.Role)
                 .Select(c => c.Value)
                 .ToList();
+            if (!roles.Any())
+            {
+                return string.Empty;
+            }
+
+            return roles[0];
         }
     }
 }
