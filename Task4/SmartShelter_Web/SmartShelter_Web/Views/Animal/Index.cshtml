@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Animal/_AnimalLayout.cshtml";
+}
+
+@model List<Animal>
+
+
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Breed</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Acc Date</th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @foreach (var animal in Model)
+        {
+            <tr>
+                <th scope="row">@animal.Name</th>
+                <td>@animal.Breed</td>
+                <td>@animal.Gender</td>
+                <td>@animal.AcceptanceDate</td>
+                <td>
+                    <div class="col-10 text-end">
+                        <a asp-route-animalId="@animal.Id" asp-action="Details" class="btn btn-secondary">
+                            Details
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -11,7 +11,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public Animal? GetById(int id);
         public bool AddAnimal(AddAnimalDto animalDto);
         public bool RemoveAnimal(int id);
-
+        public bool UpdateAnimal(Animal animal);
         public List<Treatment> GetAllTreatments(int id);
         public List<Treatment> GetDiseaseTreatments(int diseaseId);
         public bool AddTreatment(AddTreatmentDto treatmentDto);

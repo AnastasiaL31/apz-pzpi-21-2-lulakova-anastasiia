@@ -1,0 +1,217 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SmartShelter_Web.Models.ViewModel.AnimalDetailsVM
+
+<div class="row justify-content-start">
+    <a class="btn btn-info col-1 m-3" asp-action="Index" asp-controller="Animal">Back</a>
+</div>
+<div class="row justify-content-center">
+    <div class=" card col-5 m-3 p-3">
+        <form method="post" asp-action="UpdateAnimal" asp-controller="Animal">
+            <input type="hidden" asp-for="Animal.Id" />
+            <input type="hidden" asp-for="Animal.AcceptanceDate" />
+            <div class="row pb-2 text-center">
+                <h2 class="text-primary">Edit Animal</h2>
+                <hr />
+            </div>
+            <div class="mb-3 row p-1">
+                <label class="p-0  pb-2" asp-for="@Model.Animal.Name">Name</label>
+                <input asp-for="@Model.Animal.Name" class="form-control" />
+                <span asp-validation-for="@Model.Animal.Name" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-9 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.Animal.Breed">Breed</label>
+                    <input asp-for="@Model.Animal.Breed" class="form-control" />
+                    <span asp-validation-for="@Model.Animal.Breed" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-3 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.Animal.Gender">Gender</label>
+                    <input asp-for="@Model.Animal.Gender" class="form-control" />
+                    <span asp-validation-for="@Model.Animal.Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-3 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.Animal.Weight">Weight</label>
+                    <input asp-for="@Model.Animal.Weight" class="form-control" />
+                    <span asp-validation-for="@Model.Animal.Weight" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-9 p-1">
+                    <label class="p-0  pb-2" asp-for="Animal.AcceptanceDate">Acceptance Date</label>
+                    <input asp-for="Animal.AcceptanceDate" class="form-control" disabled />
+                    <span asp-validation-for="Animal.AcceptanceDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3 col-9 p-1">
+                <label class="p-0  pb-2" asp-for="@Model.Animal.DOB">DOB</label>
+                <input asp-for="@Model.Animal.DOB" class="form-control" />
+                <span asp-validation-for="@Model.Animal.DOB" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+
+    </div>
+    <div class="card col-6 m-3 text-center">
+        <h3 class="text-primary m-3">Meals</h3>
+        @if (Model.Meals.Count == 0)
+        {
+            <div class="m-3 ">
+                <h4>There is no meal plans</h4>
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-responsive text-center">
+                <thead>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Time</th>
+                <th>Actions</th>
+                </thead>
+                <tbody>
+                    @foreach (var meal in Model.Meals)
+                    {
+
+                        <tr>
+                            <form method="post" asp-action="UpdateMealplan" name="@meal.Id">
+                            <td hidden><input asp-for="@meal.Id" />"</td>
+                            <td hidden><input asp-for="@meal.AnimalId" />"</td>
+                            <td><input asp-for="@meal.Name" class="form-control border-0" /></td>
+                            <td><input asp-for="@meal.Amount" class="form-control border-0" /></td>
+                            <td><input asp-for="@meal.Time.TimeOfDay"  class="form-control border-0" /></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-outline-warning">Save</button>
+                                    <a asp-route-mealId="@meal.Id" asp-route-animalId="@meal.AnimalId" asp-action="DeleteMeal" class="btn btn-outline-danger">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                            </form>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        @if (Model.Meals.Count < 10)
+        {
+            <div class="card p-3 ">
+                <div class="card-title"><h5>Add Meal</h5></div>
+                <form method="post" asp-action="AddMeal" asp-controller="Animal">
+                    <input hidden asp-for="@Model.NewMealPlan.AnimalId" />
+                    <div class="row">
+                        <div class="col-5">
+                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Name">Name</label>
+                            <input asp-for="@Model.NewMealPlan.Name" class="form-control" />
+                        </div>
+                        <div class="col-2">
+                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Amount">Amount</label>
+                            <input asp-for="@Model.NewMealPlan.Amount" class="form-control" />
+                        </div>
+                        <div class="col-3">
+                            <label class="p-0 pb-2" asp-for="@Model.NewMealPlan">Time</label>
+                            <input type="time" asp-for="@Model.NewMealPlan.Time"  class="form-control" />
+                        </div>
+                        <div class="col-2 align-content-center">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="card col-6 m-3 text-center">
+        <h3 class="text-primary m-3">Aviary @(Model.Aviary.Id != 0 ? $"№{Model.Aviary.Id}" : " ") </h3>
+        <hr />
+        <div class="card m-3 p-2">
+            <div class="card-body">
+                @if (Model.Aviary.Id != 0)
+                {
+                    <form method="post" asp-action="UpdateAviary">
+                        <input hidden asp-for="@Model.Aviary.Id" />
+                        <input hidden asp-for="@Model.Aviary.AnimalId" />
+                        @if (Model.Aviary.Description != null)
+                        {
+                            <div class="mb-3 row p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.Aviary.Description">Description</label>
+                                <textarea asp-for="@Model.Aviary.Description" class="form-control"></textarea>
+                                <span asp-validation-for="@Model.Aviary.Description" class="text-danger"></span>
+                                <hr />
+                            </div>
+                        }
+                        <div class="row justify-content-center">
+                            <input hidden asp-for="@Model.Aviary.AviaryConditionId" value="@(Model.Aviary.AviaryConditionId != null ? Model.Aviary.AviaryConditionId : 0)">
+                            <div class="mb-3 col-7 p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MinWater">Min Water</label>
+                                <input asp-for="@Model.AviaryCondition.MinWater" class="form-control" />
+                                <span asp-validation-for="@Model.AviaryCondition.MinWater" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6 p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MinTemperature">Min Temp</label>
+                                <input asp-for="@Model.AviaryCondition.MinTemperature" class="form-control" />
+                                <span asp-validation-for="@Model.AviaryCondition.MinTemperature" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-6 p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxTemperature">Max Temp</label>
+                                <input asp-for="@Model.AviaryCondition.MaxTemperature" class="form-control" disabled />
+                                <span asp-validation-for="@Model.AviaryCondition.MaxTemperature" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6 p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MinHumidity">Min Hum</label>
+                                <input asp-for="@Model.AviaryCondition.MinHumidity" class="form-control" />
+                                <span asp-validation-for="@Model.AviaryCondition.MinHumidity" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3 col-6 p-1">
+                                <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxHumidity">Max Hum</label>
+                                <input asp-for="@Model.AviaryCondition.MaxHumidity" class="form-control" disabled />
+                                <span asp-validation-for="@Model.AviaryCondition.MaxHumidity" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div> <button type="submit" class="btn btn-success">Submit</button></div>
+                    </form>
+                }
+                else
+                {
+                    <h4>There is no aviary</h4>
+                }
+            </div>
+        </div>
+
+        <div class="card m-3 justify-content-center">
+            <h4 class="m-3">Change Aviary</h4>
+            @if (Model.FreeAviaries.Count > 0)
+            {
+                <form method="post" asp-action="ChangeAviary">
+                    <div class="row ">
+
+                        <label class="p-0  pb-2">Select free aviary from list</label>
+                    </div>
+                    <div class="row col-10 m-3">
+                        <select class="form-select" name="selectedAviary">
+                            @foreach (var id in Model.FreeAviaries)
+                            {
+                                var item = new SelectListItem { Value = $"{id}", Text = $"{id}" };
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                </div>
+                <input hidden asp-for="@Model.Animal.Id" name="animalId" />
+                <button type="submit" class="btn btn-success m-3">Choose</button>
+                </form>
+            }
+            else
+            {
+                <h5 class="m-3">There is no free aviary</h5>
+            }
+        </div>
+    </div>
+</div>

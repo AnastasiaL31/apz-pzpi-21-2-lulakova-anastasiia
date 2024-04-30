@@ -8,8 +8,8 @@
         public int? AviaryConditionId { get; set; }
 
 
-        public Animal Animal { get; set; }
-        public AviaryCondition AviaryCondition { get; set; }
+        public Animal? Animal { get; set; }
+        public AviaryCondition? AviaryCondition { get; set; }
 
         
     }

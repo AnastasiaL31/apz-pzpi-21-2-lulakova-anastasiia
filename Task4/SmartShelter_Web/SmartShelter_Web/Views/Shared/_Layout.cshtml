@@ -18,12 +18,38 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-2">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <div class="dropdown" >
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Menu
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @if(GlobalVariables.isAdmin || GlobalVariables.role == "Doctor")
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Animal" asp-action="Index">Animals</a></li>
+                                        <li><a class="dropdown-item" href="#">Medicine</a></li>
+                                    }
+                                    @if (GlobalVariables.isAdmin || GlobalVariables.role == "Storekeeper")
+                                    {
+                                        <li><a class="dropdown-item" href="#">Store</a></li>
+                                    }
+                                    
+                                    @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
+                                    {
+                                        <li><a class="dropdown-item" href="#">Tasks</a></li>
+                                    }
+
+                                    @if (GlobalVariables.isAdmin)
+                                    {
+                                        <li><a class="dropdown-item" href="#">Staff</a></li>
+                                        <li><a class="dropdown-item" href="#">Analitics</a></li>
+                                    }
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>

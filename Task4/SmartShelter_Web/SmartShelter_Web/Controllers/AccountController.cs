@@ -97,6 +97,7 @@ namespace SmartShelter_Web.Controllers
 
                             Response.Cookies.Append("token", user.token, cookieOptions);
                             Response.Cookies.Append("role", user.role, cookieOptions);
+                            GlobalVariables.role = user.role;
                         }
                     }
                     catch (Exception ex)

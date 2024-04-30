@@ -1,0 +1,326 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
+using SmartShelter_Web.Middleware;
+using SmartShelter_Web.Models;
+using SmartShelter_Web.Models.ViewModel;
+using System.Text.Json;
+
+namespace SmartShelter_Web.Controllers
+{
+    public class AnimalController : Controller
+    {
+        private readonly ITokenService _tokenService;
+        public AnimalController(ITokenService tokenService)
+        {
+            _tokenService = tokenService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var animals = await GetAnimals();
+            return View(animals);
+        }
+
+
+        public async Task<IActionResult> Details(int animalId)
+        {
+            if(animalId == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            var animal = await GetAnimal(animalId);
+            var meals = await GetAnimalMealPlan(animalId);
+            var aviary = await GetAviary(animalId);
+            var freeAviaries = await GetFreeAviaries();
+            return View(new AnimalDetailsVM
+            {
+                Animal = animal,
+                Meals = meals,
+                NewMealPlan = new MealPlan { AnimalId = animalId },
+                Aviary = aviary,
+                FreeAviaries = freeAviaries
+            });
+        }
+
+
+        public async Task<Animal> GetAnimal(int animalId)
+        {
+            var animal = new Animal();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Animals/{animalId}";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    animal = JsonSerializer.Deserialize<Animal>(result, options);
+                }
+                catch (Exception ex)
+                {
+                   
+                }
+            }
+
+            return animal;
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAnimal(Animal animal)
+        {
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/updateAnimal";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(animal, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(fullUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+
+            return RedirectToAction("Details", new { animalId = animal.Id });
+        }
+        public async Task<List<Animal>> GetAnimals()
+        {
+            var animals = new List<Animal>();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Animals";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    animals = JsonSerializer.Deserialize<List<Animal>>(result, options);
+                }
+                catch (Exception ex)
+                {
+                    return animals;
+                }
+            }
+            
+            return animals;
+        }
+
+        public async Task<List<MealPlan>> GetAnimalMealPlan(int animalId)
+        {
+            var meals = new List<MealPlan>();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/animalMeal/{animalId}";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    meals = JsonSerializer.Deserialize<List<MealPlan>>(result, options);
+                }
+                catch (Exception ex)
+                {
+                    return meals;
+                }
+            }
+
+            return meals;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMealplan(MealPlan plan)
+        {
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/updateMealPlan";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(
+                plan, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(fullUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+
+            return RedirectToAction("Details", new { animalId = plan.AnimalId });
+        }
+
+        public async Task<IActionResult> DeleteMeal(int mealId, int animalId)
+        {
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Meals/?id={mealId}";
+            HttpResponseMessage response = await client.DeleteAsync(fullUrl);
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+            return RedirectToAction("Details", new { animalId = animalId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMeal(AnimalDetailsVM vm)
+        {
+
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/addMealPlan";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(vm.NewMealPlan, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(fullUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+            return RedirectToAction("Details", new { animalId = vm.NewMealPlan.AnimalId });
+            
+        }
+
+
+        public async Task<Aviary> GetAviary(int animalId)
+        {
+            var aviary = new Aviary();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Aviary/aviary/{animalId}";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    aviary = JsonSerializer.Deserialize<Aviary>(result, options);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            aviary.AnimalId = animalId;
+            return aviary;
+        }
+
+        public async Task<List<int>> GetFreeAviaries()
+        {
+            var freeAviaries = new List<int>();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Aviary/aviary/free";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+             
+                try
+                {
+                    freeAviaries = JsonSerializer.Deserialize<List<int>>(result);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return freeAviaries;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeAviary(string selectedAviary, int animalId)
+        {
+
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Aviary/change?animalId={animalId}&newAviaryId={selectedAviary}";
+            HttpResponseMessage response = await client.PutAsync(fullUrl, null);
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+            return RedirectToAction("Details", new { animalId = animalId });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAviary(AnimalDetailsVM vm)
+        {
+            if(vm.Aviary.AviaryConditionId == 0)
+            {
+               vm.Aviary.AviaryConditionId = await AddAviaryCodition(vm.Aviary.AviaryCondition, vm.Aviary.Id);
+     
+                await UpdateAviary(vm.Aviary);
+            }
+            return RedirectToAction("Details", new { animalId = vm.Aviary.AnimalId });
+        }
+
+        public async Task<int> AddAviaryCodition(AviaryCondition condition, int aviaryId)
+        {
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/add/condition?aviaryId={aviaryId}";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(condition, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(fullUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                return Int32.Parse(await response.Content.ReadAsStringAsync());
+            }
+            return 0;
+        }
+
+        public async Task<IActionResult> UpdateAviary(Aviary aviary)
+        {
+            aviary.AviaryCondition = null;
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/api/Aviary/update";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(aviary, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(fullUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+
+            return RedirectToAction("Details", new { animalId = aviary.AnimalId });
+        }
+    }
+}

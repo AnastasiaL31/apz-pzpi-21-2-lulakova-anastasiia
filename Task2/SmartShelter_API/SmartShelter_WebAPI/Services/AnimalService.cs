@@ -153,6 +153,10 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-
+        public bool UpdateAnimal(Animal animal)
+        {
+            _dbContext.Update(animal);
+            return _dbContext.SaveChanges() != 0;
+        }
     }
 }

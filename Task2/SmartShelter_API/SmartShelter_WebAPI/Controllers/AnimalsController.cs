@@ -92,7 +92,21 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        [Route("/updateAnimal/")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult UpdateAnimal([FromBody] Animal animal)
+        {
 
+            var result = _animalService.UpdateAnimal(animal);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
 
 
 

@@ -87,6 +87,38 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<int>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("aviary/free")]
+        public ActionResult<Aviary> GetFreeAviaries()
+        {
+            
+            var aviaries = _aviaryService.GetFreeAviaries();
+            if (aviaries.Count == 0)
+            {
+                return NotFound("");
+            }
+            return Ok(aviaries);
+        }
+
+
+        [HttpPut("update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult UpdateAviary(Aviary aviary)
+        {
+            
+            var result = _aviaryService.UpdateAviary(aviary);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -128,14 +160,14 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
         [HttpPost("/add/condition")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddAviaryCondition([FromQuery] int aviaryId ,[FromBody] AviaryCondition condition)
+        public ActionResult<int> AddAviaryCondition([FromQuery] int aviaryId ,[FromBody] AviaryCondition condition)
         {
             var result = _aviaryService.AddAviaryCondition(condition, aviaryId);
-            if (result)
+            if (result != 0)
             {
-                return Ok();
+                return Ok(result);
             }
 
             return BadRequest();

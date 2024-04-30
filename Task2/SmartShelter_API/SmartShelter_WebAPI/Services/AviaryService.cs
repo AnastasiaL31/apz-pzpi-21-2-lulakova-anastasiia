@@ -56,6 +56,12 @@ namespace SmartShelter_WebAPI.Services
             return Save();
         }
 
+        public List<int> GetFreeAviaries()
+        {
+            var list = _dbContext.Aviaries.Where(x => x.AnimalId == null).ToList();
+            var aviariesId = list.ConvertAll(x => x.Id);
+            return aviariesId;
+        }
         public bool RemoveAviary(int id)
         {
             var aviary = _dbContext.Aviaries.FirstOrDefault(x => x.Id == id);
@@ -79,7 +85,7 @@ namespace SmartShelter_WebAPI.Services
             return null;
         }
 
-        public bool AddAviaryCondition(AviaryCondition condition, int aviaryId)
+        public int AddAviaryCondition(AviaryCondition condition, int aviaryId)
         {
             var addedCondition = _dbContext.Add(condition);
             _dbContext.SaveChanges();
@@ -90,7 +96,7 @@ namespace SmartShelter_WebAPI.Services
                 aviary.AviaryConditionId = addedCondition.Entity.Id;
                 _dbContext.Update(aviary);
             }
-            return _dbContext.SaveChanges() != 0;
+            return addedCondition.Entity.Id;
         }
 
         public Sensor? GetAviarySensor(int aviaryId)
@@ -347,6 +353,12 @@ namespace SmartShelter_WebAPI.Services
         public bool ChangeCondition(AviaryCondition condition)
         {
             _dbContext.Update(condition);
+            return Save();
+        }
+
+        public bool UpdateAviary(Aviary aviary)
+        {
+            _dbContext.Update(aviary);
             return Save();
         }
     }

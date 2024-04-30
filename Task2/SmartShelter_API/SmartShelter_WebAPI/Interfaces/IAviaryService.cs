@@ -9,8 +9,10 @@ namespace SmartShelter_WebAPI.Interfaces
         public bool AddAviary(AddAviaryDto aviaryDto);
         public bool ChangeAviary(int animalId, int newAviaryId);
         public bool RemoveAviary(int id);
+        public List<int> GetFreeAviaries();
+        public bool UpdateAviary(Aviary aviary);
         public AviaryCondition? GetCondition(int id);
-        public bool AddAviaryCondition(AviaryCondition condition, int aviaryId);
+        public int AddAviaryCondition(AviaryCondition condition, int aviaryId);
         public bool ChangeCondition(AviaryCondition condition);
         public Sensor? GetAviarySensor(int aviaryId);
         public bool AddSensor(AddSensorDto sensorDto);
