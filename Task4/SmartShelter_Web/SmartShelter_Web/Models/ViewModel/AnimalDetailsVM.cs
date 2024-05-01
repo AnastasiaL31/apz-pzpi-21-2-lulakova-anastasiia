@@ -21,5 +21,8 @@
         }
 
         public List<int> FreeAviaries { get; set; }
+
+        public List<Disease> Diseases { get; set; }
+        public Disease NewDisease { get; set; }
     }
 }

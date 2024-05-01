@@ -122,5 +122,7 @@ namespace SmartShelter_WebAPI.Services
 
             return roles[0];
         }
+
+     
     }
 }

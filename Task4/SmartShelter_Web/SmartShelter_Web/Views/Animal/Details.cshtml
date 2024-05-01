@@ -135,6 +135,9 @@
             <div class="card-body">
                 @if (Model.Aviary.Id != 0)
                 {
+                    <div class="row">
+                        <a class="btn btn-info" href="#">Sensor Data</a>
+                    </div>
                     <form method="post" asp-action="UpdateAviary">
                         <input hidden asp-for="@Model.Aviary.Id" />
                         <input hidden asp-for="@Model.Aviary.AnimalId" />
@@ -188,7 +191,6 @@
                 }
             </div>
         </div>
-
         <div class="card m-3 justify-content-center">
             <h4 class="m-3">Change Aviary</h4>
             @if (Model.FreeAviaries.Count > 0)
@@ -218,3 +220,93 @@
         </div>
     </div>
 </div>
+
+
+<div class="card col-12 m-3 text-center p-2">
+    <h3 class="text-primary m-3">Diseases</h3>
+    @if (Model.Diseases.Count == 0)
+    {
+        <div class="m-3 ">
+            <h4>There is no diseases</h4>
+        </div>
+    }
+    else
+    {
+        <form method="post" asp-action="UpdateDiseases" >
+            <table class="table table-bordered  table-responsive text-center">
+                <thead>
+                <th>Name</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Symptoms</th>
+                <th>Actions</th>
+                </thead>
+                <tbody>
+                    <input hidden asp-for="@Model.Animal.Id" />
+                    @for (int i = 0; i < Model.Diseases.Count; i++)
+                    {
+                        <tr >
+                            <input hidden asp-for="@Model.Diseases[i].Id" />
+                            <input hidden asp-for="@Model.Diseases[i].AnimalId" />
+                            @if (Model.Diseases[i].EndDate != null)
+                            {
+                                <td class="col-1"><input asp-for="@Model.Diseases[i].Name" class="form-control border-0" readonly /></td>
+                                <td class="col-2"><input type="date" asp-for="@Model.Diseases[i].StartDate" readonly class="form-control border-0" /></td>
+                                <td class="col-2">
+                                    <input type="date" asp-for="@Model.Diseases[i].EndDate" readonly class="form-control border-0" />
+                                </td>
+                                <td class="col-5"><textarea asp-for="@Model.Diseases[i].Symptoms" readonly class="form-control border-0 disabled"> </textarea></td>
+                            }else{
+                                <td class="col-1"><input asp-for="@Model.Diseases[i].Name" class="form-control border-0" /></td>
+                                <td class="col-2"><input type="date" asp-for="@Model.Diseases[i].StartDate" class="form-control border-0" /></td>
+                                <td class="col-2">
+                                    <input type="date" asp-for="@Model.Diseases[i].EndDate"
+                                           class="form-control border-0" />
+                                </td>
+                                <td class="col-5"><textarea asp-for="@Model.Diseases[i].Symptoms"  class="form-control border-0"> </textarea></td>
+                            }
+                            
+                            <td class="col-2 align-items-baseline">
+                                <div class="btn-group ">
+                                    <a asp-route-diseaseId="@Model.Diseases[i].Id" asp-route-isClosed="@(Model.Diseases[i].EndDate != null)" asp-action="DiseaseTreatments" asp-controller="Treatment" class="btn btn-outline-danger">
+                                        Treatments
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="row justify-content-end ">
+                <button type="submit" class="btn btn-warning mb-3 me-3 col-2 ">Save</button>
+            </div>
+        </form>
+    }
+    <div class="card p-3 ">
+        <div class="card-title"><h5>Add Disease</h5></div>
+        <form method="post" asp-action="AddDisease" asp-controller="Animal">
+            <input hidden asp-for="@Model.NewDisease.AnimalId" />
+            <div class="row">
+                <div class="col-9">
+                    <label class="p-0 pb-2 " asp-for="@Model.NewDisease.Name">Name</label>
+                    <input asp-for="@Model.NewDisease.Name" class="form-control" />
+                </div>
+                <div class="col-3">
+                    <label class="p-0 pb-2 " asp-for="@Model.NewDisease.StartDate">Start</label>
+                    <input type="date" asp-for="@Model.NewDisease.StartDate" class="form-control" />
+                </div>
+            </div>
+            <div class="row align-items-center mt-3">
+                <div class="col-10">
+                    <label class="p-0 pb-2" asp-for="@Model.NewDisease.Symptoms">Symptoms</label>
+                    <textarea asp-for="@Model.NewDisease.Symptoms" class="form-control"></textarea>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+           
+        </form>
+    </div>
+</div>
+

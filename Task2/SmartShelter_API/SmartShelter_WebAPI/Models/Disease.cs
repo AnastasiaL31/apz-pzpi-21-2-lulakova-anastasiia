@@ -11,6 +11,6 @@
 
 
         [DeleteBehavior(DeleteBehavior.SetNull)]
-        public Animal Animal { get; set; }
+        public Animal? Animal { get; set; }
     }
 }

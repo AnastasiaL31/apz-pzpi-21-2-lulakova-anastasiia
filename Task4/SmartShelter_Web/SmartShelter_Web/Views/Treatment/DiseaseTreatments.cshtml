@@ -1,0 +1,73 @@
+﻿@using SmartShelter_Web.Models.ViewModel;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DiseaseTreatmentsVM
+
+
+<div class="row text-center">
+    <div class="card ">
+        <div class="card-body">
+            <h3 class="text-primary">@Model.Disease.Name Treatments</h3>
+            <hr/>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Exp Date</th>
+                        <th>Notes</th>
+                        <th>Staff Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @foreach(var treatment in Model.Treatments)
+                        {
+                            <tr>
+                                <td>@treatment.Treatment.Type</td>
+                                <td>@treatment.Treatment.Date.Date</td>
+                                <td>@(treatment.Treatment.ExpirationDate != null ? treatment.Treatment.ExpirationDate : " ")</td>
+                                <td>@treatment.Treatment.Notes</td>
+                                <td>@treatment.StaffName</td>
+                                <td><a class="btn btn-outline-info">Supplies</a></td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    @if (!Model.isClosed)
+    {
+        <div class="card mt-3">
+            <div class="card-body">
+            <h3 class="text-primary">Add Treatment</h3>
+            <hr />
+            <form method="post" asp-action="AddDiseaseTreatment" asp-controller="Treatment">
+                <input hidden asp-for="@Model.NewTreatment.AnimalId" />
+                <input hidden asp-for="@Model.Disease.Id" />
+                <div class="row">
+                    <div class="col-4">
+                        <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.Type">Type</label>
+                        <input asp-for="@Model.NewTreatment.Type" class="form-control" />
+                    </div>
+                    <div class="col-4">
+                        <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.ExpirationDate">Exp Date</label>
+                        <input type="date" asp-for="@Model.NewTreatment.ExpirationDate" class="form-control" />
+                    </div>
+                </div>
+                <div class="row align-items-center mt-3">
+                    <div class="col-10">
+                        <label class="p-0 pb-2" asp-for="@Model.NewTreatment.Notes">Symptoms</label>
+                        <textarea asp-for="@Model.NewTreatment.Notes" class="form-control"></textarea>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    }
+</div>

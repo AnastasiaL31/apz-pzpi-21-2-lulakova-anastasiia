@@ -108,6 +108,16 @@ namespace SmartShelter_WebAPI.Services
             return null;
         }
 
+        public async Task<int> GetStaffId(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) { return 0; }
+            var staff = _dbContext.Staff.FirstOrDefault(x => x.IdentityUserId == user.Id);
+            if (staff == null) { return 0; }
+            return staff.Id;
+
+        }
+
         public async Task<List<GetStaffTaskDto>?> GetRoleTask(string role, string username)
         {
             var access = await CheckAccess(null, role, username);
@@ -275,7 +285,7 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-
+        
         
 
 
@@ -333,5 +343,7 @@ namespace SmartShelter_WebAPI.Services
         {
             return _dbContext.SaveChanges() != 0;
         }
+
+        
     }
 }

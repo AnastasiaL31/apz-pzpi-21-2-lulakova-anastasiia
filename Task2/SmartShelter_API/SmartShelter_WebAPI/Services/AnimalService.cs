@@ -45,10 +45,10 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-        public List<Treatment> GetAllTreatments(int id)
+        public List<TreatmentWithStaff> GetAllTreatments(int id)
         {
             var diseases = _dbContext.Diseases.Where(x => x.AnimalId == id).ToList();
-            var treatments = new List<Treatment>();
+            var treatments = new List<TreatmentWithStaff>();
             foreach (var disease in diseases)
             {
                 treatments.AddRange(GetDiseaseTreatments(disease.Id));
@@ -59,6 +59,7 @@ namespace SmartShelter_WebAPI.Services
         {
             var treatment = _mapper.Map<Treatment>(treatmentDto);
             treatment.Date = DateTime.Now;
+
             _dbContext.Add(treatment);
             return _dbContext.SaveChanges() != 0;
         }
@@ -68,6 +69,7 @@ namespace SmartShelter_WebAPI.Services
             var treatment = _mapper.Map<Treatment>(treatmentDto);
             treatment.Date = DateTime.Now;
             var addedTreatment = _dbContext.Add(treatment);
+            _dbContext.SaveChanges();
             addedTreatment.State = EntityState.Detached;
             _dbContext.Add(new DiseaseTreatments()
             {
@@ -77,10 +79,8 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-        public bool UpdateDisease(AddDiseaseDto diseaseDto, int diseaseId)
+        public bool UpdateDisease(Disease disease)
         {
-            var disease = _mapper.Map<Disease>(diseaseDto);
-            disease.Id = diseaseId;
             _dbContext.Update(disease);
             return _dbContext.SaveChanges() != 0;
         }
@@ -110,11 +110,15 @@ namespace SmartShelter_WebAPI.Services
 
             return false;
         }
-        public List<Treatment> GetDiseaseTreatments(int diseaseId)
+        public List<TreatmentWithStaff> GetDiseaseTreatments(int diseaseId)
         {
             var treatments = _dbContext.DiseasesTreatments
                 .Where(x => x.DiseaseId == diseaseId)
-                .Select(x => x.Treatment)
+                .Select(ts => new TreatmentWithStaff()
+                {
+                    Treatment = ts.Treatment,
+                    StaffName = ts.Treatment.Staff.Name
+                })
                 .ToList();
             return treatments;
         }
@@ -157,6 +161,13 @@ namespace SmartShelter_WebAPI.Services
         {
             _dbContext.Update(animal);
             return _dbContext.SaveChanges() != 0;
+        }
+
+        public Disease? GetDisease(int diseaseId)
+        {
+            var disease = _dbContext.Diseases.FirstOrDefault(x => x.Id.Equals(diseaseId));
+            return disease;
+
         }
     }
 }

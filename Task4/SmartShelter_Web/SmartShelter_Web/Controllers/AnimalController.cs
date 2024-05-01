@@ -33,13 +33,16 @@ namespace SmartShelter_Web.Controllers
             var meals = await GetAnimalMealPlan(animalId);
             var aviary = await GetAviary(animalId);
             var freeAviaries = await GetFreeAviaries();
+            var diseases = await GetAnimalDiseases(animalId);
             return View(new AnimalDetailsVM
             {
                 Animal = animal,
                 Meals = meals,
                 NewMealPlan = new MealPlan { AnimalId = animalId },
                 Aviary = aviary,
-                FreeAviaries = freeAviaries
+                FreeAviaries = freeAviaries,
+                Diseases = diseases,
+                NewDisease = new Disease() { AnimalId = animalId, Symptoms="", StartDate=DateTime.Now }
             });
         }
 
@@ -334,5 +337,78 @@ namespace SmartShelter_Web.Controllers
 
             return RedirectToAction("Details", new { animalId = aviary.AnimalId });
         }
+
+        public async Task<List<Disease>> GetAnimalDiseases(int animalId)
+        {
+            var diseases = new List<Disease>();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/animal/{animalId}/diseases";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    diseases = JsonSerializer.Deserialize<List<Disease>>(result, options);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            
+            return diseases;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateDiseases(AnimalDetailsVM vm)
+        {
+            vm.Diseases.RemoveAll(x => x.Name == null);
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/updateDisease/group";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(
+                vm.Diseases, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(fullUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+
+            return RedirectToAction("Details", new { animalId = vm.Animal.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDisease(AnimalDetailsVM vm)
+        {
+
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/addDisease";
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(vm.NewDisease, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(fullUrl, content);
+            if (response.IsSuccessStatusCode)
+            {
+                //return RedirectToAction("Details", animal.Id);
+            }
+            return RedirectToAction("Details", new { animalId = vm.NewDisease.AnimalId });
+
+        }
+
     }
 }

@@ -9,6 +9,6 @@
         public string Symptoms { get; set; }
         public int? AnimalId { get; set; }
 
-        public Animal Animal { get; set; }
+        public Animal? Animal { get; set; }
     }
 }

@@ -15,8 +15,14 @@ html {
 html {
   position: relative;
   min-height: 100%;
+
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url(https://us.123rf.com/450wm/mousemd/mousemd1602/mousemd160200121/53122766-colorful-pet-motif-continu-sur-un-fond-blanc-vector-illustration.jpg?ver=6)
+}
+
+textarea {
+    height: 55px;
 }

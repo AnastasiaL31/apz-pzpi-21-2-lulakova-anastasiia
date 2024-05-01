@@ -10,6 +10,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public Task<bool> UpdateStaff(StaffDto staffDto, string username);
         public Task<bool> AddRole(int staffId,  string roleName, string senderUsername);
         public Task<StaffDto?> GetById(int id, string username);
+        public Task<int> GetStaffId(string email);
         public Task<List<GetStaffTaskDto>?> GetRoleTask(string role, string username);
         public Task<List<GetStaffTaskDto>?> GetUserTasks(int staffId, string senderUsername);
         public bool CreateTask(AddStaffTaskDto taskDto, int staffId);
