@@ -63,7 +63,8 @@
         }
         else
         {
-            <table class="table table-bordered table-responsive text-center">
+            <form method="post" asp-action="UpdateMealplan">
+            <table class="table table-bordered table-responsive text-center mb-2">
                 <thead>
                 <th>Name</th>
                 <th>Amount</th>
@@ -71,29 +72,31 @@
                 <th>Actions</th>
                 </thead>
                 <tbody>
-                    @foreach (var meal in Model.Meals)
-                    {
-
+                    <input hidden asp-for="@Model.Animal.Id"/>
+                        @for (int i = 0; i < Model.Meals.Count; i++)
+                        {
                         <tr>
-                            <form method="post" asp-action="UpdateMealplan" name="@meal.Id">
-                            <td hidden><input asp-for="@meal.Id" />"</td>
-                            <td hidden><input asp-for="@meal.AnimalId" />"</td>
-                            <td><input asp-for="@meal.Name" class="form-control border-0" /></td>
-                            <td><input asp-for="@meal.Amount" class="form-control border-0" /></td>
-                            <td><input asp-for="@meal.Time.TimeOfDay"  class="form-control border-0" /></td>
+                            <input hidden asp-for="@Model.Meals[i].Id" />
+                            <input hidden asp-for="@Model.Meals[i].AnimalId" />
+                            <td><input asp-for="@Model.Meals[i].Name" class="form-control border-0" /></td>
+                            <td><input asp-for="@Model.Meals[i].Amount" class="form-control border-0" /></td>
+                            <td><input type="time" asp-for="@Model.Meals[i].Time"  class="form-control border-0" /></td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-outline-warning">Save</button>
-                                    <a asp-route-mealId="@meal.Id" asp-route-animalId="@meal.AnimalId" asp-action="DeleteMeal" class="btn btn-outline-danger">
+                                    <a asp-route-mealId="@Model.Meals[i].Id" asp-route-animalId="@Model.Meals[i].AnimalId" asp-action="DeleteMeal" class="btn btn-outline-danger">
                                         Delete
                                     </a>
                                 </div>
                             </td>
-                            </form>
                         </tr>
-                    }
+                        }
                 </tbody>
             </table>
+            <div class="row justify-content-end ">
+                    <button type="submit" class="btn btn-warning mb-3 me-3 col-2 ">Save</button>
+             </div>
+            </form>
+
         }
         @if (Model.Meals.Count < 10)
         {
@@ -112,7 +115,7 @@
                         </div>
                         <div class="col-3">
                             <label class="p-0 pb-2" asp-for="@Model.NewMealPlan">Time</label>
-                            <input type="time" asp-for="@Model.NewMealPlan.Time"  class="form-control" />
+                            <input type="time" asp-for="@Model.NewMealPlan.Time" class="form-control" />
                         </div>
                         <div class="col-2 align-content-center">
                             <button type="submit" class="btn btn-success">Submit</button>
@@ -160,7 +163,7 @@
                             </div>
                             <div class="mb-3 col-6 p-1">
                                 <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxTemperature">Max Temp</label>
-                                <input asp-for="@Model.AviaryCondition.MaxTemperature" class="form-control" disabled />
+                                <input asp-for="@Model.AviaryCondition.MaxTemperature" class="form-control"  />
                                 <span asp-validation-for="@Model.AviaryCondition.MaxTemperature" class="text-danger"></span>
                             </div>
                         </div>
@@ -172,7 +175,7 @@
                             </div>
                             <div class="mb-3 col-6 p-1">
                                 <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxHumidity">Max Hum</label>
-                                <input asp-for="@Model.AviaryCondition.MaxHumidity" class="form-control" disabled />
+                                <input asp-for="@Model.AviaryCondition.MaxHumidity" class="form-control"  />
                                 <span asp-validation-for="@Model.AviaryCondition.MaxHumidity" class="text-danger"></span>
                             </div>
                         </div>
@@ -203,9 +206,9 @@
                                 <option value="@item.Value">@item.Text</option>
                             }
                         </select>
-                </div>
-                <input hidden asp-for="@Model.Animal.Id" name="animalId" />
-                <button type="submit" class="btn btn-success m-3">Choose</button>
+                    </div>
+                    <input hidden asp-for="@Model.Animal.Id" name="animalId" />
+                    <button type="submit" class="btn btn-success m-3">Choose</button>
                 </form>
             }
             else

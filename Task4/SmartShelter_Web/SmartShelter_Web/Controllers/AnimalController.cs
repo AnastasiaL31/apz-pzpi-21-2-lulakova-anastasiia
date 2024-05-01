@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using SmartShelter_Web.Middleware;
 using SmartShelter_Web.Models;
 using SmartShelter_Web.Models.ViewModel;
@@ -149,16 +150,16 @@ namespace SmartShelter_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateMealplan(MealPlan plan)
+        public async Task<IActionResult> UpdateMealplan(AnimalDetailsVM vm)
         {
             var client = _tokenService.CreateHttpClient();
-            string fullUrl = $"{GlobalVariables.backendAddress}/updateMealPlan";
+            string fullUrl = $"{GlobalVariables.backendAddress}/updateMealPlan/group";
             JsonSerializerOptions options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
             string json = JsonSerializer.Serialize(
-                plan, options);
+                vm.Meals, options);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(fullUrl, content);
 
@@ -167,7 +168,7 @@ namespace SmartShelter_Web.Controllers
                 //return RedirectToAction("Details", animal.Id);
             }
 
-            return RedirectToAction("Details", new { animalId = plan.AnimalId });
+            return RedirectToAction("Details", new { animalId = vm.Animal.Id });
         }
 
         public async Task<IActionResult> DeleteMeal(int mealId, int animalId)
@@ -229,6 +230,10 @@ namespace SmartShelter_Web.Controllers
                 }
             }
             aviary.AnimalId = animalId;
+            if (String.IsNullOrEmpty(aviary.Description))
+            {
+                aviary.Description = " ";
+            }
             return aviary;
         }
 
@@ -278,9 +283,16 @@ namespace SmartShelter_Web.Controllers
             if(vm.Aviary.AviaryConditionId == 0)
             {
                vm.Aviary.AviaryConditionId = await AddAviaryCodition(vm.Aviary.AviaryCondition, vm.Aviary.Id);
-     
-                await UpdateAviary(vm.Aviary);
             }
+            else
+            {
+                vm.Aviary.AviaryCondition.Id = (int)vm.Aviary.AviaryConditionId;
+
+            }
+            if(String.IsNullOrEmpty(vm.Aviary.Description)) {
+                vm.Aviary.Description = " ";
+            }
+            await UpdateAviary(vm.Aviary);
             return RedirectToAction("Details", new { animalId = vm.Aviary.AnimalId });
         }
 

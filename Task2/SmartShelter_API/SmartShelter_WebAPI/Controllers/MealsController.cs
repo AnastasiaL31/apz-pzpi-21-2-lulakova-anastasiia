@@ -88,5 +88,28 @@ namespace SmartShelter_WebAPI.Controllers
 
             return BadRequest();
         }
+
+        [HttpPut]
+        [Route("/updateMealPlan/group")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult UpdateMultipleMealPlans([FromBody] List<MealPlan> mealPlan)
+        {
+            var result = false;
+            foreach (var mealPlanItem in mealPlan)
+            {
+                result = _animalService.ChangeMealPlan(mealPlanItem);
+                if (!result)
+                {
+                    return BadRequest("Cannot update all mealplans");
+                }
+            }
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }
