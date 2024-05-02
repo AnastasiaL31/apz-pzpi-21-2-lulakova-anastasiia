@@ -45,26 +45,30 @@ namespace SmartShelter_WebAPI.Services
             return _dbContext.SaveChanges() != 0;
         }
 
-        public List<TreatmentWithStaff> GetAllTreatments(int id)
+        public List<TreatmentWithStaff> GetOtherTreatments(int id)
         {
-            var diseases = _dbContext.Diseases.Where(x => x.AnimalId == id).ToList();
-            var treatments = new List<TreatmentWithStaff>();
-            foreach (var disease in diseases)
-            {
-                treatments.AddRange(GetDiseaseTreatments(disease.Id));
-            }
+            var treatments = _dbContext.Treatments
+                .Where(x => x.AnimalId == id && (_dbContext.DiseasesTreatments.FirstOrDefault(y => y.TreatmentId == x.Id) == null))
+                .Select(ts => new TreatmentWithStaff()
+                {
+                    Treatment = ts,
+                    StaffName = ts.Staff.Name
+                })
+                .ToList();
+            
             return treatments;
         }
-        public bool AddTreatment(AddTreatmentDto treatmentDto)
+        public int AddTreatment(AddTreatmentDto treatmentDto)
         {
             var treatment = _mapper.Map<Treatment>(treatmentDto);
             treatment.Date = DateTime.Now;
 
-            _dbContext.Add(treatment);
-            return _dbContext.SaveChanges() != 0;
+            var treatmentEntity = _dbContext.Add(treatment);
+            _dbContext.SaveChanges();
+            return treatmentEntity.Entity.Id;
         }
 
-        public bool AddDiseaseTreatment(AddTreatmentDto treatmentDto, int diseaseId)
+        public int AddDiseaseTreatment(AddTreatmentDto treatmentDto, int diseaseId)
         {
             var treatment = _mapper.Map<Treatment>(treatmentDto);
             treatment.Date = DateTime.Now;
@@ -76,7 +80,8 @@ namespace SmartShelter_WebAPI.Services
                 DiseaseId = diseaseId,
                 TreatmentId = addedTreatment.Entity.Id
             });
-            return _dbContext.SaveChanges() != 0;
+            _dbContext.SaveChanges();
+            return addedTreatment.Entity.Id;
         }
 
         public bool UpdateDisease(Disease disease)
@@ -168,6 +173,28 @@ namespace SmartShelter_WebAPI.Services
             var disease = _dbContext.Diseases.FirstOrDefault(x => x.Id.Equals(diseaseId));
             return disease;
 
+        }
+
+        public bool DeleteTreatment(int id)
+        {
+            var treatment = _dbContext.Treatments.FirstOrDefault(x => x.Id == id);
+            if(treatment != null)
+            {
+                _dbContext.Remove(treatment);
+                return _dbContext.SaveChanges() != 0;
+            }
+            return false;
+        }
+
+        public bool DeleteSupply(int id)
+        {
+            var supply = _dbContext.Supplies.FirstOrDefault(x => x.Id == id);
+            if (supply != null)
+            {
+                _dbContext.Remove(supply);
+                return _dbContext.SaveChanges() != 0;
+            }
+            return false;
         }
     }
 }

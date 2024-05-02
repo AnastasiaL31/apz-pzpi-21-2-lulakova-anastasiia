@@ -24,9 +24,9 @@ namespace SmartShelter_WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<TreatmentWithStaff>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Route("/treatments/{id:int}")]
-        public ActionResult<List<TreatmentWithStaff>> GetAnimalTreatments(int id)
+        public ActionResult<List<TreatmentWithStaff>> GetOtherTreatments(int id)
         {
-            var allTreatments = _animalService.GetAllTreatments(id);
+            var allTreatments = _animalService.GetOtherTreatments(id);
             if (allTreatments.Count == 0)
             {
                 return NotFound();
@@ -58,9 +58,9 @@ namespace SmartShelter_WebAPI.Controllers
         [Route("/addTreatment/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddTreatment([FromBody] AddTreatmentDto treatmentDto, int? diseaseId)
+        public async Task<ActionResult<int>> AddTreatment([FromBody] AddTreatmentDto treatmentDto, int? diseaseId)
         {
-            var result = false;
+            var result = 0;
             var userName = User.Identity.Name;
             if (userName == null)
             {
@@ -80,9 +80,9 @@ namespace SmartShelter_WebAPI.Controllers
                 result = _animalService.AddTreatment(treatmentDto);
             }
 
-            if (result)
+            if (result > 0)
             {
-                return Ok();
+                return Ok(result);
             }
 
             return BadRequest();
@@ -124,20 +124,7 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
-        //[HttpPut]
-        //[Route("/updateDisease/")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public ActionResult UpdateDisease(int diseaseId, [FromBody] AddDiseaseDto diseaseDto)
-        //{
-        //    var result = _animalService.UpdateDisease(diseaseDto, diseaseId);
-        //    if (result)
-        //    {
-        //        return Ok();
-        //    }
-
-        //    return BadRequest();
-        //}
+        
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<TreatmentWithStaff>))]
@@ -205,6 +192,46 @@ namespace SmartShelter_WebAPI.Controllers
                     return BadRequest("Cannot update all diseases");
                 }
             }
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("/treatment/delete/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult DeleteTreatment(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            var result = _animalService.DeleteTreatment(id);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("/supply/delete/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult DeleteSupply(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+            var result = _animalService.DeleteSupply(id);
             if (result)
             {
                 return Ok();

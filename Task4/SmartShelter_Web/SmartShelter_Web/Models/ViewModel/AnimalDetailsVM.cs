@@ -24,5 +24,7 @@
 
         public List<Disease> Diseases { get; set; }
         public Disease NewDisease { get; set; }
+
+        public List<TreatmentWithStaff> Treatments { get; set; }
     }
 }

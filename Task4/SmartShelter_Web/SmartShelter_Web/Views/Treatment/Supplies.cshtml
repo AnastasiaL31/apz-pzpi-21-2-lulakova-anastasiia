@@ -1,0 +1,55 @@
+﻿@using SmartShelter_Web.Models.ViewModel;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SuppliesVM
+
+
+<div class="row text-center">
+    <div class="card ">
+        <div class="card-body ">
+             <h3 class="text-primary">Supplies</h3>
+            <hr />
+            @if (Model.Supplies.Count > 0)
+            {
+                <table class="table table-bordered m-2 col-10">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>UOM</th>
+                            @if (!Model.IsClosed)
+                            {
+                                <th>Actions</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var supply in Model.Supplies)
+                        {
+                            <tr>
+                                <td>@supply.Type</td>
+                                <td>@supply.Name</td>
+                                <td>@supply.Amount</td>
+                                <td>@supply.UnitOfMeasure</td>
+                                @if (!Model.IsClosed)
+                                {
+                                    <td>
+                                        <a class="btn btn-outline-info" asp-action="DeleteInsertedSupply" asp-controller="Treatment"
+                                        asp-route-supplyId="@supply.Id"  asp-route-treatmentId="@Model.TreatmentId"
+                                    >Delete</a></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h3>There is no supplies</h3>
+            }
+
+        </div>
+    </div>
+</div>

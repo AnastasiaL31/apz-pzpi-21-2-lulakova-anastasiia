@@ -64,37 +64,37 @@
         else
         {
             <form method="post" asp-action="UpdateMealplan">
-            <table class="table table-bordered table-responsive text-center mb-2">
-                <thead>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Time</th>
-                <th>Actions</th>
-                </thead>
-                <tbody>
-                    <input hidden asp-for="@Model.Animal.Id"/>
+                <table class="table table-bordered table-responsive text-center mb-2">
+                    <thead>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        <input hidden asp-for="@Model.Animal.Id" />
                         @for (int i = 0; i < Model.Meals.Count; i++)
                         {
-                        <tr>
-                            <input hidden asp-for="@Model.Meals[i].Id" />
-                            <input hidden asp-for="@Model.Meals[i].AnimalId" />
-                            <td><input asp-for="@Model.Meals[i].Name" class="form-control border-0" /></td>
-                            <td><input asp-for="@Model.Meals[i].Amount" class="form-control border-0" /></td>
-                            <td><input type="time" asp-for="@Model.Meals[i].Time"  class="form-control border-0" /></td>
-                            <td>
-                                <div class="btn-group">
-                                    <a asp-route-mealId="@Model.Meals[i].Id" asp-route-animalId="@Model.Meals[i].AnimalId" asp-action="DeleteMeal" class="btn btn-outline-danger">
-                                        Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <input hidden asp-for="@Model.Meals[i].Id" />
+                                <input hidden asp-for="@Model.Meals[i].AnimalId" />
+                                <td><input asp-for="@Model.Meals[i].Name" class="form-control border-0" /></td>
+                                <td><input asp-for="@Model.Meals[i].Amount" class="form-control border-0" /></td>
+                                <td><input type="time" asp-for="@Model.Meals[i].Time" class="form-control border-0" /></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-route-mealId="@Model.Meals[i].Id" asp-route-animalId="@Model.Meals[i].AnimalId" asp-action="DeleteMeal" class="btn btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                </tbody>
-            </table>
-            <div class="row justify-content-end ">
+                    </tbody>
+                </table>
+                <div class="row justify-content-end ">
                     <button type="submit" class="btn btn-warning mb-3 me-3 col-2 ">Save</button>
-             </div>
+                </div>
             </form>
 
         }
@@ -128,7 +128,7 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="card col-6 m-3 text-center">
+    <div class="card col-5 m-3 text-center">
         <h3 class="text-primary m-3">Aviary @(Model.Aviary.Id != 0 ? $"№{Model.Aviary.Id}" : " ") </h3>
         <hr />
         <div class="card m-3 p-2">
@@ -166,7 +166,7 @@
                             </div>
                             <div class="mb-3 col-6 p-1">
                                 <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxTemperature">Max Temp</label>
-                                <input asp-for="@Model.AviaryCondition.MaxTemperature" class="form-control"  />
+                                <input asp-for="@Model.AviaryCondition.MaxTemperature" class="form-control" />
                                 <span asp-validation-for="@Model.AviaryCondition.MaxTemperature" class="text-danger"></span>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
                             </div>
                             <div class="mb-3 col-6 p-1">
                                 <label class="p-0  pb-2" asp-for="@Model.AviaryCondition.MaxHumidity">Max Hum</label>
-                                <input asp-for="@Model.AviaryCondition.MaxHumidity" class="form-control"  />
+                                <input asp-for="@Model.AviaryCondition.MaxHumidity" class="form-control" />
                                 <span asp-validation-for="@Model.AviaryCondition.MaxHumidity" class="text-danger"></span>
                             </div>
                         </div>
@@ -219,10 +219,61 @@
             }
         </div>
     </div>
+    <div class="card col-6 m-3 text-center">
+        <h3 class="text-primary m-3">Other Treatments</h3>
+        <a class="btn btn-success col-3 m-2 align-self-end" asp-action="CreateTreatment" asp-controller="Treatment" asp-route-animalId="@Model.Animal.Id">Add Treatment</a>
+        <hr />
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Exp Date</th>
+                    <th>Notes</th>
+                    <th>Staff Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var treatment in Model.Treatments)
+                {
+                    <tr>
+                        <td>@treatment.Treatment.Type</td>
+                        <td>@treatment.Treatment.Date.Date</td>
+                        <td>@(treatment.Treatment.ExpirationDate != null ? treatment.Treatment.ExpirationDate : " ")</td>
+                        <td>@treatment.Treatment.Notes</td>
+                        <td>@treatment.StaffName</td>
+                        <td>
+                            <div class="btn-group">
+
+                                @if (treatment.Treatment.ExpirationDate > DateTime.Now || treatment.Treatment.ExpirationDate == null)
+                                {
+                                    <a class="btn btn-info"
+                                       asp-action="Supplies" asp-controller="Treatment"
+                                       asp-route-treatmentId="@treatment.Treatment.Id" asp-route-isClosed="@false">Supplies</a>
+                                    <a class="btn btn-outline-danger" asp-action="DeleteTreatment" asp-controller="Treatment"
+                                       asp-route-treatmentId="@treatment.Treatment.Id"
+                                       asp-route-animalId="@treatment.Treatment.AnimalId">Delete</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-info"
+                                       asp-action="Supplies" asp-controller="Treatment"
+                                       asp-route-treatmentId="@treatment.Treatment.Id" asp-route-isClosed="@true">Supplies</a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
 <div class="card col-12 m-3 text-center p-2">
+
     <h3 class="text-primary m-3">Diseases</h3>
     @if (Model.Diseases.Count == 0)
     {
@@ -232,7 +283,7 @@
     }
     else
     {
-        <form method="post" asp-action="UpdateDiseases" >
+        <form method="post" asp-action="UpdateDiseases">
             <table class="table table-bordered  table-responsive text-center">
                 <thead>
                 <th>Name</th>
@@ -245,7 +296,7 @@
                     <input hidden asp-for="@Model.Animal.Id" />
                     @for (int i = 0; i < Model.Diseases.Count; i++)
                     {
-                        <tr >
+                        <tr>
                             <input hidden asp-for="@Model.Diseases[i].Id" />
                             <input hidden asp-for="@Model.Diseases[i].AnimalId" />
                             @if (Model.Diseases[i].EndDate != null)
@@ -256,16 +307,18 @@
                                     <input type="date" asp-for="@Model.Diseases[i].EndDate" readonly class="form-control border-0" />
                                 </td>
                                 <td class="col-5"><textarea asp-for="@Model.Diseases[i].Symptoms" readonly class="form-control border-0 disabled"> </textarea></td>
-                            }else{
+                            }
+                            else
+                            {
                                 <td class="col-1"><input asp-for="@Model.Diseases[i].Name" class="form-control border-0" /></td>
                                 <td class="col-2"><input type="date" asp-for="@Model.Diseases[i].StartDate" class="form-control border-0" /></td>
                                 <td class="col-2">
                                     <input type="date" asp-for="@Model.Diseases[i].EndDate"
                                            class="form-control border-0" />
                                 </td>
-                                <td class="col-5"><textarea asp-for="@Model.Diseases[i].Symptoms"  class="form-control border-0"> </textarea></td>
+                                <td class="col-5"><textarea asp-for="@Model.Diseases[i].Symptoms" class="form-control border-0"> </textarea></td>
                             }
-                            
+
                             <td class="col-2 align-items-baseline">
                                 <div class="btn-group ">
                                     <a asp-route-diseaseId="@Model.Diseases[i].Id" asp-route-isClosed="@(Model.Diseases[i].EndDate != null)" asp-action="DiseaseTreatments" asp-controller="Treatment" class="btn btn-outline-danger">
@@ -305,7 +358,7 @@
                     <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </div>
-           
+
         </form>
     </div>
 </div>

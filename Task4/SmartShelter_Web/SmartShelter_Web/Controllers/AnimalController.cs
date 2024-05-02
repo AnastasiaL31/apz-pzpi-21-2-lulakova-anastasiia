@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using SmartShelter_Web.Middleware;
 using SmartShelter_Web.Models;
 using SmartShelter_Web.Models.ViewModel;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace SmartShelter_Web.Controllers
@@ -34,6 +35,7 @@ namespace SmartShelter_Web.Controllers
             var aviary = await GetAviary(animalId);
             var freeAviaries = await GetFreeAviaries();
             var diseases = await GetAnimalDiseases(animalId);
+            var treatments = await GetTreatments(animalId);
             return View(new AnimalDetailsVM
             {
                 Animal = animal,
@@ -42,6 +44,7 @@ namespace SmartShelter_Web.Controllers
                 Aviary = aviary,
                 FreeAviaries = freeAviaries,
                 Diseases = diseases,
+                Treatments = treatments,
                 NewDisease = new Disease() { AnimalId = animalId, Symptoms="", StartDate=DateTime.Now }
             });
         }
@@ -410,5 +413,33 @@ namespace SmartShelter_Web.Controllers
 
         }
 
+
+        public async Task<List<TreatmentWithStaff>> GetTreatments(int animalId)
+        {
+            var treatments = new List<TreatmentWithStaff>();
+            var client = _tokenService.CreateHttpClient();
+            string fullUrl = $"{GlobalVariables.backendAddress}/treatments/{animalId}";
+
+            HttpResponseMessage response = await client.GetAsync(fullUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string result = await response.Content.ReadAsStringAsync();
+                JsonSerializerOptions options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                try
+                {
+                    treatments = JsonSerializer.Deserialize<List<TreatmentWithStaff>>(result, options);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            
+            return treatments;
+        }
     }
 }

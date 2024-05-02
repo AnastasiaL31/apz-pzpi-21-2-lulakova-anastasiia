@@ -9,6 +9,6 @@
         public string UnitOfMeasure { get; set; }
         public int TreatmentId { get; set; }
 
-        public Treatment Treatment { get; set; }
+        public Treatment? Treatment { get; set; }
     }
 }
