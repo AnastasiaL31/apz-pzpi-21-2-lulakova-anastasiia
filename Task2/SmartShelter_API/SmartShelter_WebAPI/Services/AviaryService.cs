@@ -4,6 +4,7 @@ using SmartShelter_WebAPI.Dtos;
 using SmartShelter_WebAPI.Models;
 using System.Net.Mail;
 using System.Net;
+using System.Linq;
 
 namespace SmartShelter_WebAPI.Services
 {
@@ -23,9 +24,17 @@ namespace SmartShelter_WebAPI.Services
             return aviary;
         }
 
-        public List<Aviary> GetAllAviaries()
+        public List<AviaryDescription> GetAllAviaries()
         {
-            var aviaries = _dbContext.Aviaries.ToList();
+            List<AviaryDescription> aviaries = _dbContext.Aviaries
+                .Include(x => x.Animal)
+                .Select(x => new AviaryDescription()
+                {
+                    Aviary = x,
+                    FoodPerDay = _dbContext.MealPlans.Where(m => m.AnimalId == x.AnimalId).Select(m => m.Amount).Sum(),
+                    LastRecharge = _dbContext.AviariesRecharges.Where(r => r.AviaryId == x.Id).Select(r => r.Date).Max()
+                })
+                .ToList();
             return aviaries;
         }
 
@@ -359,6 +368,28 @@ namespace SmartShelter_WebAPI.Services
         public bool UpdateAviary(Aviary aviary)
         {
             _dbContext.Update(aviary);
+            return Save();
+        }
+
+        public bool FillAviary(int aviaryId, int staffId)
+        {
+            var totalMeal = _dbContext.MealPlans
+                .Where(x => x.AnimalId == 
+                ( _dbContext.Aviaries.Where(a => a.Id == aviaryId)
+                .Select(x => x.AnimalId).FirstOrDefault())).Select(x => x.Amount).Sum();
+
+            if(totalMeal > 0)
+            {
+                _dbContext.Add(new AviaryRecharge()
+                {
+                    Amount = totalMeal,
+                    AviaryId = aviaryId,
+                    StaffId = staffId,
+                    Date = DateTime.Now,
+                    Type = "Food"
+                });
+            }
+
             return Save();
         }
     }

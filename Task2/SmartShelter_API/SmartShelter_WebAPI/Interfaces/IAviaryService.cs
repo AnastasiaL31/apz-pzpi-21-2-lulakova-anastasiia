@@ -5,7 +5,7 @@ namespace SmartShelter_WebAPI.Interfaces
     public interface IAviaryService
     {
         public Aviary? GetAnimalAviary(int animalId);
-        public List<Aviary> GetAllAviaries();
+        public List<AviaryDescription> GetAllAviaries();
         public bool AddAviary(AddAviaryDto aviaryDto);
         public bool ChangeAviary(int animalId, int newAviaryId);
         public bool RemoveAviary(int id);
@@ -22,5 +22,7 @@ namespace SmartShelter_WebAPI.Interfaces
         public bool AddSensorData(AddSensorDataDto sensorDataDto);
         bool SendExtremeConditions(float ihs, int sensorId);
         int GetSensorFrequency(int sensorId);
+
+        bool FillAviary(int aviaryId, int staffId);
     }
 }

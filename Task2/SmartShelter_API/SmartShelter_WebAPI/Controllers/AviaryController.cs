@@ -13,25 +13,26 @@ namespace SmartShelter_WebAPI.Controllers
     public class AviaryController : ControllerBase
     {
         private readonly IAviaryService _aviaryService;
+        private readonly IStaffService _staffService;
 
-
-        public AviaryController(IAviaryService aviaryService)
+        public AviaryController(IAviaryService aviaryService, IStaffService staffService)
         {
             _aviaryService = aviaryService;
+            _staffService = staffService;
         }
 
         [HttpGet("all")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Aviary>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<AviaryDescription>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Animal>> GetAll()
+        public ActionResult<List<AviaryDescription>> GetAll()
         {
-            var animalList = _aviaryService.GetAllAviaries();
-            if (animalList.Count == 0)
+            var aviaryList = _aviaryService.GetAllAviaries();
+            if (aviaryList.Count == 0)
             {
                 return NotFound();
             }
 
-            return Ok(animalList);
+            return Ok(aviaryList);
         }
 
 
@@ -334,6 +335,38 @@ namespace SmartShelter_WebAPI.Controllers
                 return NotFound("");
             }
             return Ok(frequency);
+        }
+
+
+
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("/aviaries/fill")]
+        public async Task<ActionResult> FillAviariesAsync([FromBody] int[] aviariesId)
+        {
+            int staffId;
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                staffId = await _staffService.GetStaffId(userName);
+            }
+            foreach (var aviary in aviariesId)
+            {
+                var result = _aviaryService.FillAviary(aviary, staffId);
+
+                if (!result)
+                {
+                    return BadRequest("Not all aviaries are updated");
+                }
+            }
+
+            return Ok();
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Animal/_AnimalLayout.cshtml";
+}
+@model List<AviaryDescription>
+
+<div class="row justify-content-end m-2">
+    <a class="btn btn-success col-2">Add new</a>
+</div>
+<form method="post" asp-action="GetAviariesToFeed" asp-controller="Aviary">
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Description</th>
+            <th scope="col">Has animal</th>
+            <th scope="col">Total Food</th>
+            <th scope="col">Last Recharge</th>
+            <th scope="col">Feed</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @for (int i = 0; i < Model.Count ; i++)
+        {
+            <tr>
+                <th scope="row">@Model[i].Aviary.Id</th>
+                <td>@Model[i].Aviary.Description</td>
+                <td>@(Model[i].Aviary.Animal == null ? " " : Model[i].Aviary.Animal.Name)</td>
+                <td>@Math.Round(Model[i].FoodPerDay, 2)</td>
+                <td>@(Model[i].LastRecharge == null ? " " : Model[i].LastRecharge)</td>
+                <td>
+                        <input class="form-check-input" name="selectedAviaries" type="checkbox" value="@Model[i].Aviary.Id">
+                </td>
+            </tr>
+        }
+  
+    </tbody>
+</table>
+
+<div class="row justify-content-end m-2">
+    <button type="submit" class="btn btn-warning col-2">Feed</button>
+</div>
+
+</form>
