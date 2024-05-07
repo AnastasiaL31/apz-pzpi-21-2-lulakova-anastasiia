@@ -288,8 +288,18 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("addRecharges")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AddAviaryRecharges(int aviaryId, int staffId, [FromBody] List<AddAviaryRechargeDto> list)
+        public async Task<ActionResult> AddAviaryRechargesAsync(int aviaryId, [FromBody] List<AddAviaryRechargeDto> list)
         {
+            int staffId;
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                staffId = await _staffService.GetStaffId(userName);
+            }
             var result = _aviaryService.AddRecharges(list, staffId, aviaryId);
             if (result)
             {

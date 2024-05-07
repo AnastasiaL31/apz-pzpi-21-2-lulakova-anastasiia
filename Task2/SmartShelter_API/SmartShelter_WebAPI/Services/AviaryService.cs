@@ -28,11 +28,15 @@ namespace SmartShelter_WebAPI.Services
         {
             List<AviaryDescription> aviaries = _dbContext.Aviaries
                 .Include(x => x.Animal)
+                .Include(x => x.AviaryCondition)
                 .Select(x => new AviaryDescription()
                 {
                     Aviary = x,
                     FoodPerDay = _dbContext.MealPlans.Where(m => m.AnimalId == x.AnimalId).Select(m => m.Amount).Sum(),
-                    LastRecharge = _dbContext.AviariesRecharges.Where(r => r.AviaryId == x.Id).Select(r => r.Date).Max()
+                    LastRecharge = _dbContext.AviariesRecharges.Where(r => r.AviaryId == x.Id && r.Type == "Food").Select(r => r.Date).Max(),
+                    WaterNow = _dbContext.SensorsData.Where(d => d.SensorId == 
+                    (_dbContext.Sensors.FirstOrDefault(s => s.AviaryId == x.Id)).Id).OrderByDescending(d => d.Date).FirstOrDefault().Water
+                   
                 })
                 .ToList();
             return aviaries;
@@ -138,7 +142,18 @@ namespace SmartShelter_WebAPI.Services
             {
                 recharge.StaffId = staffId;
                 recharge.AviaryId = aviaryId;
+                recharge.Date = DateTime.Now;
                 _dbContext.Add(recharge);
+                if (recharge.Type == "Water")
+                {
+                    var lastCondition = _dbContext.SensorsData.Where(d => d.SensorId ==
+                    (_dbContext.Sensors.Where(s => s.AviaryId == aviaryId).Select(s => s.Id).FirstOrDefault()))
+                        .OrderByDescending(d => d.Date).FirstOrDefault();
+                    lastCondition.Water = recharge.Amount;
+                    lastCondition.Id = 0;
+                    lastCondition.Date = DateTime.Now;
+                    _dbContext.Add(lastCondition);
+                }
             }
             return Save();
         }

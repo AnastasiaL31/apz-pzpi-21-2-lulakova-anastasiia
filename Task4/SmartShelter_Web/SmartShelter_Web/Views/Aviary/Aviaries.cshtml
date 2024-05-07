@@ -4,40 +4,79 @@
 @model List<AviaryDescription>
 
 <div class="row justify-content-end m-2">
-    <a class="btn btn-success col-2">Add new</a>
+    <a class="btn btn-success col-2" asp-action="AddAviary" asp-controller="Aviary">Add new</a>
 </div>
 <form method="post" asp-action="GetAviariesToFeed" asp-controller="Aviary">
-<table class="table table-light">
-    <thead>
-        <tr>
-            <th scope="col">Number</th>
-            <th scope="col">Description</th>
-            <th scope="col">Has animal</th>
-            <th scope="col">Total Food</th>
-            <th scope="col">Last Recharge</th>
-            <th scope="col">Feed</th>
-        </tr>
-    </thead>
-    <tbody class="table-group-divider">
-        @for (int i = 0; i < Model.Count ; i++)
-        {
+    <table class="table table-light">
+        <thead>
             <tr>
-                <th scope="row">@Model[i].Aviary.Id</th>
-                <td>@Model[i].Aviary.Description</td>
-                <td>@(Model[i].Aviary.Animal == null ? " " : Model[i].Aviary.Animal.Name)</td>
-                <td>@Math.Round(Model[i].FoodPerDay, 2)</td>
-                <td>@(Model[i].LastRecharge == null ? " " : Model[i].LastRecharge)</td>
-                <td>
-                        <input class="form-check-input" name="selectedAviaries" type="checkbox" value="@Model[i].Aviary.Id">
-                </td>
+                <th scope="col">Number</th>
+                <th scope="col">Description</th>
+                <th scope="col">Has animal</th>
+                <th scope="col">Total Food</th>
+                <th scope="col">Last Food Recharge</th>
+                <th scope="col">Feed</th>
+                <th>Min water</th>
+                <th>Water now</th>
+                <th>Delete</th>
             </tr>
-        }
-  
-    </tbody>
-</table>
+        </thead>
+        <tbody class="table-group-divider">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@Model[i].Aviary.Id</th>
+                    <td>@Model[i].Aviary.Description</td>
+                    <td>@(Model[i].Aviary.Animal == null ? " " : Model[i].Aviary.Animal.Name)</td>
+                    <td>@(Model[i].FoodPerDay != null ? Math.Round((float)Model[i].FoodPerDay, 2) : 0)</td>
+                    <td>@(Model[i].LastRecharge == null ? " " : Model[i].LastRecharge)</td>
+                    <td>
+                        <input class="form-check-input" name="selectedAviaries" type="checkbox" value="@Model[i].Aviary.Id">
+                    </td>
+                    <td>@(Model[i].Aviary.AviaryCondition != null ? Model[i].Aviary.AviaryCondition.MinWater! : 0)</td>
+                    <td class="text-@(
+                        Model[i].Aviary.AviaryCondition != null &&
+                        Model[i].WaterNow < Model[i].Aviary.AviaryCondition.MinWater ? "danger" : "black")">@Model[i].WaterNow</td>
+                    <td><a class="btn btn-danger" asp-route-aviaryId="@Model[i].Aviary.Id" asp-action="DeleteAviary" asp-controller="Aviary">Delete</a></td>
+                </tr>
+            }
 
-<div class="row justify-content-end m-2">
-    <button type="submit" class="btn btn-warning col-2">Feed</button>
-</div>
+        </tbody>
+    </table>
+
+    <div class="row justify-content-end m-2">
+        <button type="submit" class="btn btn-warning col-2">Feed</button>
+    </div>
 
 </form>
+
+<div class="row">
+    <div class="card m-3 justify-content-center">
+        <h4 class="m-3">Add water</h4>
+        @if (Model.Count > 0)
+        {
+            <form method="post" asp-action="AddWater">
+                <div class="row ">
+
+                    <label class="p-0  pb-2">Select aviary from list</label>
+                </div>
+                <div class="row col-10 m-3">
+                    <select class="form-select" name="selectedAviary">
+                        @foreach (var aviary in Model)
+                        {
+                            var item = new SelectListItem { Value = $"{aviary.Aviary.Id}", Text = $"{aviary.Aviary.Id}" };
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </div>
+                <label class="p-0  pb-2">Enter water number</label>
+                <input name="water" />
+                <button type="submit" class="btn btn-success m-3">Add</button>
+            </form>
+        }
+        else
+        {
+            <h5 class="m-3">There is no aviary to add water</h5>
+        }
+    </div>
+</div>
