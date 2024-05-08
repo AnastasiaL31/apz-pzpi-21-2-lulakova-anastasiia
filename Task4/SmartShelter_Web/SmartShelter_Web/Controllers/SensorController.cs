@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Highsoft.Web.Mvc.Charts;
+using Microsoft.AspNetCore.Mvc;
+using PlantCare_Web.Models.ViewModels;
 using SmartShelter_Web.Dtos;
 using SmartShelter_Web.Middleware;
 using SmartShelter_Web.Models;
@@ -130,5 +132,122 @@ namespace SmartShelter_Web.Controllers
             return RedirectToAction("Index", new { animalId = animalId, aviaryId = aviaryId });
 
         }
+
+
+        public async Task<IActionResult> Diagrams(int sensorId)
+        {
+            if (sensorId != 0)
+            {
+                TempData["SId"] = sensorId;
+            }
+            else
+            {
+                sensorId = (int)TempData["SId"];
+            }
+            TempData["SId"] = sensorId;
+
+
+            Sensor sensor = new Sensor() { Id = sensorId };
+            var sensorData = await GetSensorData(sensorId);
+            SensorDataViewModel model = new SensorDataViewModel()
+            {
+                Temperatures = new List<float>(),
+                Humidities = new List<float>(),
+                DewPoints = new List<float>(),
+                AbsHumidities = new List<float>(),
+                Dates = new List<DateTime>()
+            };
+            foreach (var data in sensorData)
+            {
+                model.Temperatures.Add(data.Temperature);
+                model.Humidities.Add(data.Humidity);
+                //model.DewPoints.Add(data.DewPoint);
+                //model.AbsHumidities.Add(data.AbsoluteHumidity);
+                model.Dates.Add(data.Date);
+            }
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var isCelsius = currentCulture.Name != "en-US";
+            List<LineSeriesData> tempData = new List<LineSeriesData>();
+            List<LineSeriesData> humidData = new List<LineSeriesData>();
+            //List<LineSeriesData> dewpointData = new List<LineSeriesData>();
+            //List<LineSeriesData> absHumData = new List<LineSeriesData>();
+            if (!isCelsius)
+            {
+                model.Temperatures.ForEach(p => tempData.Add(new LineSeriesData
+                {
+                    Y = Math.Round(p * 1.8 + 32, 2)
+                }));
+
+                //model.DewPoints.ForEach(p => dewpointData.Add(new LineSeriesData
+                //{
+                //    Y = Math.Round(p * 1.8 + 32, 2)
+                //}));
+            }
+            else
+            {
+                model.Temperatures.ForEach(p => tempData.Add(new LineSeriesData
+                {
+                    Y = p
+                }));
+
+                //model.DewPoints.ForEach(p => dewpointData.Add(new LineSeriesData
+                //{
+                //    Y = p
+                //}));
+            }
+
+            model.Humidities.ForEach(p => humidData.Add(new LineSeriesData
+            {
+                Y = p
+            }));
+            //model.AbsHumidities.ForEach(p => absHumData.Add(new LineSeriesData
+            //{
+            //    Y = p
+            //}));
+            TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            List<string> chDates = new List<string>();
+            if (isCelsius)
+            {
+                for (int i = 0; i < model.Dates.Count(); i++)
+                {
+                    model.Dates[i] = TimeZoneInfo.ConvertTimeFromUtc(model.Dates[i], localTimeZone);
+                }
+                chDates.Add(model.Dates[0].ToString("dd.MM.y HH:mm"));
+            }
+            else
+            {
+                chDates.Add(model.Dates[0].ToString("y.MM.dd HH:mm"));
+            }
+
+
+            for (int i = 1; i < model.Dates.Count(); i++)
+            {
+                if (model.Dates[i].DayOfYear == model.Dates[i - 1].DayOfYear)
+                {
+                    chDates.Add(model.Dates[i].ToString("t"));
+                }
+                else
+                {
+                    if (!isCelsius)
+                    {
+                        chDates.Add(model.Dates[i].ToString("y.MM.dd HH:mm"));
+                    }
+                    else
+                    {
+                        chDates.Add(model.Dates[i].ToString("dd.MM.y HH:mm"));
+                    }
+                }
+            }
+
+            ViewData["tempData"] = tempData;
+            ViewData["humidData"] = humidData;
+            //ViewData["dewpointData"] = dewpointData;
+            //ViewData["absHumData"] = absHumData;
+            ViewData["dates"] = chDates;
+            ViewData["sensorId"] = sensorId;
+            //ViewData["plantName"] = plantName;
+            return View();
+        }
+
     }
 }

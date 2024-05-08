@@ -1,0 +1,46 @@
+﻿@using SmartShelter_Web.Dtos;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<StaffDto>
+
+<div class="card text-center">
+    <div class="card-title m-3">
+        <h4>Staff</h4>
+        <hr/>
+    </div>
+    <div class="card-body">
+        <table class="table table-light">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Has role</th>
+                    <th scope="col">AcceptanceDate</th>
+                    <th scope="col">DismissialDate</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <th>@Model[i].Name</th>
+                        <td>@Model[i].Phone</td>
+                        <td>@Model[i].DOB</td>
+                        <td>@Model[i].Position</td>
+                        <td>@Model[i].HasRole</td>
+                        <td>@Model[i].AcceptanceDate.Date</td>
+                        <td>@(Model[i].DismissialDate != null ? Model[i].DismissialDate.Value.Date : "-")</td>
+                        <td><a class="btn btn-warning" asp-action="StaffDetails" asp-controller="Staff" asp-route-staffId="@Model[i].Id">Update</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

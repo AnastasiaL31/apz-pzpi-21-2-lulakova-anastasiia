@@ -1,0 +1,118 @@
+﻿@using Highsoft.Web.Mvc.Charts;
+@using Highsoft.Web.Mvc.Charts.Rendering;
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+@{
+
+
+    var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+    var isCelsius = currentCulture.Name != "en-US";
+
+
+    var chartOptions = new Highcharts(){
+        Title = new Title
+        {
+                    Text = "Humidities"
+        },
+        XAxis = new List<XAxis>
+        {
+            new XAxis
+            {
+                Categories = ViewData["dates"] as List<string>
+            }
+        },
+        YAxis = new List<YAxis> {
+            new YAxis {
+                Title = new YAxisTitle {
+                    Text = "ValuesP"
+                }
+            }
+        },
+                Tooltip = new Tooltip
+                {
+                    HeaderFormat = "<span style='font-size:10px'>{point.key}</span><table style='font-size:12px'>",
+                    PointFormat = "<tr><td style='color:{series.color};padding:0'>{series.name}: </td><td style='padding:0'><b>{point.y:.1f} %</b></td></tr>",
+                    FooterFormat = "</table>",
+                    Shared = true,
+                    UseHTML = true
+                },
+        PlotOptions = new PlotOptions {
+            Column = new PlotOptionsColumn {
+                PointPadding = 0.2,
+                BorderWidth = 0
+            }
+        },
+        Series = new List<Series> {
+            new LineSeries {
+                Name = "Humidity",
+                Data = ViewData["humidData"] as List<LineSeriesData>
+            }
+            //new LineSeries {
+            //    Name = "AbsHumidity",
+            //    Data = ViewData["absHumData"] as List<LineSeriesData>
+            //}
+        }
+    };
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions);
+}
+
+
+@{
+    var chartOptions2 = new Highcharts(){
+        Title = new Title
+        {
+           Text = "TempAndDew"
+        },
+        XAxis = new List<XAxis>
+        {
+            new XAxis
+            {
+                Categories = ViewData["dates"] as List<string>
+            }
+        },
+        YAxis = new List<YAxis> {
+            new YAxis {
+                Title = new YAxisTitle {
+                    Text = "ValuesT"
+                }
+            }
+        },
+        Tooltip = new Tooltip
+        {
+            HeaderFormat = "<span style='font-size:10px'>{point.key}</span><table style='font-size:12px'>",
+            PointFormat = isCelsius ? "<tr><td style='color:{series.color};padding:0'>{series.name}: </td><td style='padding:0'><b>{point.y:.1f} C</b></td></tr>" : "<tr><td style='color:{series.color};padding:0'>{series.name}: </td><td style='padding:0'><b>{point.y:.1f} F</b></td></tr>",
+            FooterFormat = "</table>",
+            Shared = true,
+            UseHTML = true
+        },
+        PlotOptions = new PlotOptions {
+            Column = new PlotOptionsColumn {
+                PointPadding = 0.2,
+                BorderWidth = 0
+            }
+        },
+        Series = new List<Series> {
+            new LineSeries {
+                Name = "Temperature",
+                Color = "#00e600",
+                Data = ViewData["tempData"] as List<LineSeriesData>
+            }
+        }
+    };
+    chartOptions2.ID = "chart3";
+    var renderer2 = new HighchartsRenderer(chartOptions2);
+}
+
+@*<div class=" m-3 p-3 col-2 text-center ">
+    <a asp-controller="SensorData" asp-action="Index" asp-route-sensorId=" @ViewData["sensorId"]" asp-route-plantName="@ViewData["plantName"]" class="btn btn-secondary form-control"> @localizer["Back"]</a>
+</div>
+*@
+<div style="margin-bottom: 20px;">
+    
+@Html.Raw(renderer.RenderHtml())
+</div>
+
+@Html.Raw(renderer2.RenderHtml())

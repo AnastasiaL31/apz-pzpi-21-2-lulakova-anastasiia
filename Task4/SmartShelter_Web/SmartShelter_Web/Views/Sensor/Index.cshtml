@@ -86,7 +86,7 @@
     @if (Model.SensorData.Count > 0)
     {
         <div class="col-10 text-end">
-            <a asp-controller="SensorData" asp-action="Diagrams" asp-route-sensorId="@Model.Sensor.Id" class="btn btn-secondary">
+            <a asp-controller="Sensor" asp-action="Diagrams" asp-route-sensorId="@Model.Sensor.Id" class="btn btn-secondary">
                 <i class="bi bi-plus-circle"></i> Graphics
             </a>
         </div>

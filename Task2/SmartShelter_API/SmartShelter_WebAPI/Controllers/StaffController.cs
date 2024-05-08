@@ -60,9 +60,14 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> AddStaff(string username, [FromBody] AddStaffDto staffDto)
+        public async Task<ActionResult<bool>> AddStaff([FromBody] AddStaffDto staffDto)
         {
-            var result = await _staffService.AddStaff(staffDto, username);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            var result = await _staffService.AddStaff(staffDto, userName);
             if (result)
             {
                 return Ok();
@@ -75,9 +80,15 @@ namespace SmartShelter_WebAPI.Controllers
         [HttpPut("update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> UpdateStaff(string username, [FromBody] StaffDto staffDto)
+        public async Task<ActionResult<bool>> UpdateStaff([FromBody] StaffDto staffDto)
         {
-            var result = await _staffService.UpdateStaff(staffDto, username);
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            
+            var result = await _staffService.UpdateStaff(staffDto, userName);
             if (result)
             {
                 return Ok();
@@ -110,7 +121,7 @@ namespace SmartShelter_WebAPI.Controllers
 
 
         [HttpGet("all/{staffId:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Staff>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Staff))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Staff>> GetStaffById(int staffId)
         {

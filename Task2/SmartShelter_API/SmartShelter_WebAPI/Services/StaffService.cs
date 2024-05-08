@@ -92,16 +92,16 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-        public async Task<StaffDto?> GetById(int id, string senderUsername)
+        public async Task<StaffDto?> GetById(int staffId, string senderUsername)
         {
-            var userId = GetIdentityId(id);
+            var userId = GetIdentityId(staffId);
             if (userId.IsNullOrEmpty())
             {
                 return null;
             }
             if (await CheckAccess(userId, "", senderUsername))
             {
-                var user = _dbContext.Staff.FirstOrDefault(x => x.Id == id);
+                var user = _dbContext.Staff.FirstOrDefault(x => x.Id == staffId);
                 var mappedUser = _mapper.Map<StaffDto>(user);
                 return mappedUser;
             }
