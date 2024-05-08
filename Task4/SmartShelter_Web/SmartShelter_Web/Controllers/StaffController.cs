@@ -2,6 +2,7 @@
 using SmartShelter_Web.Dtos;
 using SmartShelter_Web.Middleware;
 using SmartShelter_Web.Models;
+using SmartShelter_Web.Models.ViewModel;
 using System.Text.Json;
 
 namespace SmartShelter_Web.Controllers
@@ -51,9 +52,9 @@ namespace SmartShelter_Web.Controllers
             return staff;
         }
 
-        public async Task<StaffDto> GetStaffById(int staffId)
+        public async Task<StaffDetailsVM> GetStaffById(int staffId)
         {
-            var staff = new StaffDto();
+            var staff = new StaffDetailsVM();
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/api/Staff/all/{staffId}";
 
@@ -68,7 +69,7 @@ namespace SmartShelter_Web.Controllers
                 };
                 try
                 {
-                    staff = JsonSerializer.Deserialize<StaffDto>(result, options);
+                    staff = JsonSerializer.Deserialize<StaffDetailsVM>(result, options);
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +80,7 @@ namespace SmartShelter_Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateStaff(StaffDto staff)
+        public async Task<IActionResult> UpdateStaff(StaffDetailsVM vm, string selectedRole)
         {
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/api/Staff/update";
@@ -87,16 +88,26 @@ namespace SmartShelter_Web.Controllers
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
-            string json = JsonSerializer.Serialize(staff, options);
+            string json = JsonSerializer.Serialize(vm.Staff, options);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(fullUrl, content);
 
             if (response.IsSuccessStatusCode)
             {
-                //return RedirectToAction("Details", animal.Id);
+                if(selectedRole != vm.Role)
+                {
+                    client = _tokenService.CreateHttpClient();
+                    fullUrl = $"{GlobalVariables.backendAddress}/api/Staff/addRole?roleName={selectedRole}&staffId={vm.Staff.Id}";
+                    content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                    response = await client.PutAsync(fullUrl, null);
+                    if(response.IsSuccessStatusCode)
+                    {
+
+                    }
+                }
             }
 
-            return RedirectToAction("StaffDetails", new { staffId = staff.Id });
+            return RedirectToAction("StaffDetails", new { staffId = vm.Staff.Id });
         }
 
     }

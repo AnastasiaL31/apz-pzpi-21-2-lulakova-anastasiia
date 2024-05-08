@@ -1,62 +1,76 @@
 ﻿@using SmartShelter_Web.Dtos;
+@using SmartShelter_Web.Models.ViewModel;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model StaffDto
-
+@model StaffDetailsVM
+@{
+    List<string> roles = new List<string>() { "Admin", "Doctor", "Guest", "Storekeeper" };
+}
 <div class="card text-center">
     <div class="card-title m-3">
-        <h4>@Model.Name</h4>
+        <h4>@Model.Staff.Name</h4>
         <hr />
     </div>
     <div class="card-body">
         <form method="post" asp-action="UpdateStaff">
             <div class="row justify-content-center">
-                <input hidden asp-for="@Model.Id" />
-                <input hidden asp-for="@Model.IdentityUserId" />
+                <input hidden asp-for="@Model.Staff.Id" />
+                <input hidden asp-for="@Model.Staff.IdentityUserId" />
                 <div class="mb-3 col-7 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.Name">Name</label>
-                    <input asp-for="@Model.Name" class="form-control" />
-                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.Name">Name</label>
+                    <input asp-for="@Model.Staff.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Staff.Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.Phone">Phone</label>
-                    <input asp-for="@Model.Phone" class="form-control" />
-                    <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.Phone">Phone</label>
+                    <input asp-for="@Model.Staff.Phone" class="form-control" />
+                    <span asp-validation-for="@Model.Staff.Phone" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.DOB">DOB</label>
-                    <input type="date" asp-for="@Model.DOB" class="form-control" />
-                    <span asp-validation-for="@Model.DOB" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.Position">Position</label>
-                    <input asp-for="@Model.Position" class="form-control" />
-                    <span asp-validation-for="@Model.Position" class="text-danger"></span>
-                </div>
-                <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.HasRole">HasRole</label>
-                    <input asp-for="@Model.HasRole" class="form-control" />
-                    <span asp-validation-for="@Model.HasRole" class="text-danger"></span>
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.DOB">DOB</label>
+                    <input type="date" asp-for="@Model.Staff.DOB" class="form-control" />
+                    <span asp-validation-for="@Model.Staff.DOB" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.AcceptanceDate">AcceptanceDate</label>
-                    <input type="date" asp-for="@Model.AcceptanceDate" class="form-control" />
-                    <span asp-validation-for="@Model.AcceptanceDate" class="text-danger"></span>
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.Position">Position</label>
+                    <input asp-for="@Model.Staff.Position" class="form-control" />
+                    <span asp-validation-for="@Model.Staff.Position" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-6 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.DismissialDate">DismissialDate</label>
-                    <input type="date" asp-for="@Model.DismissialDate"
-                           value="@(Model.DismissialDate == null ? DateTime.MinValue : Model.DismissialDate)"
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.HasRole">HasRole</label>
+                    <select class="form-select" name="selectedRole">
+                        @foreach (var role in roles)
+                        {
+                            var item = new SelectListItem { Value = $"{role}", Text = $"{role}" };
+                            if (role == Model.Role)
+                            {
+                                <option selected value="@item.Value">@item.Text</option>
+                            }
+                            else{
+                                 <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.AcceptanceDate">AcceptanceDate</label>
+                    <input type="date" asp-for="@Model.Staff.AcceptanceDate" class="form-control" />
+                    <span asp-validation-for="@Model.Staff.AcceptanceDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.Staff.DismissialDate">DismissialDate</label>
+                    <input type="date" asp-for="@Model.Staff.DismissialDate"
+                           value="@(Model.Staff.DismissialDate == null ? DateTime.MinValue : Model.Staff.DismissialDate)"
                     class="form-control" />
-                    <span asp-validation-for="@Model.DismissialDate" class="text-danger"></span>
+                    <span asp-validation-for="@Model.Staff.DismissialDate" class="text-danger"></span>
                 </div>
             </div>
             <div> <button type="submit" class="btn btn-success">Submit</button></div>

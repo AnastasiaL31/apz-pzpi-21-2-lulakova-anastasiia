@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using NuGet.Common;
 using SmartShelter_Web.Middleware;
 using Microsoft.IdentityModel.Tokens;
+using SmartShelter_Web.Dtos;
 
 namespace SmartShelter_Web.Controllers
 {
@@ -30,6 +31,11 @@ namespace SmartShelter_Web.Controllers
         public IActionResult Register()
         {
             return View(new LoginModel());
+        }
+
+        public IActionResult UserData(string username)
+        {
+            return View(new LoginModel() { Username = username, NewStaff = new AddStaffDto() });
         }
 
         [HttpPost]
@@ -52,18 +58,28 @@ namespace SmartShelter_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(LoginModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
+           
             var res = await RegisterUser(model);
             if (!String.IsNullOrEmpty(res))
             {
                 return View(model);
             }
+             
+            return RedirectToAction("UserData", new {username = model.Username});
+        }
 
-            return RedirectToAction("Index", "Home");
+        [HttpPost]
+        public async Task<IActionResult> AddUserData(LoginModel model)
+        {
+            var result = await AddStaff(model.NewStaff, model.Username);
+            if (!result)
+            {
+                return RedirectToAction("UserData", model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public async Task<string> GetUser(LoginModel model)
@@ -176,6 +192,29 @@ namespace SmartShelter_Web.Controllers
                     }
                 }
                 return error;
+            }
+        }
+
+        public async Task<bool> AddStaff(AddStaffDto staff, string email)
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            string json = JsonSerializer.Serialize(staff, options);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            string error = String.Empty;
+            using (HttpClient client = new HttpClient())
+            {
+                string fullUrl = $"{GlobalVariables.backendAddress}/api/Staff/add?email={email}";
+
+                HttpResponseMessage response = await client.PostAsync(fullUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 

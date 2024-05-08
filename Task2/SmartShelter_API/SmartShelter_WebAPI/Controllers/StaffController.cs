@@ -57,17 +57,14 @@ namespace SmartShelter_WebAPI.Controllers
             return Ok(staffList);
         }
 
+        [AllowAnonymous]
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> AddStaff([FromBody] AddStaffDto staffDto)
+        public async Task<ActionResult<bool>> AddStaff([FromBody] AddStaffDto staffDto, [FromQuery] string email)
         {
-            var userName = User.Identity.Name;
-            if (userName == null)
-            {
-                return BadRequest();
-            }
-            var result = await _staffService.AddStaff(staffDto, userName);
+           
+            var result = await _staffService.AddStaff(staffDto, email);
             if (result)
             {
                 return Ok();
@@ -121,9 +118,9 @@ namespace SmartShelter_WebAPI.Controllers
 
 
         [HttpGet("all/{staffId:int}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Staff))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StaffDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Staff>> GetStaffById(int staffId)
+        public async Task<ActionResult<StaffDetailsDto>> GetStaffById(int staffId)
         {
             var userName = User.Identity.Name;
             if (userName == null)

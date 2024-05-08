@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -41,7 +42,13 @@ namespace SmartShelter_WebAPI.Services
                 _dbContext.Add(staff);
             }
 
-            return Save();
+            if (Save())
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Guest"));
+                var res = _userManager.AddToRoleAsync(identityUser, "Guest");
+                return res.Result.Succeeded;
+            }
+            return false;
         }
 
         public async Task<bool> UpdateStaff(StaffDto staffDto, string senderUsername)
@@ -74,7 +81,8 @@ namespace SmartShelter_WebAPI.Services
                 {
                     await _roleManager.CreateAsync(new IdentityRole(roleName));
                 }
-               
+                var oldRoles = await _userManager.GetRolesAsync(identityUser);
+                await _userManager.RemoveFromRolesAsync(identityUser, oldRoles);
                 result = await _userManager.AddToRoleAsync(identityUser, roleName);
 
                 if (result.Succeeded)
@@ -92,7 +100,7 @@ namespace SmartShelter_WebAPI.Services
             return false;
         }
 
-        public async Task<StaffDto?> GetById(int staffId, string senderUsername)
+        public async Task<StaffDetailsDto?> GetById(int staffId, string senderUsername)
         {
             var userId = GetIdentityId(staffId);
             if (userId.IsNullOrEmpty())
@@ -101,9 +109,15 @@ namespace SmartShelter_WebAPI.Services
             }
             if (await CheckAccess(userId, "", senderUsername))
             {
-                var user = _dbContext.Staff.FirstOrDefault(x => x.Id == staffId);
-                var mappedUser = _mapper.Map<StaffDto>(user);
-                return mappedUser;
+                var staff = _dbContext.Staff.FirstOrDefault(x => x.Id == staffId);
+                var mappedStaff = _mapper.Map<StaffDto>(staff);
+                var user = await _userManager.FindByIdAsync(userId);
+                var role = await _userManager.GetRolesAsync(user);
+                return new StaffDetailsDto()
+                {
+                    Staff = mappedStaff,
+                    Role = role[0]
+                };
             }
             return null;
         }
