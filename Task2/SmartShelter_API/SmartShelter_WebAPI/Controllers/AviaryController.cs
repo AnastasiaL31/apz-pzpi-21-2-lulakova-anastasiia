@@ -378,6 +378,42 @@ namespace SmartShelter_WebAPI.Controllers
 
             return Ok();
         }
+
+
+        [HttpPut("update/sensor")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult UpdateSensor([FromBody]Sensor sensor)
+        {
+
+            var result = _aviaryService.UpdateAviarySensor(sensor);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("/sensor/{sensorId:int}")]
+        public ActionResult DeleteSensor(int sensorId)
+        {
+            if (sensorId <= 0)
+            {
+                return BadRequest();
+            }
+            var result = _aviaryService.RemoveAviarySensor(sensorId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }
 

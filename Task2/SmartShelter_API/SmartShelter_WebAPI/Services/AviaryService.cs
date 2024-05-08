@@ -407,6 +407,22 @@ namespace SmartShelter_WebAPI.Services
 
             return Save();
         }
+
+        public bool UpdateAviarySensor(Sensor sensor)
+        {
+            _dbContext.Update (sensor);
+            return Save();
+        }
+
+        public bool RemoveAviarySensor(int sensorId)
+        {
+            var sensor  = _dbContext.Sensors.FirstOrDefault(x => x.Id == sensorId);
+            if(sensor != null)
+            {
+                _dbContext.Remove(sensor);
+            }
+            return Save();
+        }
     }
 
     

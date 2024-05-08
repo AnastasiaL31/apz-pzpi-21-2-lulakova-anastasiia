@@ -7,6 +7,6 @@
         public int Frequency { get; set; }
         public int AviaryId { get; set; }
 
-        public Aviary Aviary { get; set; }
+        public Aviary? Aviary { get; set; }
     }
 }

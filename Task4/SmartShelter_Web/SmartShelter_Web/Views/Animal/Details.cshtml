@@ -135,8 +135,9 @@
             <div class="card-body">
                 @if (Model.Aviary.Id != 0)
                 {
-                    <div class="row">
-                        <a class="btn btn-info" href="#">Sensor Data</a>
+                    <div class="row justify-content-end">
+                        <a class="btn btn-info col-3"  asp-route-aviaryId="@Model.Aviary.Id"
+                        asp-route-animalId="@Model.Animal.Id" asp-controller="Sensor" asp-action="Index">Sensor Data</a>
                     </div>
                     <form method="post" asp-action="UpdateAviary">
                         <input hidden asp-for="@Model.Aviary.Id" />
