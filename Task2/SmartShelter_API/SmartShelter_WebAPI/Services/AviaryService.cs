@@ -403,9 +403,21 @@ namespace SmartShelter_WebAPI.Services
                     Date = DateTime.Now,
                     Type = "Food"
                 });
-            }
 
-            return Save();
+                _dbContext.Add(new Storage()
+                {
+                    Type = "Food",
+                    Amount = totalMeal*(-1),
+                    Date = DateTime.Now,
+                    UnitOfMeasure = "kg",
+                    Name = "Food",
+                    Price = 0,
+                    StaffId= staffId
+                });
+                return Save();
+            }
+            return true;
+            
         }
 
         public bool UpdateAviarySensor(Sensor sensor)

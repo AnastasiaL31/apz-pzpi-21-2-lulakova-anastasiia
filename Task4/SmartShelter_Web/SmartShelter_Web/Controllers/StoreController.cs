@@ -66,18 +66,26 @@ namespace SmartShelter_Web.Controllers
         public List<Storage> GetGroupedStorage(List<Storage> list)
         {
             List<Storage> storage = new List<Storage>();
-            foreach (var item in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                if (storage.FirstOrDefault(x => x.Name == item.Name) != null)
+                if (storage.FirstOrDefault(x => x.Name.ToLower() == list[i].Name.ToLower()) != null)
                 {
-                    int ind = storage.FindIndex(x => x.Name == item.Name);
+                    int ind = storage.FindIndex(x => x.Name.ToLower() == list[i].Name.ToLower());
                     if (ind != -1)
                     {
-                        storage[ind].Amount += item.Amount;
-                        storage[ind].Price += item.Price;
+                        storage[ind].Amount += list[i].Amount;
+                        storage[ind].Price += list[i].Price;
                     }
                 }
-                else { storage.Add(item); }
+                else { 
+                    storage.Add(new Storage()
+                    {
+                        Id = list[i].Id, Amount = list[i].Amount, Price = list[i].Price, 
+                        Date = list[i].Date,  Name = list[i].Name, StaffId = list[i].StaffId, 
+                        Type = list[i].Type, UnitOfMeasure = list[i].UnitOfMeasure
+
+                    }); 
+                }
             }
             return storage;
         }
