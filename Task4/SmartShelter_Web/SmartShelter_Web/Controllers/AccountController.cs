@@ -41,11 +41,6 @@ namespace SmartShelter_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
             string res = await GetUser(model);
             if (!String.IsNullOrEmpty(res))
             {
@@ -111,7 +106,7 @@ namespace SmartShelter_Web.Controllers
                                 HttpOnly = true
                             };
 
-                            Response.Cookies.Append("token", user.token, cookieOptions);
+                            Response.Cookies.Append("token", user.token);
                             Response.Cookies.Append("role", user.role, cookieOptions);
                             GlobalVariables.role = user.role;
                         }

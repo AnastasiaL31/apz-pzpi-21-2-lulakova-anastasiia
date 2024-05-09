@@ -35,7 +35,7 @@
                                     }
                                     @if (GlobalVariables.isAdmin || GlobalVariables.role == "Storekeeper")
                                     {
-                                        <li><a class="dropdown-item" href="#">Store</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">Store</a></li>
                                     }
                                     
                                     @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
@@ -46,7 +46,7 @@
                                     @if (GlobalVariables.isAdmin)
                                     {
                                         <li><a class="dropdown-item" asp-controller="Staff" asp-action="Index">Staff</a></li>
-                                        <li><a class="dropdown-item" href="#">Analitics</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Backup">Backup</a></li>
                                     }
                                 </ul>
                             </div>

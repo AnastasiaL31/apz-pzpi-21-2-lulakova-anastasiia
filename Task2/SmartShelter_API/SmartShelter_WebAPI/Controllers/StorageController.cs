@@ -13,14 +13,16 @@ namespace SmartShelter_WebAPI.Controllers
     public class StorageController : ControllerBase
     {
         private readonly IStorageService _storageService;
+        private readonly IStaffService _staffService;
 
-        public StorageController(IStorageService storageService)
+        public StorageController(IStorageService storageService, IStaffService staffService)
         {
             _storageService = storageService;
+            _staffService = staffService;
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("all")]
+        [HttpGet("orders/all")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<OrderDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<OrderDto>> GetAllOrders()
@@ -65,11 +67,21 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
 
-        [HttpPost("add")]
+        [HttpPost("order/add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public  ActionResult AddOrder(int staffId, [FromBody] AddOrderDto orderDto)
+        public async Task<ActionResult> AddOrder([FromBody] AddOrderDto orderDto)
         {
+            int staffId;
+            var userName = User.Identity.Name;
+            if (userName == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                staffId = await _staffService.GetStaffId(userName);
+            }
             var result =_storageService.CreateOrder(orderDto, staffId);
             if (result)
             {
@@ -79,7 +91,7 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
-        [HttpPost("update")]
+        [HttpPost("order/update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult UpdateOrder(int staffId, [FromBody] UpdateOrderDto orderDto)
@@ -93,7 +105,7 @@ namespace SmartShelter_WebAPI.Controllers
             return BadRequest();
         }
 
-        [HttpPut("delete")]
+        [HttpPut("order/delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public  ActionResult DeleteOrder(int staffId, int orderId)
@@ -105,6 +117,36 @@ namespace SmartShelter_WebAPI.Controllers
             }
 
             return BadRequest();
+        }
+
+        
+        [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Storage>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Storage>> GetFullStorage()
+        {
+            var storage = _storageService.GetFullStorage();
+            if (storage == null || storage.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(storage);
+        }
+
+    
+        [HttpGet("all/grouped")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Storage>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Storage>> GetFullStorageGrouped()
+        {
+            var storage = _storageService.GetGroupedStorage();
+            if (storage == null || storage.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(storage);
         }
     }
 }

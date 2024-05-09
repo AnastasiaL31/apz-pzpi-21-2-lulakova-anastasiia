@@ -1,0 +1,128 @@
+﻿@using SmartShelter_Web.Models.ViewModel;
+@model StorageVM
+
+<div class="row col-12 m-0 justify-content-center">
+    <div class="card col-11 m-2">
+        <div class="card-title">
+            <h3>All Storage</h3>
+            <hr />
+        </div>
+        <div class="card-body">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">UOM</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Staff</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var item in Model.FullList)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <th>@item.Type</th>
+                            <th>@item.Name</th>
+                            <td>@item.Amount</td>
+                            <td>@item.UnitOfMeasure</td>
+                            <td>@item.Price</td>
+                            <td>@item.Date</td>
+                            <td>@item.StaffId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center justify-content-center">
+    <div class="card col-5 m-2">
+        <div class="card-title">
+            <h3>Grouped Storage</h3>
+            <hr />
+        </div>
+        <div class="card-body">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">UOM</th>
+                        <th scope="col">Price</th>
+
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach (var item in Model.GroupedList)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <th>@item.Type</th>
+                            <th>@item.Name</th>
+                            <td>@item.Amount</td>
+                            <td>@item.UnitOfMeasure</td>
+                            <td>@item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card col-6 m-2">
+        <div class="card-title">
+            <h3>Create order</h3>
+            <hr />
+        </div>
+        <div class="card-body">
+        <form method="post" asp-action="CreateOrder">
+            <div class="row">
+                <div class="mb-3 col-5 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Type">Type</label>
+                    <input asp-for="@Model.NewOrder.Type" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.Type" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-5 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Name">Name</label>
+                    <input asp-for="@Model.NewOrder.Name" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-3 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Amount">Amount</label>
+                    <input asp-for="@Model.NewOrder.Amount" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.Amount" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-4 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.UnitOfMeasure">UOM</label>
+                    <input asp-for="@Model.NewOrder.UnitOfMeasure" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.UnitOfMeasure" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-4 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Price">Price</label>
+                    <input asp-for="@Model.NewOrder.Price" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-8 p-1">
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.EndDate">EndDate</label>
+                    <input asp-for="@Model.NewOrder.EndDate" class="form-control" />
+                    <span asp-validation-for="@Model.NewOrder.EndDate" class="text-danger"></span>
+                </div>
+                <input hidden asp-for="@Model.NewOrder.OrderDate" value="@DateTime.Now" />
+                <button type="submit" class="btn btn-success col-3 mb-3 p-1">Create</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+

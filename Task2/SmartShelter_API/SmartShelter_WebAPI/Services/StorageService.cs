@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SmartShelter_WebAPI.Dtos;
+using System.Linq;
 
 namespace SmartShelter_WebAPI.Services
 {
@@ -18,6 +19,7 @@ namespace SmartShelter_WebAPI.Services
         {
             var order = _mapper.Map<Order>(orderDto);
             order.StaffId = creatorId;
+            order.OrderDate = DateTime.Now;
             _dbContext.Add(order);
             return Save();
         }
@@ -88,6 +90,31 @@ namespace SmartShelter_WebAPI.Services
         public bool Save()
         {
             return _dbContext.SaveChanges() != 0;
+        }
+
+        public List<Storage> GetFullStorage()
+        {
+            var list = _dbContext.Storage.ToList();
+            return list;
+        }
+
+        public List<Storage> GetGroupedStorage()
+        {
+            var list = _dbContext.Storage.ToList();
+            List<Storage> storage = new List<Storage>();
+            foreach (var item in list)
+            {
+                if (storage.FirstOrDefault(x => x.Name == item.Name) != null)
+                {
+                    int ind = storage.FindIndex(x => x.Name == item.Name);
+                    if(ind != -1)
+                    {
+                        storage[ind].Amount += item.Amount;
+                        storage[ind].Price += item.Price;
+                    }
+                }else { storage.Add(item); }
+            }
+            return storage;
         }
     }
 }
