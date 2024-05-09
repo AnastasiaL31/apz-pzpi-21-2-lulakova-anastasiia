@@ -9,5 +9,8 @@ namespace SmartShelter_Web.Models.ViewModel
 
         public AddOrderDto NewOrder { get; set; }
 
+        public List<OrderDto> Orders { get; set; }
+
+
     }
 }

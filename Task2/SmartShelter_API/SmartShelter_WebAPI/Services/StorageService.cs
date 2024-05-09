@@ -83,7 +83,18 @@ namespace SmartShelter_WebAPI.Services
             }
 
             order.IsApproved = true;
+            var storage = new Storage()
+            {
+                Name = order.Name,
+                Type = order.Type,
+                Amount = order.Amount,
+                UnitOfMeasure = order.UnitOfMeasure,
+                Price = order.Price,
+                Date = DateTime.Now,
+                StaffId = (int)order.StaffId
+            };
             _dbContext.Update(order);
+            _dbContext.Add(storage);
             return Save();
         }
 
