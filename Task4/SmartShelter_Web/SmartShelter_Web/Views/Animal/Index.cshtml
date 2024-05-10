@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+@{
     Layout = "~/Views/Animal/_AnimalLayout.cshtml";
 }
 
@@ -8,11 +9,11 @@
 <table class="table table-light">
     <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Breed</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Acc Date</th>
-            <th scope="col">Details</th>
+            <th scope="col">@localizer["Name"]</th>
+            <th scope="col">@localizer["Breed"]</th>
+            <th scope="col">@localizer["Gender"]</th>
+            <th scope="col">@localizer["AccDate"]</th>
+            <th scope="col">@localizer["Details"]</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">

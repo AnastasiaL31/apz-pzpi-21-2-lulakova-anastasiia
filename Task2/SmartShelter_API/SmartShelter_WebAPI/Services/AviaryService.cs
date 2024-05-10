@@ -154,6 +154,16 @@ namespace SmartShelter_WebAPI.Services
                     lastCondition.Date = DateTime.Now;
                     _dbContext.Add(lastCondition);
                 }
+                _dbContext.Add(new Storage()
+                {
+                    Type = recharge.Type,
+                    Amount = recharge.Amount * (-1),
+                    Date = DateTime.Now,
+                    UnitOfMeasure = "",
+                    Name = recharge.Name == null ? recharge.Type : " ",
+                    Price = 0,
+                    StaffId = staffId
+                });
             }
             return Save();
         }

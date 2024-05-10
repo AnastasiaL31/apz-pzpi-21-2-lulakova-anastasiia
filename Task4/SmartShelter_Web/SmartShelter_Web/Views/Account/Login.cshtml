@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+@{
     Layout = "~/Views/_AuthLayout.cshtml";
 }
 
@@ -11,20 +13,20 @@
     <div class="col-md-10">
         <section>
             <form  asp-action="Login" method="post">
-                <h2>Use a local account to log in.</h2>
+                <h2>@localizer["Login"]</h2>
                 <hr />
                 <div class="mb-3">
-                    <label asp-for="@Model.Username" class="form-label">Email</label>
+                    <label asp-for="@Model.Username" class="form-label">@localizer["Email"]</label>
                     <input asp-for="@Model.Username" class="form-control" />
                     <span asp-validation-for="@Model.Username" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="@Model.Password" class="form-label">Password</label>
+                    <label asp-for="@Model.Password" class="form-label">@localizer["Password"]</label>
                     <input asp-for="@Model.Password" class="form-control"/>
                     <span asp-validation-for="@Model.Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <button  type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">@localizer["Enter"]</button>
                 </div>
             </form>
         </section>
