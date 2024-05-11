@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
 
 <div class="row justify-content-center">
     <div class="col-5 md-5">
@@ -9,12 +10,12 @@
                 <ul class=" nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link" href="/Account/Login">
-                            Log In
+                            @localizer["LogIn"]
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Account/Register">
-                            Register
+                            @localizer["Register"]
                         </a>
                     </li>
                 </ul>

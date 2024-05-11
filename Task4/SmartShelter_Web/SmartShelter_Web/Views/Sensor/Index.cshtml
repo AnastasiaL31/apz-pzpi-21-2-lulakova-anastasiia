@@ -1,4 +1,5 @@
 ﻿@using SmartShelter_Web.Models.ViewModel;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
 
 @model SensorWithDataVM
 
@@ -26,33 +27,33 @@
 <div class="container col-10 align-self-center">
     <div class=" m-3 p-3 col-2 text-center ">
         <a asp-controller="Animal" asp-action="Details" asp-route-animalId="@Model.AnimalId"
-        class="btn btn-secondary form-control"> Back</a>
+        class="btn btn-secondary form-control">@localizer["Back"]</a>
     </div>
     <div class="m-3 p-3 col-10 align-self-center" style="background-color:white; border-radius:10px">
 
         <div class="row pb-2 text-center">
-            <h2 class="text-primary"> Aviary №@Model.Sensor.AviaryId</h2>
+            <h2 class="text-primary"> @localizer["Aviary"] №@Model.Sensor.AviaryId</h2>
             <hr />
         </div>
         @if(Model.Sensor.Id == 0)
         {
             <div class="row justify-content-center">
                 <a class="btn btn-success col-4" asp-action="AddSensor" asp-controller="Sensor"
-                asp-route-aviaryId="@Model.Sensor.AviaryId"  asp-route-animalId="@Model.AnimalId" >Add Sensor</a>
+                asp-route-aviaryId="@Model.Sensor.AviaryId"  asp-route-animalId="@Model.AnimalId" >@localizer["AddSensor"]</a>
             </div>
         }else{
             <div class="row pb-2 text-end">
-                <h4 class="text-primary col-7 ">SensorId @Model.Sensor.Id</h4>
+                <h4 class="text-primary col-7 ">@localizer["SensorId"] @Model.Sensor.Id</h4>
                 <div class="col-3"></div>
                 <a class="btn btn-danger col-2" asp-action="DeleteSensor" asp-controller="Sensor"
-                   asp-route-aviaryId="@Model.Sensor.AviaryId" asp-route-sensorId="@Model.Sensor.Id" asp-route-animalId="@Model.AnimalId">Delete</a>
+                   asp-route-aviaryId="@Model.Sensor.AviaryId" asp-route-sensorId="@Model.Sensor.Id" asp-route-animalId="@Model.AnimalId">@localizer["Delete"]</a>
             </div>
         }
     </div>
     @if(Model.Sensor.Id != 0){
         <div class="m-3 p-3 col-10 align-self-center" style="background-color:white; border-radius:10px">
             <div class="row pb-2 text-center">
-                <h2 class="text-info">SensorSettings</h2>
+                <h2 class="text-info">@localizer["SensorSettings"]</h2>
                 <hr />
             </div>
             <form method="post" asp-action="UpdateSensorSettings">
@@ -61,22 +62,22 @@
                     <input type="hidden" asp-for="@Model.AnimalId" />
                     <input type="hidden" asp-for="@Model.Sensor.AviaryId" />
                     <div class="col justify-content-center text-center">
-                        <h5 class="col-10">Notes</h5>
+                        <h5 class="col-10">@localizer["Notes"]</h5>
                         <div class="mb-1 col-10  p-1">
-                            <label class="p-0  pb-2" asp-for="@Model.Sensor.Notes">Notes</label>
+                            <label class="p-0  pb-2" asp-for="@Model.Sensor.Notes">@localizer["Notes"]</label>
                             <textarea  asp-for="@Model.Sensor.Notes" class="form-control" ></textarea>
                             <span asp-validation-for="@Model.Sensor.Notes" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col justify-content-center text-center">
-                        <h5 class="col-10">Frequency</h5>
+                        <h5 class="col-10">@localizer["Frequency"]</h5>
                         <div class="mb-1 col-10  p-1">
-                            <label class="p-0  pb-2" asp-for="@Model.Sensor.Frequency">frequency </label>
+                            <label class="p-0  pb-2" asp-for="@Model.Sensor.Frequency">@localizer["Frequency"] </label>
                             <input type="number" asp-for="@Model.Sensor.Frequency" value="@Math.Round((double)Model.Sensor.Frequency/60000)" class="form-control" />
                             <span asp-validation-for="@Model.Sensor.Frequency" class="text-danger"></span>
                         </div>
                         <div class="mb-1 col-10  p-1 mt-4">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">@localizer["Update"]</button>
                         </div>
                     </div>
                 </div>
@@ -87,13 +88,13 @@
     {
         <div class="col-10 text-end">
             <a asp-controller="Sensor" asp-action="Diagrams" asp-route-sensorId="@Model.Sensor.Id" class="btn btn-secondary">
-                <i class="bi bi-plus-circle"></i> Graphics
+                <i class="bi bi-plus-circle"></i> @localizer["Graphics"]
             </a>
         </div>
     }
     <div class="m-3 p-3 col-10 align-self-center" style="background-color:white; border-radius:10px">
         <div class="row pb-2 text-center">
-            <h2 class="text-info">SensorData</h2>
+            <h2 class="text-info">@localizer["SensorData"]</h2>
             <hr />
         </div>
         @if (Model.SensorData.Count > 0)
@@ -102,12 +103,12 @@
                 <thead>
                     <tr>
                         <th>№</th>
-                        <th>Temperature</th>
-                        <th>Humidity</th>
-                        <th>Water</th>
-                        <th>Food</th>
-                        <th>IHS</th>
-                        <th>Date</th>
+                        <th>@localizer["Temperature"]</th>
+                        <th>@localizer["Humidity"]</th>
+                        <th>@localizer["Water"]</th>
+                        <th>@localizer["Food"]</th>
+                        <th>@localizer["IHS"]</th>
+                        <th>@localizer["Date"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,7 +136,7 @@
         }
         else
         {
-            <h5 class="text-center">NoData</h5>
+            <h5 class="text-center">@localizer["NoData"]</h5>
         }
     </div>
 </div>

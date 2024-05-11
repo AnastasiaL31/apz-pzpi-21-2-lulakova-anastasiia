@@ -1,4 +1,6 @@
 ﻿@using SmartShelter_Web.Dtos;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,7 +9,7 @@
 
 <div class="card text-center">
     <div class="card-title m-3">
-        <h4>Staff</h4>
+        <h4>@localizer["Staff"]</h4>
         <hr/>
     </div>
     <div class="card-body">
@@ -15,14 +17,14 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">DOB</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Has role</th>
-                    <th scope="col">AcceptanceDate</th>
-                    <th scope="col">DismissialDate</th>
-                    <th>Actions</th>
+                    <th scope="col">@localizer["Name"]</th>
+                    <th scope="col">@localizer["Phone"]</th>
+                    <th scope="col">@localizer["DOB"]</th>
+                    <th scope="col">@localizer["Position"]</th>
+                    <th scope="col">@localizer["HasRole"]</th>
+                    <th scope="col">@localizer["AcceptanceDate"]</th>
+                    <th scope="col">@localizer["DismissialDate"]</th>
+                    <th>@localizer["Actions"]</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -38,7 +40,7 @@
                         <td>@(Model[i].HasRole ? "yes" : "no")</td>
                         <td>@Model[i].AcceptanceDate.Date</td>
                         <td>@(Model[i].DismissialDate != null ? Model[i].DismissialDate.Value.Date : "-")</td>
-                        <td><a class="btn btn-warning" asp-action="StaffDetails" asp-controller="Staff" asp-route-staffId="@Model[i].Id">Update</a></td>
+                        <td><a class="btn btn-warning" asp-action="StaffDetails" asp-controller="Staff" asp-route-staffId="@Model[i].Id">@localizer["Update"]</a></td>
                     </tr>
                 }
             </tbody>

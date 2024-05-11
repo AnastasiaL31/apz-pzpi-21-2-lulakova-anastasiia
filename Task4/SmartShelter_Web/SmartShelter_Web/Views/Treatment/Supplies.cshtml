@@ -1,4 +1,6 @@
 ﻿@using SmartShelter_Web.Models.ViewModel;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,20 +10,20 @@
 <div class="row text-center">
     <div class="card ">
         <div class="card-body ">
-             <h3 class="text-primary">Supplies</h3>
+             <h3 class="text-primary">@localizer["Supplies"]</h3>
             <hr />
             @if (Model.Supplies.Count > 0)
             {
                 <table class="table table-bordered m-2 col-10">
                     <thead>
                         <tr>
-                            <th>Type</th>
-                            <th>Name</th>
-                            <th>Amount</th>
-                            <th>UOM</th>
+                            <th>@localizer["Type"]</th>
+                            <th>@localizer["Name"]</th>
+                            <th>@localizer["Amount"]</th>
+                            <th>@localizer["UOM"]</th>
                             @if (!Model.IsClosed)
                             {
-                                <th>Actions</th>
+                                <th>@localizer["Actions"]</th>
                             }
                         </tr>
                     </thead>
@@ -38,7 +40,7 @@
                                     <td>
                                         <a class="btn btn-outline-info" asp-action="DeleteInsertedSupply" asp-controller="Treatment"
                                         asp-route-supplyId="@supply.Id"  asp-route-treatmentId="@Model.TreatmentId"
-                                    >Delete</a></td>
+                                    >@localizer["Delete"]</a></td>
                                 }
                             </tr>
                         }
@@ -47,7 +49,7 @@
             }
             else
             {
-                <h3>There is no supplies</h3>
+                <h3>@localizer["NoSupplies"]</h3>
             }
 
         </div>

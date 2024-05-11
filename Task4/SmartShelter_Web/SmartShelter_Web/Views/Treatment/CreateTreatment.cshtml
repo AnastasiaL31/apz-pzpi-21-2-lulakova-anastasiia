@@ -1,4 +1,6 @@
 ﻿@using SmartShelter_Web.Models.ViewModel;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,11 +8,11 @@
 
 <div class="card mt-3 text-center">
     <div class="card-body">
-        <h3 class="text-primary">Add Treatment</h3>
+        <h3 class="text-primary">@localizer["AddTreatment"]</h3>
         @if (Model.Disease != null)
         {
             <div class="row">
-                <h4>Disease: @Model.Disease.Name</h4>
+                <h4>@localizer["Disease"]: @Model.Disease.Name</h4>
             </div>
         }
         <hr />
@@ -23,21 +25,21 @@
             }
             <div class="row">
                 <div class="col-4">
-                    <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.Type">Type</label>
+                    <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.Type">@localizer["Type"]</label>
                     <input asp-for="@Model.NewTreatment.Type" class="form-control" />
                 </div>
                 <div class="col-4">
-                    <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.ExpirationDate">Exp Date</label>
+                    <label class="p-0 pb-2 " asp-for="@Model.NewTreatment.ExpirationDate">@localizer["ExpDate"]</label>
                     <input type="date" asp-for="@Model.NewTreatment.ExpirationDate" class="form-control" />
                 </div>
             </div>
             <div class="row align-items-center mt-3">
                 <div class="col-10">
-                    <label class="p-0 pb-2" asp-for="@Model.NewTreatment.Notes">Notes</label>
+                    <label class="p-0 pb-2" asp-for="@Model.NewTreatment.Notes">@localizer["Notes"]</label>
                     <textarea asp-for="@Model.NewTreatment.Notes" class="form-control"></textarea>
                 </div>
                 <div class="col-2">
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">@localizer["Submit"]</button>
                 </div>
             </div>
 
@@ -47,7 +49,7 @@
 
 <div class="card mt-3 text-center">
     <div class="card-body">
-        <h3 class="text-primary">Supplies</h3>
+        <h3 class="text-primary">@localizer["Supplies"]</h3>
         @if (Model.SuppliesToAdd.Count > 0)
         {
             <hr />
@@ -55,10 +57,10 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Type</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>UOM</th>
+                        <th>@localizer["Type"]</th>
+                        <th>@localizer["Name"]</th>
+                        <th>@localizer["Amount"]</th>
+                        <th>@localizer["UOM"]</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -76,7 +78,7 @@
                             <td>
 
                                 <input type="hidden" asp-for="@Model.indexToDelete" value="@i" />
-                                <button type="submit" class="btn btn-outline-danger" >Delete</button>
+                                <button type="submit" class="btn btn-outline-danger" >@localizer["Delete"]</button>
 
                             </td>
                         </tr>
@@ -86,7 +88,7 @@
             </table>
         }
         <hr />
-        <h5>Add New</h5>
+        <h5>@localizer["AddNew"]</h5>
         <form method="post" asp-action="AddSupply" asp-controller="Treatment">
             @if (Model.Disease != null)
             {
@@ -96,23 +98,23 @@
             <input hidden asp-for="@Model.SuppliesToAdd" />
             <div class="row">
                 <div class="col-2">
-                    <label class="p-0 pb-2 " asp-for="@Model.NewSupply.Type">Type</label>
+                    <label class="p-0 pb-2 " asp-for="@Model.NewSupply.Type">@localizer["Type"]</label>
                     <input asp-for="@Model.NewSupply.Type" class="form-control" />
                 </div>
                 <div class="col-3">
-                    <label class="p-0 pb-2 " asp-for="@Model.NewSupply.Name">Name</label>
+                    <label class="p-0 pb-2 " asp-for="@Model.NewSupply.Name">@localizer["Name"]</label>
                     <input type="text" asp-for="@Model.NewSupply.Name" class="form-control" />
                 </div>
                 <div class="col-2">
-                    <label class="p-0 pb-2" asp-for="@Model.NewSupply.Amount">Amount</label>
+                    <label class="p-0 pb-2" asp-for="@Model.NewSupply.Amount">@localizer["Amount"]</label>
                     <input type="number" asp-for="@Model.NewSupply.Amount" class="form-control" />
                 </div>
                 <div class="col-2">
-                    <label class="p-0 pb-2" asp-for="@Model.NewSupply.UnitOfMeasure">UOM</label>
+                    <label class="p-0 pb-2" asp-for="@Model.NewSupply.UnitOfMeasure">@localizer["UOM"]</label>
                     <input type="text" asp-for="@Model.NewSupply.UnitOfMeasure" class="form-control" />
                 </div>
                 <div class="col-2">
-                    <button type="submit" class="btn btn-success">Add</button>
+                    <button type="submit" class="btn btn-success">@localizer["Add"]</button>
                 </div>
             </div>
 

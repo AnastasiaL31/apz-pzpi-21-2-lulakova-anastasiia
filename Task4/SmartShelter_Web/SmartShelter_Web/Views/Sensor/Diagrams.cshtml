@@ -1,5 +1,6 @@
 ﻿@using Highsoft.Web.Mvc.Charts;
 @using Highsoft.Web.Mvc.Charts.Rendering;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -14,7 +15,7 @@
     var chartOptions = new Highcharts(){
         Title = new Title
         {
-                    Text = "Humidities"
+                    Text = localizer["Humidities"].Value
         },
         XAxis = new List<XAxis>
         {
@@ -26,7 +27,7 @@
         YAxis = new List<YAxis> {
             new YAxis {
                 Title = new YAxisTitle {
-                    Text = "ValuesP"
+                    Text = localizer["ValuesP"].Value
                 }
             }
         },
@@ -46,7 +47,7 @@
         },
         Series = new List<Series> {
             new LineSeries {
-                Name = "Humidity",
+                Name = localizer["Humidity"].Value,
                 Data = ViewData["humidData"] as List<LineSeriesData>
             }
             //new LineSeries {
@@ -64,7 +65,7 @@
     var chartOptions2 = new Highcharts(){
         Title = new Title
         {
-           Text = "TempAndDew"
+           Text = localizer["Temp"].Value
         },
         XAxis = new List<XAxis>
         {
@@ -76,7 +77,7 @@
         YAxis = new List<YAxis> {
             new YAxis {
                 Title = new YAxisTitle {
-                    Text = "ValuesT"
+                    Text = localizer["ValuesT"].Value
                 }
             }
         },
@@ -96,7 +97,7 @@
         },
         Series = new List<Series> {
             new LineSeries {
-                Name = "Temperature",
+                Name = localizer["Temperature"].Value,
                 Color = "#00e600",
                 Data = ViewData["tempData"] as List<LineSeriesData>
             }

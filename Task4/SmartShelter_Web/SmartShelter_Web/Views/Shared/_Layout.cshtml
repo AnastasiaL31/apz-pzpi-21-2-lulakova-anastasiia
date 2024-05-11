@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,33 +22,32 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-2">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a>
                         </li>
                         <li>
                             <div class="dropdown" >
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Menu
+                                    @localizer["Menu"]
                                 </button>
                                 <ul class="dropdown-menu">
                                     @if(GlobalVariables.isAdmin || GlobalVariables.role == "Doctor")
                                     {
-                                        <li><a class="dropdown-item" asp-controller="Animal" asp-action="Index">Animals</a></li>
-                                        <li><a class="dropdown-item" href="#">Medicine</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Animal" asp-action="Index">@localizer["Animals"]</a></li>
                                     }
                                     @if (GlobalVariables.isAdmin || GlobalVariables.role == "Storekeeper")
                                     {
-                                        <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">Store</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">@localizer["Store"]</a></li>
                                     }
                                     
-                                    @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
+                                   @* @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
                                     {
                                         <li><a class="dropdown-item" href="#">Tasks</a></li>
-                                    }
+                                    }*@
 
                                     @if (GlobalVariables.isAdmin)
                                     {
-                                        <li><a class="dropdown-item" asp-controller="Staff" asp-action="Index">Staff</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Backup">Backup</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Staff" asp-action="Index">@localizer["Staff"]</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Backup">@localizer["Backup"]</a></li>
                                     }
                                 </ul>
                             </div>
@@ -65,11 +66,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - SmartShelter_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

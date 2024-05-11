@@ -103,24 +103,24 @@
         @if (Model.Meals.Count < 10)
         {
             <div class="card p-3 ">
-                <div class="card-title"><h5>Add Meal</h5></div>
+                <div class="card-title"><h5>@localizer["AddMeal"]</h5></div>
                 <form method="post" asp-action="AddMeal" asp-controller="Animal">
                     <input hidden asp-for="@Model.NewMealPlan.AnimalId" />
                     <div class="row">
                         <div class="col-5">
-                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Name">Name</label>
+                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Name">@localizer["Name"]</label>
                             <input asp-for="@Model.NewMealPlan.Name" class="form-control" />
                         </div>
                         <div class="col-2">
-                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Amount">Amount</label>
+                            <label class="p-0 pb-2 " asp-for="@Model.NewMealPlan.Amount">@localizer["Amount"]</label>
                             <input asp-for="@Model.NewMealPlan.Amount" class="form-control" />
                         </div>
                         <div class="col-3">
-                            <label class="p-0 pb-2" asp-for="@Model.NewMealPlan">Time</label>
+                            <label class="p-0 pb-2" asp-for="@Model.NewMealPlan">@localizer["Time"]</label>
                             <input type="time" asp-for="@Model.NewMealPlan.Time" class="form-control" />
                         </div>
                         <div class="col-2 align-content-center">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">@localizer["Submit"]</button>
                         </div>
 
                     </div>
@@ -224,7 +224,8 @@
     </div>
     <div class="card col-6 m-3 text-center">
         <h3 class="text-primary m-3">@localizer["OtherTreatments"]</h3>
-        <a class="btn btn-success col-3 m-2 align-self-end" asp-action="CreateTreatment" asp-controller="Treatment" asp-route-animalId="@Model.Animal.Id">Add Treatment</a>
+        <a class="btn btn-success col-3 m-2 align-self-end" asp-action="CreateTreatment" asp-controller="Treatment"
+        asp-route-animalId="@Model.Animal.Id">@localizer["AddTreatment"]</a>
         <hr />
 
         <table class="table table-bordered">
@@ -263,7 +264,7 @@
                                 {
                                     <a class="btn btn-info"
                                        asp-action="Supplies" asp-controller="Treatment"
-                                       asp-route-treatmentId="@treatment.Treatment.Id" asp-route-isClosed="@true">>@localizer["Supplies"]</a>
+                                       asp-route-treatmentId="@treatment.Treatment.Id" asp-route-isClosed="@true">@localizer["Supplies"]</a>
                                 }
                             </div>
                         </td>
@@ -340,7 +341,7 @@
         </form>
     }
     <div class="card p-3 ">
-        <div class="card-title"><h5>Add Disease</h5></div>
+        <div class="card-title"><h5>@localizer["AddDisease"]</h5></div>
         <form method="post" asp-action="AddDisease" asp-controller="Animal">
             <input hidden asp-for="@Model.NewDisease.AnimalId" />
             <div class="row">

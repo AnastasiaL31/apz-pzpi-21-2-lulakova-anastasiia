@@ -1,10 +1,12 @@
 ﻿@using SmartShelter_Web.Models.ViewModel;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 @model StorageVM
 
 <div class="row col-12 m-0 justify-content-center text-center">
     <div class="card col-11 m-2">
         <div class="card-title mt-2">
-            <h3>All Storage</h3>
+            <h3>@localizer["AllStorage"]</h3>
             <hr />
         </div>
         <div class="card-body">
@@ -12,13 +14,13 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">UOM</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Staff</th>
+                        <th scope="col">@localizer["Type"]</th>
+                        <th scope="col">@localizer["Name"]</th>
+                        <th scope="col">@localizer["Amount"]</th>
+                        <th scope="col">@localizer["UOM"]</th>
+                        <th scope="col">@localizer["Price"]</th>
+                        <th scope="col">@localizer["Date"]</th>
+                        <th scope="col">@localizer["Staff"]</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -44,7 +46,7 @@
 <div class="row text-center justify-content-center">
     <div class="card col-5 m-2">
         <div class="card-title mt-2">
-            <h3>Available Products</h3>
+            <h3>@localizer["Available Products"]</h3>
             <hr />
         </div>
         <div class="card-body">
@@ -52,11 +54,11 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">UOM</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">@localizer["Type"]</th>
+                        <th scope="col">@localizer["Name"]</th>
+                        <th scope="col">@localizer["Amount"]</th>
+                        <th scope="col">@localizer["UOM"]</th>
+                        <th scope="col">@localizer["Price"]</th>
 
                     </tr>
                 </thead>
@@ -78,48 +80,48 @@
     </div>
     <div class="card col-6 m-2">
         <div class="card-title mt-2">
-            <h3>Create order</h3>
+            <h3>@localizer["CreateOrder"]</h3>
             <hr />
         </div>
         <div class="card-body">
         <form method="post" asp-action="CreateOrder">
             <div class="row">
                 <div class="mb-3 col-5 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Type">Type</label>
+                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Type">@localizer["Type"]</label>
                     <input asp-for="@Model.NewOrder.Type" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.Type" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-5 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Name">Name</label>
+                        <label class="p-0  pb-2" asp-for="@Model.NewOrder.Name">@localizer["Name"]</label>
                     <input asp-for="@Model.NewOrder.Name" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-3 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Amount">Amount</label>
+                        <label class="p-0  pb-2" asp-for="@Model.NewOrder.Amount">@localizer["Amount"]</label>
                     <input asp-for="@Model.NewOrder.Amount" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.Amount" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-4 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.UnitOfMeasure">UOM</label>
+                        <label class="p-0  pb-2" asp-for="@Model.NewOrder.UnitOfMeasure">@localizer["UOM"]</label>
                     <input asp-for="@Model.NewOrder.UnitOfMeasure" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.UnitOfMeasure" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-4 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.Price">Price</label>
+                        <label class="p-0  pb-2" asp-for="@Model.NewOrder.Price">@localizer["Price"]</label>
                     <input asp-for="@Model.NewOrder.Price" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.Price" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-8 p-1">
-                    <label class="p-0  pb-2" asp-for="@Model.NewOrder.EndDate">EndDate</label>
+                        <label class="p-0  pb-2" asp-for="@Model.NewOrder.EndDate">@localizer["EndDate"]</label>
                     <input asp-for="@Model.NewOrder.EndDate" class="form-control" />
                     <span asp-validation-for="@Model.NewOrder.EndDate" class="text-danger"></span>
                 </div>
                 <input hidden asp-for="@Model.NewOrder.OrderDate" value="@DateTime.Now" />
-                <button type="submit" class="btn btn-success col-3 m-3 p-0">Create</button>
+                <button type="submit" class="btn btn-success col-3 m-3 p-0">@localizer["Create"]</button>
             </div>
         </form>
         </div>
@@ -129,7 +131,7 @@
 <div class="row text-center justify-content-center">
     <div class="card col-11 m-2">
         <div class="card-title mt-2">
-            <h3>All Orders</h3>
+            <h3>@localizer["AllOrders"]</h3>
             <hr />
         </div>
         <div class="card-body p-0">
@@ -137,16 +139,16 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">UOM</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Approved</th>
+                        <th scope="col">@localizer["Type"]</th>
+                        <th scope="col">@localizer["Name"]</th>
+                        <th scope="col">@localizer["Amount"]</th>
+                        <th scope="col">@localizer["UOM"]</th>
+                        <th scope="col">@localizer["Price"]</th>
+                        <th scope="col">@localizer["Date"]</th>
+                        <th scope="col">@localizer["Approved"]</th>
                         @if(GlobalVariables.isAdmin)
                         {
-                            <th scope="col">Actions</th>
+                            <th scope="col">@localizer["Actions"]</th>
 
                         }
                     </tr>
@@ -162,13 +164,15 @@
                             <td>@item.UnitOfMeasure</td>
                             <td>@item.Price</td>
                             <td>@item.OrderDate</td>
-                            <td>@(item.IsApproved ? "yes" : "no")</td>
+                            <td>
+                                @(item.IsApproved ? localizer["yes"] : localizer["no"])
+                            </td>
                             @if (GlobalVariables.isAdmin )
                             {
                                 if (!item.IsApproved)
                                 {
                                     <td>
-                                        <a class="btn btn-warning" asp-action="ApproveOrder" asp-route-orderId="@item.Id">Approve</a>
+                                        <a class="btn btn-warning" asp-action="ApproveOrder" asp-route-orderId="@item.Id">@localizer["Approve"]</a>
                                     </td>
                                 }
                                 else

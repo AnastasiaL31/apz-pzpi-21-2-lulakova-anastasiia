@@ -117,139 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccDate" xml:space="preserve">
-    <value>Acceptance Date</value>
+  <data name="AcceptanceDate" xml:space="preserve">
+    <value>Дата прийняття</value>
   </data>
   <data name="Actions" xml:space="preserve">
-    <value>Actions</value>
+    <value>Дії</value>
   </data>
-  <data name="AddDisease" xml:space="preserve">
-    <value>Add Disease</value>
-  </data>
-  <data name="AddMeal" xml:space="preserve">
-    <value>Add Meal</value>
-  </data>
-  <data name="AddTreatment" xml:space="preserve">
-    <value>Add Treatment</value>
-  </data>
-  <data name="Amount" xml:space="preserve">
-    <value>Amount</value>
-  </data>
-  <data name="Aviary" xml:space="preserve">
-    <value>Aviary</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="Breed" xml:space="preserve">
-    <value>Breed</value>
-  </data>
-  <data name="ChangeAviary" xml:space="preserve">
-    <value>Change Aviary</value>
-  </data>
-  <data name="Choose" xml:space="preserve">
-    <value>Choose</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="Diseases" xml:space="preserve">
-    <value>Diseases</value>
+  <data name="DismissialDate" xml:space="preserve">
+    <value>Дата звільнення</value>
   </data>
   <data name="DOB" xml:space="preserve">
-    <value>DOB</value>
+    <value>Дата народження</value>
   </data>
-  <data name="EditAnimal" xml:space="preserve">
-    <value>Edit Animal</value>
-  </data>
-  <data name="End" xml:space="preserve">
-    <value>End</value>
-  </data>
-  <data name="ExpDate" xml:space="preserve">
-    <value>Exp Date</value>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>Gender</value>
-  </data>
-  <data name="MaxHum" xml:space="preserve">
-    <value>Max Hum</value>
-  </data>
-  <data name="MaxTemp" xml:space="preserve">
-    <value>Max Temp</value>
-  </data>
-  <data name="Meals" xml:space="preserve">
-    <value>Meals</value>
-  </data>
-  <data name="MinHum" xml:space="preserve">
-    <value>MinHum</value>
-  </data>
-  <data name="MinTemp" xml:space="preserve">
-    <value>Min Temp</value>
-  </data>
-  <data name="MinWater" xml:space="preserve">
-    <value>Min Water</value>
+  <data name="HasRole" xml:space="preserve">
+    <value>Має роль</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>ПІП</value>
   </data>
-  <data name="NoAviary" xml:space="preserve">
-    <value>There is no aviary</value>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
   </data>
-  <data name="NoDiseases" xml:space="preserve">
-    <value>There is no diseases</value>
+  <data name="Position" xml:space="preserve">
+    <value>Посада</value>
   </data>
-  <data name="NoMeals" xml:space="preserve">
-    <value>There is no meal plans</value>
+  <data name="Staff" xml:space="preserve">
+    <value>Робітники</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>Notes</value>
-  </data>
-  <data name="OtherTreatments" xml:space="preserve">
-    <value>Other Treatments</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="SelectAviary" xml:space="preserve">
-    <value>Select free aviary from list</value>
-  </data>
-  <data name="SensorData" xml:space="preserve">
-    <value>Sensor Data</value>
-  </data>
-  <data name="StaffName" xml:space="preserve">
-    <value>Staff Name</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="Supplies" xml:space="preserve">
-    <value>Supplies</value>
-  </data>
-  <data name="Symptoms" xml:space="preserve">
-    <value>Symptoms</value>
-  </data>
-  <data name="Time" xml:space="preserve">
-    <value>Time</value>
-  </data>
-  <data name="Treatments" xml:space="preserve">
-    <value>Treatments</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="Weight" xml:space="preserve">
-    <value>Weight</value>
+  <data name="Update" xml:space="preserve">
+    <value>Оновити</value>
   </data>
 </root>

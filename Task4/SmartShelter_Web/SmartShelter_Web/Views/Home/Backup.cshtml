@@ -1,10 +1,11 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 <div class="card text-center">
     <div class="card-title m-3">
-        <h3>Create database backup</h3>
+        <h3>@localizer["CreateBackup"]</h3>
     </div>
     <div class="card-body m-3">
-        <a asp-action="DownloadFile" class="btn btn-primary" >Dowload</a>
+        <a asp-action="DownloadFile" class="btn btn-primary" >@localizer["Dowload"]</a>
     </div>
 </div>
 

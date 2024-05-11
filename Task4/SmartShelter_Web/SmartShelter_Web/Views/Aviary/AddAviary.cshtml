@@ -1,4 +1,6 @@
 ﻿@using SmartShelter_Web.Dtos;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,16 +12,16 @@
         <form method="post" asp-action="AddNewAviary" asp-controller="Aviary">
        
             <div class="row pb-2 text-center">
-                <h2 class="text-primary">Add Aviary</h2>
+                <h2 class="text-primary">@localizer["AddAviary"]</h2>
                 <hr />
             </div>
             <div class="mb-3 row p-1">
-                <label class="p-0  pb-2" asp-for="@Model.Description">Description</label>
+                <label class="p-0  pb-2" asp-for="@Model.Description">@localizer["Description"]</label>
                 <textarea asp-for="@Model.Description" class="form-control"></textarea>
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>
             </div>
             
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">@localizer["Submit"]</button>
         </form>
     </div>
 </div>

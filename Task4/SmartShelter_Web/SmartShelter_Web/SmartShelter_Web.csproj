@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Resources\Views\Store.Index.en.resx" />
+    <EmbeddedResource Remove="Resources\Views\Store.Index.uk.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Views\Store\Index.uk.resx">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\Views\Store\Index.en.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Highsoft.Highcharts" Version="11.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.18" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.18" />
