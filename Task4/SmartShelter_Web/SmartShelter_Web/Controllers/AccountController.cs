@@ -12,6 +12,7 @@ using NuGet.Common;
 using SmartShelter_Web.Middleware;
 using Microsoft.IdentityModel.Tokens;
 using SmartShelter_Web.Dtos;
+using Microsoft.AspNetCore.Http;
 
 namespace SmartShelter_Web.Controllers
 {
@@ -213,6 +214,13 @@ namespace SmartShelter_Web.Controllers
             }
         }
 
+        public IActionResult Logout()
+        {
+            Response.Cookies.Append("token", "");
+            Response.Cookies.Append("role", "");
+            GlobalVariables.role = String.Empty;
+            return RedirectToAction("Login", "Account");
+        }
         public async void GetStaff()
         {
             var client = _tokenService.CreateHttpClient();

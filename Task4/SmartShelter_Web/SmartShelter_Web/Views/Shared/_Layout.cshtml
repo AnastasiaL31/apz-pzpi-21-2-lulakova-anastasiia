@@ -20,41 +20,54 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-2">
+                    <ul class="navbar-nav ">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a>
                         </li>
                         <li>
-                            <div class="dropdown" >
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @localizer["Menu"]
-                                </button>
-                                <ul class="dropdown-menu">
-                                    @if(GlobalVariables.isAdmin || GlobalVariables.role == "Doctor")
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Animal" asp-action="Index">@localizer["Animals"]</a></li>
-                                    }
-                                    @if (GlobalVariables.isAdmin || GlobalVariables.role == "Storekeeper")
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">@localizer["Store"]</a></li>
-                                    }
-                                    
-                                   @* @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
+                            @if (!String.IsNullOrEmpty(GlobalVariables.role))
+                            {
+                                <div class="dropdown" >
+                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @localizer["Menu"]
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if (GlobalVariables.isAdmin || GlobalVariables.role == "Doctor")
+                                        {
+                                            <li><a class="dropdown-item" asp-controller="Animal" asp-action="Index">@localizer["Animals"]</a></li>
+                                        }
+                                        @if (GlobalVariables.isAdmin || GlobalVariables.role == "Storekeeper")
+                                        {
+                                            <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">@localizer["Store"]</a></li>
+                                        }
+
+                                        @* @if (String.IsNullOrEmpty(GlobalVariables.role) || GlobalVariables.role != "Guest")
                                     {
                                         <li><a class="dropdown-item" href="#">Tasks</a></li>
                                     }*@
 
-                                    @if (GlobalVariables.isAdmin)
-                                    {
-                                        <li><a class="dropdown-item" asp-controller="Staff" asp-action="Index">@localizer["Staff"]</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Home" asp-action="Backup">@localizer["Backup"]</a></li>
-                                    }
-                                </ul>
-                            </div>
+                                        @if (GlobalVariables.isAdmin)
+                                        {
+                                            <li><a class="dropdown-item" asp-controller="Staff" asp-action="Index">@localizer["Staff"]</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Home" asp-action="Backup">@localizer["Backup"]</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
                         </li>
                         <li>
                             <partial name="_Culture.cshtml" />
                         </li>
+                        @if (String.IsNullOrEmpty(GlobalVariables.role))
+                        {
+                            <li class="ml-5">
+                                <a class="btn ml-5 btn-warning" asp-action="Login" asp-controller="Account">@localizer["Login"]</a>
+                            </li>
+                        }else{
+                            <li class="ml-5">
+                                <a class="btn ml-5 btn-warning" asp-action="Logout" asp-controller="Account">@localizer["Logout"]</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

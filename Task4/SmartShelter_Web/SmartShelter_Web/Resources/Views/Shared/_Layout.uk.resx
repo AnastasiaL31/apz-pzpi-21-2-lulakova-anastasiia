@@ -126,6 +126,12 @@
   <data name="Home" xml:space="preserve">
     <value>Головна</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Вихід</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
   </data>
