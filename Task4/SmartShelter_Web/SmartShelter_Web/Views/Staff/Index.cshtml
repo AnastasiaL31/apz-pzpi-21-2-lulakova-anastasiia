@@ -35,11 +35,11 @@
                         <th scope="row">@(i + 1)</th>
                         <th>@Model[i].Name</th>
                         <td>@Model[i].Phone</td>
-                        <td>@Model[i].DOB</td>
+                        <td>@Model[i].DOB.ToString("d")</td>
                         <td>@Model[i].Position</td>
                         <td>@(Model[i].HasRole ? "yes" : "no")</td>
-                        <td>@Model[i].AcceptanceDate.Date</td>
-                        <td>@(Model[i].DismissialDate != null ? Model[i].DismissialDate.Value.Date : "-")</td>
+                        <td>@Model[i].AcceptanceDate.Date.ToString("d")</td>
+                        <td>@(Model[i].DismissialDate != null ? Model[i].DismissialDate.Value.Date.ToString("d") : "-")</td>
                         <td><a class="btn btn-warning" asp-action="StaffDetails" asp-controller="Staff" asp-route-staffId="@Model[i].Id">@localizer["Update"]</a></td>
                     </tr>
                 }

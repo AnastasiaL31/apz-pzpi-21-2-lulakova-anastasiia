@@ -244,8 +244,8 @@
                 {
                     <tr>
                         <td>@treatment.Treatment.Type</td>
-                        <td>@treatment.Treatment.Date.Date</td>
-                        <td>@(treatment.Treatment.ExpirationDate != null ? treatment.Treatment.ExpirationDate : " ")</td>
+                        <td>@treatment.Treatment.Date.ToString("d")</td>
+                        <td>@(treatment.Treatment.ExpirationDate != null ? treatment.Treatment.ExpirationDate.Value.Date : " ")</td>
                         <td>@treatment.Treatment.Notes</td>
                         <td>@treatment.StaffName</td>
                         <td>

@@ -57,7 +57,20 @@ namespace SmartShelter_Web.Controllers
 
                 }
             }
+            if (list.Count > 0)
+            {
+                var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+                var isUtc = currentCulture.Name == "en-US";
+                if (!isUtc)
+                {
+                    TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                    for (int i = 0; i < list.Count; i++)
+                    {
 
+                        list[i].Date = TimeZoneInfo.ConvertTimeFromUtc(list[i].Date, localTimeZone);
+                    }
+                }
+            }
             return list;
 
         }
@@ -93,6 +106,13 @@ namespace SmartShelter_Web.Controllers
 
         public async Task<IActionResult> CreateOrder(StorageVM vm)
         {
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var isUtc = currentCulture.Name == "en-US";
+            if (!isUtc)
+            {
+                TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                vm.NewOrder.EndDate = TimeZoneInfo.ConvertTimeToUtc(vm.NewOrder.OrderDate, localTimeZone);
+            }
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/api/Storage/order/add";
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -133,7 +153,20 @@ namespace SmartShelter_Web.Controllers
 
                 }
             }
+            if (list.Count > 0)
+            {
+                var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+                var isUtc = currentCulture.Name == "en-US";
+                if (!isUtc)
+                {
+                    TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                    for (int i = 0; i < list.Count; i++)
+                    {
 
+                        list[i].OrderDate = TimeZoneInfo.ConvertTimeFromUtc(list[i].OrderDate, localTimeZone);
+                    }
+                }
+            }
             return list;
 
         }

@@ -151,13 +151,35 @@ namespace SmartShelter_Web.Controllers
                     return meals;
                 }
             }
+            if(meals.Count > 0)
+            {
+                var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+                var isUtc = currentCulture.Name == "en-US";
+                if (!isUtc) {
+                    TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                    for (int i = 0; i < meals.Count; i++)
+                    {
 
+                        meals[i].Time = TimeZoneInfo.ConvertTimeFromUtc(meals[i].Time, localTimeZone);
+                    }
+                }
+            }
             return meals;
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateMealplan(AnimalDetailsVM vm)
         {
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var isUtc = currentCulture.Name == "en-US";
+            if (!isUtc)
+            {
+                TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                for (int i = 0; i < vm.Meals.Count; i++)
+                {
+                    vm.Meals[i].Time = TimeZoneInfo.ConvertTimeToUtc(vm.Meals[i].Time, localTimeZone);
+                }
+            }
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/updateMealPlan/group";
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -192,7 +214,13 @@ namespace SmartShelter_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMeal(AnimalDetailsVM vm)
         {
-
+            var currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            var isUtc = currentCulture.Name == "en-US";
+            if (!isUtc)
+            {
+                TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                vm.NewMealPlan.Time = TimeZoneInfo.ConvertTimeToUtc(vm.NewMealPlan.Time, localTimeZone);
+            }
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/addMealPlan";
             JsonSerializerOptions options = new JsonSerializerOptions

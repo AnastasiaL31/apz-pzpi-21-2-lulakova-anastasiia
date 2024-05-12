@@ -23,7 +23,7 @@
                 <th scope="row">@animal.Name</th>
                 <td>@animal.Breed</td>
                 <td>@animal.Gender</td>
-                <td>@animal.AcceptanceDate</td>
+                <td>@animal.AcceptanceDate.ToString("d")</td>
                 <td>
                     <div class="col-10 text-end">
                         <a asp-route-animalId="@animal.Id" asp-action="Details" class="btn btn-secondary">

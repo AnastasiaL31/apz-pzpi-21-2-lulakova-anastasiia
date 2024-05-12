@@ -16,7 +16,7 @@ namespace SmartShelter_WebAPI.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<bool> Register(LoginUser user)
+        public async Task<string> Register(LoginUser user)
         {
             return await _authService.RegisterUser(user);
         }

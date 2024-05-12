@@ -19,7 +19,7 @@ namespace SmartShelter_WebAPI.Services
             _configuration = configuration;
         }
 
-        public async Task<bool> RegisterUser(LoginUser user)
+        public async Task<string> RegisterUser(LoginUser user)
         {
             var identityUser = new IdentityUser
             {
@@ -28,7 +28,7 @@ namespace SmartShelter_WebAPI.Services
             };
             
            var result = await  _userManager.CreateAsync(identityUser, user.Password);
-           return result.Succeeded;
+           return result.ToString();
         }
 
         public async Task<bool> LoginUser(LoginUser user)
