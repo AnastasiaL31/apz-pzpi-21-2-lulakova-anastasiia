@@ -166,6 +166,10 @@ namespace SmartShelter_Web.Controllers
             {
                 fullUrl += $"?diseaseId={vm.Disease.Id}";
             }
+            if (String.IsNullOrEmpty(vm.NewTreatment.Notes))
+            {
+                vm.NewTreatment.Notes = " ";
+            }
             JsonSerializerOptions options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,

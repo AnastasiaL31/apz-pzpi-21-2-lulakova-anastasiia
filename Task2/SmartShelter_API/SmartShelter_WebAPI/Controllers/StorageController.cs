@@ -21,7 +21,7 @@ namespace SmartShelter_WebAPI.Controllers
             _staffService = staffService;
         }
 
-        [Authorize(Roles = "Admin")]
+       
         [HttpGet("orders/all")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<OrderDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

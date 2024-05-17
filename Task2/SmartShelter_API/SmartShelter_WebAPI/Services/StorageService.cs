@@ -21,7 +21,8 @@ namespace SmartShelter_WebAPI.Services
             order.StaffId = creatorId;
             order.OrderDate = DateTime.Now;
             _dbContext.Add(order);
-            return Save();
+            var res = _dbContext.SaveChanges();
+            return res == 1;
         }
 
         public bool UpdateOrder(UpdateOrderDto orderDto, int staffId)

@@ -120,7 +120,8 @@ namespace SmartShelter_Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return animals;
+                    ViewData["error"] = ex.Message;
+                    return new List<Animal>();
                 }
             }
             
@@ -230,12 +231,11 @@ namespace SmartShelter_Web.Controllers
             string json = JsonSerializer.Serialize(vm.NewMealPlan, options);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(fullUrl, content);
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                //return RedirectToAction("Details", animal.Id);
+                //return RedirectToAction("index", "Home");
             }
             return RedirectToAction("Details", new { animalId = vm.NewMealPlan.AnimalId });
-            
         }
 
 
@@ -350,7 +350,7 @@ namespace SmartShelter_Web.Controllers
 
         public async Task<IActionResult> UpdateAviary(Aviary aviary)
         {
-            aviary.AviaryCondition = null;
+            //aviary.AviaryCondition = null;
             var client = _tokenService.CreateHttpClient();
             string fullUrl = $"{GlobalVariables.backendAddress}/api/Aviary/update";
             JsonSerializerOptions options = new JsonSerializerOptions
