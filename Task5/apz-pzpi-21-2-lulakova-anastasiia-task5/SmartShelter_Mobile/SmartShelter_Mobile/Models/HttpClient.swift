@@ -24,9 +24,9 @@ class HttpClient {
             var request = URLRequest(url: endURL)
             request.httpMethod = method.rawValue
             
-            if(!HttpClient.token.isEmpty){
-                request.addValue(token, forHTTPHeaderField: "Authorization")
-            }
+//            if(!HttpClient.token.isEmpty){
+//                request.addValue(token, forHTTPHeaderField: "Authorization")
+//            }
             if(method == .POST || method == .PUT){
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
@@ -37,7 +37,11 @@ class HttpClient {
     
     public static func serializeObject<T: Encodable>(_ object: T) -> Data? {
         let encoder = JSONEncoder()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         encoder.keyEncodingStrategy = .useDefaultKeys
+        encoder.dateEncodingStrategy = .formatted(dateFormatter)
+        
         do {
             let jsonData = try encoder.encode(object)
             return jsonData
@@ -62,6 +66,23 @@ class HttpClient {
         }
     }
     
-   
+    public static func checkResponseAndError(response:URLResponse?, error:Error?) -> Bool{
+        if let error = error {
+            print("Error: \(error)")
+            return false
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("Invalid response")
+            return false
+        }
+        
+        print("Status Code: \(httpResponse.statusCode)")
+        
+        return true
+    }
+    
+    
+    
 }
 

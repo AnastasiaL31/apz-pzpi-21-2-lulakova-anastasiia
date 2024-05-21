@@ -14,6 +14,8 @@
 		D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426512BFB1D6000C02630 /* LoginUser.swift */; };
 		D6B426542BFB1EEE00C02630 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426532BFB1EEE00C02630 /* HttpClient.swift */; };
 		D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426562BFB27DF00C02630 /* UserVM.swift */; };
+		D6B4265A2BFC727400C02630 /* StaffRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426592BFC727400C02630 /* StaffRegisterView.swift */; };
+		D6B4265C2BFC811100C02630 /* FunctionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4265B2BFC811100C02630 /* FunctionListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		D6B426512BFB1D6000C02630 /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
 		D6B426532BFB1EEE00C02630 /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		D6B426562BFB27DF00C02630 /* UserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVM.swift; sourceTree = "<group>"; };
+		D6B426592BFC727400C02630 /* StaffRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffRegisterView.swift; sourceTree = "<group>"; };
+		D6B4265B2BFC811100C02630 /* FunctionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,10 +61,10 @@
 		D6B426412BFB179B00C02630 /* SmartShelter_Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				D6B426582BFC717C00C02630 /* Views */,
 				D6B426552BFB27C500C02630 /* ViewModels */,
 				D6B426502BFB1C8300C02630 /* Models */,
 				D6B426422BFB179B00C02630 /* SmartShelter_MobileApp.swift */,
-				D6B426442BFB179B00C02630 /* ContentView.swift */,
 				D6B426462BFB179E00C02630 /* Assets.xcassets */,
 				D6B426482BFB179E00C02630 /* Preview Content */,
 			);
@@ -90,6 +94,16 @@
 				D6B426562BFB27DF00C02630 /* UserVM.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D6B426582BFC717C00C02630 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D6B426442BFB179B00C02630 /* ContentView.swift */,
+				D6B426592BFC727400C02630 /* StaffRegisterView.swift */,
+				D6B4265B2BFC811100C02630 /* FunctionListView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,7 +178,9 @@
 			files = (
 				D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */,
 				D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */,
+				D6B4265A2BFC727400C02630 /* StaffRegisterView.swift in Sources */,
 				D6B426452BFB179B00C02630 /* ContentView.swift in Sources */,
+				D6B4265C2BFC811100C02630 /* FunctionListView.swift in Sources */,
 				D6B426542BFB1EEE00C02630 /* HttpClient.swift in Sources */,
 				D6B426432BFB179B00C02630 /* SmartShelter_MobileApp.swift in Sources */,
 			);

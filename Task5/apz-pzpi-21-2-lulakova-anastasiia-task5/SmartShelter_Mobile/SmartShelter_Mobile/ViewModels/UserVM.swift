@@ -14,11 +14,26 @@ class UserVM:ObservableObject {
         self.user = LoginUser(Username: "", Password: "")
     }
     
-    public func GetUser(){
-        var res = model.GetUser()
+    public func AuthorizeUser(completion: @escaping (Result<Bool, Error>) -> Void) {
+        model.GetUser(completion: completion)
     }
     
-    var model:LoginUser {
+    public func RegisterUser(completion: @escaping (Result<Bool, Error>) -> Void){
+        model.RegisterUser {result in
+            switch result {
+            case .success(true):
+                self.model.GetUser(completion: completion)
+            default:
+                return
+            }
+        }
+    }
+    
+    public func AddStaff(addStaff: AddStaff, completion: @escaping (Bool) -> Void){
+        model.RegisterStaff(staff: addStaff, completion: completion)
+    }
+    
+    public var model:LoginUser {
         return user
     }
     
