@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "DA2C21B8-25A7-4C86-9266-B9F69DCF629B"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2192B0AF-92AC-42F8-B508-BBEF11041FCB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/LoginUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "GetUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2192B0AF-92AC-42F8-B508-BBEF11041FCB - 2d649000f4240f80"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmartShelter_Mobile.LoginUser.GetUser() -&gt; Swift.Bool"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Models/LoginUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "288">
+               </Location>
+               <Location
+                  uuid = "2192B0AF-92AC-42F8-B508-BBEF11041FCB - 2d649000f4240f42"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmartShelter_Mobile.LoginUser.GetUser() -&gt; Swift.Bool"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Models/LoginUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "329">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B7C7C8F9-61E3-426E-AE56-CDB423E3E3E2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/LoginUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "GetUser()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B7C7C8F9-61E3-426E-AE56-CDB423E3E3E2 - 2d649000f4240c98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmartShelter_Mobile.LoginUser.GetUser() -&gt; Swift.Bool"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Models/LoginUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "921">
+               </Location>
+               <Location
+                  uuid = "B7C7C8F9-61E3-426E-AE56-CDB423E3E3E2 - ff6d150026150005"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SmartShelter_Mobile.LoginUser.GetUser() -&gt; Swift.Bool"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Models/LoginUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "193">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77CC3077-5B3B-4886-87B0-B247F3B44826"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "deserializeObject(_:type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D015F675-CE7D-4350-80C8-CB53FFB41AA5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "serializeObject(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2C5C808B-BDD3-4215-BF0D-E826314F3D5C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/LoginUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "GetUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C2B10EB3-D95D-47CA-8C1D-F8C9834298C8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/LoginUser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "GetUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "127276A0-135B-4112-970B-8025075A2FD5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "createRequest(url:method:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
