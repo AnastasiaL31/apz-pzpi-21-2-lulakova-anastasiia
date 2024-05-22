@@ -9,7 +9,20 @@ import SwiftUI
 
 struct FunctionListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            List{
+                NavigationLink(destination: AllAnimalsView()){
+                    Text("Animals")
+                }
+                NavigationLink(destination: FunctionListView()){
+                    Text("Store")
+                }
+                NavigationLink(destination: FunctionListView()){
+                    Text("Staff")
+                }
+            }
+            .navigationBarBackButtonHidden(true)
+        }
     }
 }
 

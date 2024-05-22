@@ -23,10 +23,9 @@ class HttpClient {
         if let endURL = URL(string: backendAddress + url){
             var request = URLRequest(url: endURL)
             request.httpMethod = method.rawValue
-            
-//            if(!HttpClient.token.isEmpty){
-//                request.addValue(token, forHTTPHeaderField: "Authorization")
-//            }
+            if(!HttpClient.token.isEmpty){
+                request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
             if(method == .POST || method == .PUT){
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
@@ -56,7 +55,12 @@ class HttpClient {
             return nil
         }
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .useDefaultKeys
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        decoder.dateDecodingStrategy = .iso8601
+        //decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
             let decodedObject = try decoder.decode(type, from: jsonData)
             return decodedObject
@@ -65,6 +69,7 @@ class HttpClient {
             return nil
         }
     }
+
     
     public static func checkResponseAndError(response:URLResponse?, error:Error?) -> Bool{
         if let error = error {
