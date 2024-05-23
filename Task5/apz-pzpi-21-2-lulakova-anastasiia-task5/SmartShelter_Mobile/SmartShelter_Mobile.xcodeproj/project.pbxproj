@@ -20,6 +20,9 @@
 		D6B426622BFE1F5E00C02630 /* AllAnimalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426612BFE1F5E00C02630 /* AllAnimalsView.swift */; };
 		D6B426642BFE20DF00C02630 /* AnimalVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426632BFE20DE00C02630 /* AnimalVM.swift */; };
 		D6B426662BFE3BF700C02630 /* AnimalDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426652BFE3BF700C02630 /* AnimalDetailsView.swift */; };
+		D6B426682BFF6B5400C02630 /* AnimalEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426672BFF6B5400C02630 /* AnimalEditorView.swift */; };
+		D6B4266A2BFF7ABB00C02630 /* Aviary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426692BFF7ABB00C02630 /* Aviary.swift */; };
+		D6B4266C2BFF893500C02630 /* AviaryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4266B2BFF893500C02630 /* AviaryEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +40,9 @@
 		D6B426612BFE1F5E00C02630 /* AllAnimalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAnimalsView.swift; sourceTree = "<group>"; };
 		D6B426632BFE20DE00C02630 /* AnimalVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalVM.swift; sourceTree = "<group>"; };
 		D6B426652BFE3BF700C02630 /* AnimalDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailsView.swift; sourceTree = "<group>"; };
+		D6B426672BFF6B5400C02630 /* AnimalEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalEditorView.swift; sourceTree = "<group>"; };
+		D6B426692BFF7ABB00C02630 /* Aviary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aviary.swift; sourceTree = "<group>"; };
+		D6B4266B2BFF893500C02630 /* AviaryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AviaryEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,7 @@
 				D6B426512BFB1D6000C02630 /* LoginUser.swift */,
 				D6B426532BFB1EEE00C02630 /* HttpClient.swift */,
 				D6B4265F2BFE1CE800C02630 /* Animal.swift */,
+				D6B426692BFF7ABB00C02630 /* Aviary.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -114,6 +121,8 @@
 				D6B4265B2BFC811100C02630 /* FunctionListView.swift */,
 				D6B426612BFE1F5E00C02630 /* AllAnimalsView.swift */,
 				D6B426652BFE3BF700C02630 /* AnimalDetailsView.swift */,
+				D6B426672BFF6B5400C02630 /* AnimalEditorView.swift */,
+				D6B4266B2BFF893500C02630 /* AviaryEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,12 +200,15 @@
 				D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */,
 				D6B426602BFE1CE800C02630 /* Animal.swift in Sources */,
 				D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */,
+				D6B4266A2BFF7ABB00C02630 /* Aviary.swift in Sources */,
 				D6B426622BFE1F5E00C02630 /* AllAnimalsView.swift in Sources */,
 				D6B4265A2BFC727400C02630 /* StaffRegisterView.swift in Sources */,
+				D6B4266C2BFF893500C02630 /* AviaryEditor.swift in Sources */,
 				D6B426452BFB179B00C02630 /* ContentView.swift in Sources */,
 				D6B426662BFE3BF700C02630 /* AnimalDetailsView.swift in Sources */,
 				D6B4265C2BFC811100C02630 /* FunctionListView.swift in Sources */,
 				D6B426542BFB1EEE00C02630 /* HttpClient.swift in Sources */,
+				D6B426682BFF6B5400C02630 /* AnimalEditorView.swift in Sources */,
 				D6B426642BFE20DF00C02630 /* AnimalVM.swift in Sources */,
 				D6B426432BFB179B00C02630 /* SmartShelter_MobileApp.swift in Sources */,
 			);

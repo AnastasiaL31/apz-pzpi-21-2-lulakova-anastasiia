@@ -15,16 +15,16 @@ struct Animal: Codable, Hashable, Identifiable{
     public var dob:String
     public var gender:String
     public var weight:Float
-    public var acceptancedate:String?
+    public var acceptanceDate:String
 
     var DOB: Date? {
         return Animal.customDateFormatter.date(from: dob)
        }
 
-       var AcceptanceDate: Date? {
-           guard let acceptancedate = acceptancedate else { return nil }
-           return Animal.customDateFormatter.date(from: acceptancedate)
-       }
+    var AcceptanceDate: Date? {
+        //guard let acceptancedate = acceptancedate else { return nil }
+        return Animal.customDateFormatter.date(from: acceptanceDate)
+    }
     
     public static func GetAllAnimals(completion: @escaping (Result<Array<Animal>, Error>) -> Void) {
         let url = "api/Animals"
@@ -58,6 +58,38 @@ struct Animal: Codable, Hashable, Identifiable{
         task.resume()
     }
     
+    public func updateAnimal(completion: @escaping (Bool) -> Void){
+        let url = "updateAnimal"
+        
+        var httpClient = HttpClient.createRequest(url: url, method: .PUT)
+        if(httpClient == nil){
+            completion(false)
+            return
+        }
+        if let jsonData = HttpClient.serializeObject(self){
+            httpClient?.httpBody = jsonData
+        }
+        
+        let task = URLSession.shared.dataTask(with: httpClient!){ (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("Invalid response")
+                return
+            }
+            print(httpResponse.statusCode)
+            if(httpResponse.statusCode == 200){
+                print("Succesful animal update")
+                completion(true)
+                return
+            }
+        }
+        task.resume()
+    }
+    
     
     
     enum AnimalError: Error {
@@ -66,7 +98,6 @@ struct Animal: Codable, Hashable, Identifiable{
     
     private static let customDateFormatter: DateFormatter = {
            let formatter = DateFormatter()
-           // Customize the date format to match your JSON date format
            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
            return formatter
        }()

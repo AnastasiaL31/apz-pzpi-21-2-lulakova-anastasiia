@@ -16,7 +16,7 @@ struct AllAnimalsView: View {
         List{
             ForEach(animalVM.animalList) {animal in
                 if let index = animalVM.animalList.firstIndex(where: {$0.id == animal.id}){
-                    NavigationLink(destination: AnimalDetailsView(animal: $animalVM.animalList[index])){
+                    NavigationLink(destination: AnimalDetailsView(animal: $animalVM.animalList[index], animalVM: animalVM)){
                         AnimalItem(animal: $animalVM.animalList[index])
                     }
                 }
