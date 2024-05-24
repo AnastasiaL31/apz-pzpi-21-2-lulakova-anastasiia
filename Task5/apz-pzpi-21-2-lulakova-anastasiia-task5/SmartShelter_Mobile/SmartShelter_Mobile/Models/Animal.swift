@@ -96,9 +96,9 @@ struct Animal: Codable, Hashable, Identifiable{
         case programError
     }
     
-    private static let customDateFormatter: DateFormatter = {
+    public static let customDateFormatter: DateFormatter = {
            let formatter = DateFormatter()
-           formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+           formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS" //"yyyy-MM-dd'T'HH:mm:ss.SSSZ"
            return formatter
        }()
 }

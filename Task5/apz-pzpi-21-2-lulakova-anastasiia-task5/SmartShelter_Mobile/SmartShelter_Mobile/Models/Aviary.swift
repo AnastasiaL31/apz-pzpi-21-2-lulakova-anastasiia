@@ -20,7 +20,7 @@ struct Aviary: Codable{
         let url = "api/Aviary/aviary/\(animalId)"
         
         print("Getting aviary")
-        var httpClient = HttpClient.createRequest(url: url, method: .GET)
+        let httpClient = HttpClient.createRequest(url: url, method: .GET)
         if(httpClient == nil){
             completion(Result.failure(RequestError.WrongRequest))
             return

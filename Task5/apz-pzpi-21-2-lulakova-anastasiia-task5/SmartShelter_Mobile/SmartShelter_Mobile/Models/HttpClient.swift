@@ -8,7 +8,7 @@
 import Foundation
 
 class HttpClient {
-    public static var backendAddress = "http://192.168.1.9:5139/"
+    public static var backendAddress = "http://192.168.1.11:5139/"
     public static var token = ""
     public static var role = ""
     
@@ -88,11 +88,7 @@ class HttpClient {
     }
     
     
-    public static func formatDate(_ date: Date) -> String {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-            return formatter.string(from: date)
-        }
+    
 }
 
 enum RequestError: Error{

@@ -8,7 +8,7 @@
 import Foundation
 
 class AnimalVM: ObservableObject {
-    @Published public var selectedAnimal:Animal?
+
     @Published public var animalList:Array<Animal> = []
     
     
@@ -30,7 +30,7 @@ class AnimalVM: ObservableObject {
     public func updateAnimal(animal:Animal){
         print(animal)
         var updatedAnimal = animal
-        updatedAnimal.dob = HttpClient.formatDate(updatedAnimal.DOB ?? Date())
+        updatedAnimal.dob = DateConverter.formatDateToString(updatedAnimal.DOB ?? Date())
         print(updatedAnimal)
         updatedAnimal.updateAnimal{result in
             if(result){
