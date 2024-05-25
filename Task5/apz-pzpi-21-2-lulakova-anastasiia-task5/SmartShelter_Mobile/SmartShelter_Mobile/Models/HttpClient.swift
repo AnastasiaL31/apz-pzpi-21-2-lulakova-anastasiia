@@ -8,7 +8,7 @@
 import Foundation
 
 class HttpClient {
-    public static var backendAddress = "http://192.168.1.11:5139/"
+    public static var backendAddress = "http://192.168.1.5:5139/"
     public static var token = ""
     public static var role = ""
     

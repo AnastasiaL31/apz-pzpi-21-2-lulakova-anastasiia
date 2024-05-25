@@ -62,10 +62,23 @@ class AnimalVM: ObservableObject {
     }
     
     private func performUpdate(aviary: Aviary) {
-        // Update aviary
         aviary.updateAviary { result in
             if !result {
                 print("Cannot update aviary")
+            }
+        }
+    }
+    
+    
+    public func getAviarySensor(aviaryId:Int, completion: @escaping (Result<Sensor?, Error>) -> Void){
+        Sensor.getSensor(aviaryId: aviaryId, completion: completion)
+    }
+    
+    public func updateSensor(sensor:Sensor){
+        print(sensor)
+        sensor.updateSensor{result in
+            if(result){
+                print("Success")
             }
         }
     }

@@ -11,10 +11,11 @@ struct AnimalDetailsView: View {
     @Binding var animal:Animal
     @State var isAnimalEditShown = false
     @State var isAviaryEditShown = false
+    @State var isSensorEditShown = false
     var animalVM:AnimalVM
     @State var animalAviary:Aviary = Aviary(id: 0, aviaryCondition: AviaryCondition(id: 0))
     @State var aviaryCondition:AviaryCondition = AviaryCondition(id: 0)
-    
+    @State var sensor:Sensor = Sensor(id:0, frequency: 0)
     
     var body: some View {
         Form{
@@ -25,6 +26,7 @@ struct AnimalDetailsView: View {
                         case .success(let GotAviary):
                             print(GotAviary)
                             animalAviary = GotAviary
+                            getSensor()
                             if(GotAviary.aviaryCondition == nil){
                                 aviaryCondition = AviaryCondition(id: 0)
                             }else{
@@ -37,6 +39,8 @@ struct AnimalDetailsView: View {
                 }
             Spacer()
             aviaryView
+            Spacer()
+            sensorView
         }
         .sheet(isPresented: $isAnimalEditShown){
             let date = animal.DOB ?? Date()
@@ -48,6 +52,9 @@ struct AnimalDetailsView: View {
             AviaryEditor(aviary: $animalAviary,
                          updateInDB: animalVM.updateAviary(aviary:),
                          aviaryCondition: $aviaryCondition)
+        }
+        .sheet(isPresented: $isSensorEditShown){
+            SensorEditor(sensor: $sensor, updateInDB: animalVM.updateSensor(sensor:))
         }
     }
     
@@ -75,7 +82,8 @@ struct AnimalDetailsView: View {
                     Text("Edit")
                 })
             }
-        
+            .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+            .padding()
     }
     
     
@@ -110,13 +118,49 @@ struct AnimalDetailsView: View {
                     Text("Edit")
                 })
             }
-       // }
+            .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+            .padding()
+            
+    }
+    
+    
+    var sensorView: some View{
+        VStack{
+            if sensor.id != 0{
+                Text("Sensor #\(sensor.id)")
+                Text(sensor.notes ?? " ")
+                Text("Frequency: \(sensor.frequency/3600)")
+                Spacer()
+                Button(action: {
+                    isSensorEditShown = true
+                }, label: {
+                    Text("Edit")
+                })
+            }else{
+                Text("No sensor connected to aviary")
+            }
+        }
+        .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
+        .padding()
     }
     
     func formatFloatToString(_ number:Float) -> String {
         return String(format: "%.2f", number)
     }
-        
+      
+    
+    func getSensor(){
+        animalVM.getAviarySensor(aviaryId: animalAviary.id){ result in
+            switch result{
+            case .success(let sensor):
+                if let unwrappedSensor = sensor{
+                    self.sensor = unwrappedSensor
+                }
+            default:
+                break
+            }
+        }
+    }
 }
 
 

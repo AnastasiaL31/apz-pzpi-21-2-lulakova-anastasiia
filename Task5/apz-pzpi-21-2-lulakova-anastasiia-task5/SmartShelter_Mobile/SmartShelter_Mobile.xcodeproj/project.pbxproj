@@ -28,6 +28,8 @@
 		D6B426722C006AEF00C02630 /* AllStaffView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426712C006AEF00C02630 /* AllStaffView.swift */; };
 		D6B426742C00758C00C02630 /* StaffEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426732C00758C00C02630 /* StaffEditor.swift */; };
 		D6B426762C00A06F00C02630 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426752C00A06F00C02630 /* DateConverter.swift */; };
+		D6B426782C02222800C02630 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426772C02222800C02630 /* Sensor.swift */; };
+		D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426792C0227F900C02630 /* SensorEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		D6B426712C006AEF00C02630 /* AllStaffView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStaffView.swift; sourceTree = "<group>"; };
 		D6B426732C00758C00C02630 /* StaffEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffEditor.swift; sourceTree = "<group>"; };
 		D6B426752C00A06F00C02630 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
+		D6B426772C02222800C02630 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		D6B426792C0227F900C02630 /* SensorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 				D6B426692BFF7ABB00C02630 /* Aviary.swift */,
 				D6B4266D2C0067E200C02630 /* Staff.swift */,
 				D6B426752C00A06F00C02630 /* DateConverter.swift */,
+				D6B426772C02222800C02630 /* Sensor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 				D6B4266B2BFF893500C02630 /* AviaryEditor.swift */,
 				D6B426712C006AEF00C02630 /* AllStaffView.swift */,
 				D6B426732C00758C00C02630 /* StaffEditor.swift */,
+				D6B426792C0227F900C02630 /* SensorEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,7 +218,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */,
 				D6B4266E2C0067E200C02630 /* Staff.swift in Sources */,
+				D6B426782C02222800C02630 /* Sensor.swift in Sources */,
 				D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */,
 				D6B426602BFE1CE800C02630 /* Animal.swift in Sources */,
 				D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */,
