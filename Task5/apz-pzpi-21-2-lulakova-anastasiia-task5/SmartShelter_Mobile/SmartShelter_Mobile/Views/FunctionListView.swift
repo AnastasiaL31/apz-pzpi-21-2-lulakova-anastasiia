@@ -14,7 +14,7 @@ struct FunctionListView: View {
                 NavigationLink(destination: AllAnimalsView()){
                     Text("Animals")
                 }
-                NavigationLink(destination: FunctionListView()){
+                NavigationLink(destination: StorageView()){
                     Text("Store")
                 }
                 NavigationLink(destination: AllStaffView()){

@@ -34,6 +34,10 @@
 		D6B4267E2C0251F500C02630 /* Diagrams.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4267D2C0251F500C02630 /* Diagrams.swift */; };
 		D6B426812C02541300C02630 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426802C02541300C02630 /* DGCharts */; };
 		D6B426832C02541300C02630 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426822C02541300C02630 /* DGChartsDynamic */; };
+		D6B426852C03271B00C02630 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426842C03271B00C02630 /* Storage.swift */; };
+		D6B426872C0329E100C02630 /* StorageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426862C0329E100C02630 /* StorageVM.swift */; };
+		D6B426892C032AC400C02630 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426882C032AC400C02630 /* StorageView.swift */; };
+		D6B4268B2C03374700C02630 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4268A2C03374700C02630 /* Order.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +67,10 @@
 		D6B426792C0227F900C02630 /* SensorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorEditor.swift; sourceTree = "<group>"; };
 		D6B4267B2C024E5900C02630 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
 		D6B4267D2C0251F500C02630 /* Diagrams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagrams.swift; sourceTree = "<group>"; };
+		D6B426842C03271B00C02630 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		D6B426862C0329E100C02630 /* StorageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageVM.swift; sourceTree = "<group>"; };
+		D6B426882C032AC400C02630 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
+		D6B4268A2C03374700C02630 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +134,8 @@
 				D6B426752C00A06F00C02630 /* DateConverter.swift */,
 				D6B426772C02222800C02630 /* Sensor.swift */,
 				D6B4267B2C024E5900C02630 /* SensorData.swift */,
+				D6B426842C03271B00C02630 /* Storage.swift */,
+				D6B4268A2C03374700C02630 /* Order.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +146,7 @@
 				D6B426562BFB27DF00C02630 /* UserVM.swift */,
 				D6B426632BFE20DE00C02630 /* AnimalVM.swift */,
 				D6B4266F2C00699100C02630 /* StaffVM.swift */,
+				D6B426862C0329E100C02630 /* StorageVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -154,6 +165,7 @@
 				D6B426732C00758C00C02630 /* StaffEditor.swift */,
 				D6B426792C0227F900C02630 /* SensorEditor.swift */,
 				D6B4267D2C0251F500C02630 /* Diagrams.swift */,
+				D6B426882C032AC400C02630 /* StorageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,18 +249,22 @@
 			files = (
 				D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */,
 				D6B4266E2C0067E200C02630 /* Staff.swift in Sources */,
+				D6B426892C032AC400C02630 /* StorageView.swift in Sources */,
 				D6B4267E2C0251F500C02630 /* Diagrams.swift in Sources */,
 				D6B426782C02222800C02630 /* Sensor.swift in Sources */,
 				D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */,
+				D6B426852C03271B00C02630 /* Storage.swift in Sources */,
 				D6B426602BFE1CE800C02630 /* Animal.swift in Sources */,
 				D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */,
 				D6B4266A2BFF7ABB00C02630 /* Aviary.swift in Sources */,
 				D6B4267C2C024E5900C02630 /* SensorData.swift in Sources */,
 				D6B426622BFE1F5E00C02630 /* AllAnimalsView.swift in Sources */,
+				D6B4268B2C03374700C02630 /* Order.swift in Sources */,
 				D6B4265A2BFC727400C02630 /* StaffRegisterView.swift in Sources */,
 				D6B426722C006AEF00C02630 /* AllStaffView.swift in Sources */,
 				D6B4266C2BFF893500C02630 /* AviaryEditor.swift in Sources */,
 				D6B426762C00A06F00C02630 /* DateConverter.swift in Sources */,
+				D6B426872C0329E100C02630 /* StorageVM.swift in Sources */,
 				D6B426452BFB179B00C02630 /* ContentView.swift in Sources */,
 				D6B426662BFE3BF700C02630 /* AnimalDetailsView.swift in Sources */,
 				D6B4265C2BFC811100C02630 /* FunctionListView.swift in Sources */,
