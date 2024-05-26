@@ -22,6 +22,9 @@ struct AllAnimalsView: View {
                 }
             }
         }
+        
+        .navigationTitle("All animals")
+    
     }
         
 }
@@ -35,9 +38,7 @@ struct AllAnimalsView: View {
                     Text(animal.name)
                         .fontWeight(.bold)
                     Text(animal.breed)
-                    if let accDate = animal.AcceptanceDate {
-                        Text(accDate.description)
-                    }
+                    Text("Acc Date: " + animal.acceptanceDate)
                 }
         }
         

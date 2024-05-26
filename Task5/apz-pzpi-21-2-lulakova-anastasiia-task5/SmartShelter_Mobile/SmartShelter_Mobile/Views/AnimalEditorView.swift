@@ -23,19 +23,19 @@ struct AnimalEditorView: View {
                     TextField("Breed", text: $animal.breed)
                     TextField("Gender", text: $animal.gender)
                 }
-                HStack{
-                    DatePicker(selection: $dob){
+                VStack{
+                    DatePicker(selection: $dob, displayedComponents: .date){
                         Text("DOB")
+                        TextField("Weight", value: $animal.weight, formatter: formatter)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
                     }
-                    TextField("Enter your score", value: $animal.weight, formatter: formatter)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
                 }
                 
             }
         }
         .onDisappear {
-            animal.dob = dob.formatted()
+            animal.dob = DateConverter.dateToSwiftString(dob)
             updateInDB(animal)
         }
     }

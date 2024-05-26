@@ -18,12 +18,11 @@ struct Animal: Codable, Hashable, Identifiable{
     public var acceptanceDate:String
 
     var DOB: Date? {
-        return Animal.customDateFormatter.date(from: dob)
+        return DateConverter.fromSwiftDateStringToDate(from: dob)
        }
 
     var AcceptanceDate: Date? {
-        //guard let acceptancedate = acceptancedate else { return nil }
-        return Animal.customDateFormatter.date(from: acceptanceDate)
+        return DateConverter.fromSwiftDateStringToDate(from: acceptanceDate)
     }
     
     public static func GetAllAnimals(completion: @escaping (Result<Array<Animal>, Error>) -> Void) {
@@ -46,7 +45,7 @@ struct Animal: Codable, Hashable, Identifiable{
                     if let jsonString = String(data: data, encoding: .utf8) {
                             print("Received JSON: \(jsonString)")
                         }
-                    let decodedData = try JSONDecoder().decode(Array<Animal>.self, from: data)
+                    var decodedData = try JSONDecoder().decode(Array<Animal>.self, from: data)
                     completion(.success(decodedData))
                 } catch {
                     print("Decoding error: \(error.localizedDescription)")

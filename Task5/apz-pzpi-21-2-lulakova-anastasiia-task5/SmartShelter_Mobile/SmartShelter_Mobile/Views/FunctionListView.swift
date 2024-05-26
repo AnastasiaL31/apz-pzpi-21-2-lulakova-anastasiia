@@ -21,8 +21,18 @@ struct FunctionListView: View {
                     Text("Staff")
                 }
             }
+            .navigationTitle("All Functions")
             .navigationBarBackButtonHidden(true)
+            
+            
         }
+        
+        .ignoresSafeArea()
+        .padding()
+        .background(Color(red: 250, green: 242, blue: 220))
+        //.scrollContentBackground(.hidden)
+        
+        
     }
 }
 

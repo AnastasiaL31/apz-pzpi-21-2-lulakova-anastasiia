@@ -15,7 +15,11 @@ class AnimalVM: ObservableObject {
     init(){
         AnimalVM.getAllAnimals { result in
             switch result{
-            case .success(let animals):
+            case .success(var animals):
+                for ind in 0..<animals.count{
+                    animals[ind].acceptanceDate = DateConverter.fromServerDateToString(dateString:  animals[ind].acceptanceDate, time: .omitted)
+                    animals[ind].dob = DateConverter.fromServerDateToString(dateString:  animals[ind].dob, time: .omitted)
+                }
                 self.animalList = animals
             default:
                 break
@@ -30,7 +34,8 @@ class AnimalVM: ObservableObject {
     public func updateAnimal(animal:Animal){
         print(animal)
         var updatedAnimal = animal
-        updatedAnimal.dob = DateConverter.formatDateToString(updatedAnimal.DOB ?? Date())
+        updatedAnimal.dob = DateConverter.swiftDateStringToServerString(updatedAnimal.dob)
+        updatedAnimal.acceptanceDate = DateConverter.formatDateToString(updatedAnimal.AcceptanceDate ?? Date())
         print(updatedAnimal)
         updatedAnimal.updateAnimal{result in
             if(result){

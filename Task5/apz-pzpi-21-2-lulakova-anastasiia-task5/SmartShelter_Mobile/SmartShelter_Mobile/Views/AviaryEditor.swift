@@ -18,19 +18,47 @@ struct AviaryEditor: View {
             Section(header: Text("Name")){
                 TextField("Description", text: $description)
             }
-            
+            .padding()
             Section(header: Text("Conditions")){
                 HStack{
-                    NumberTextField(value: $aviaryCondition.minWater, name: "Min water")
-                    NumberTextField(value: $aviaryCondition.food, name:"Food")
+                    VStack(spacing:3){
+                        Text("Min water")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.minWater, name: "Min water")
+                    }
+            
+                    VStack{
+                        Text("Food")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.food, name:"Food")
+                    }
                 }
+               
                 HStack{
-                    NumberTextField(value: $aviaryCondition.minTemperature, name: "Min temperature")
-                    NumberTextField(value: $aviaryCondition.maxTemperature, name: "Max temperature")
+                    VStack(spacing:3){
+                        Text("Min temperature")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.minTemperature, name: "Min temperature")
+                    }
+                    
+                    VStack(spacing:3){
+                        Text("Max temperature")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.maxTemperature, name: "Max temperature")
+                    }
                 }
+                
                 HStack{
-                    NumberTextField(value: $aviaryCondition.minHumidity, name: "Min Humidity")
-                    NumberTextField(value: $aviaryCondition.maxHumidity, name: "Max Humidity")
+                    VStack(spacing:3){
+                        Text("Min Humidity")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.minHumidity, name: "Min Humidity")
+                    }
+                    VStack(spacing:3){
+                        Text("Max Humidity")
+                            .font(.subheadline)
+                        NumberTextField(value: $aviaryCondition.maxHumidity, name: "Max Humidity")
+                    }
                 }
             }
         }

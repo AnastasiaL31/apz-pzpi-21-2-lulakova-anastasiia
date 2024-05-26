@@ -18,22 +18,46 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                HStack{
+            VStack (spacing: 15){
+                HStack(spacing: 80){
                     Button(action: {
                         changeSheets()
                     }, label: {
                         Text("Login")
+                            .font(.title3)
+                            .foregroundStyle(.blue)
                     })
                     
                     Button(action: {
                         changeSheets()
                     }, label: {
                         Text("Register")
+                            .font(.title3)
+                            .foregroundStyle(.blue)
                     })
                 }
+                .padding()
                 Divider()
-                login
+                
+                
+                VStack(spacing:3){
+                    Text(sectionName)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .padding()
+                        .foregroundStyle(.cyan)
+                    login
+                        //.scrollContentBackground(.hidden)
+                       .padding(0)
+                }
+                .background {
+                    RoundedRectangle(cornerRadius: 14, style: .circular)
+                        .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+                        }
+                .frame(width: 300, height:270, alignment: .leading)
+                .padding()
+                
                 Button (action: {
                     if(isLogin){
                         userModel.AuthorizeUser { result in
@@ -56,7 +80,15 @@ struct ContentView: View {
                     }
                 }, label: {
                     Text(sectionName)
+                        
                 })
+                .padding()
+                .frame(width: 250, height: 40, alignment: .center)
+                .foregroundStyle(.white)
+                .background {
+                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                        .fill(.blue)
+                        }
             }
             .navigationDestination(isPresented: $navigateToStaffRegister) {
                 StaffRegisterView(userModel: userModel)
@@ -65,21 +97,30 @@ struct ContentView: View {
                 FunctionListView()
             }
         }
+        .ignoresSafeArea()
+        .background(Color(red: 255, green: 250, blue: 237))
         .padding()
-        //.frame(width: 300, height: 400, alignment: .center)
     }
     
     
     var login: some View{
         Form{
-            Section(sectionName) {
-                TextField("Username",
-                          text: $userModel.username)
-                TextField("Password",
-                          text: $userModel.password)
+            VStack(spacing:35){
+                Section{
+                    TextField("Username",
+                              text: $userModel.username)
+                }
+               
+                Section{
+                    TextField("Password",
+                              text: $userModel.password)
+                }
             }
-            
+            .padding()
         }
+        
+        .multilineTextAlignment(.center)
+       
     }
     
     private func changeSheets(){

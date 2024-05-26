@@ -21,7 +21,7 @@ struct AnimalDetailsView: View {
     
     
     var body: some View {
-        Form{
+        ScrollView{
             animalView
                 .onAppear {
                     animalVM.getAnimalAviary(animalId: animal.id){result in
@@ -62,7 +62,7 @@ struct AnimalDetailsView: View {
         .sheet(isPresented: $isSensorEditShown){
             SensorEditor(sensor: $sensor, updateInDB: animalVM.updateSensor(sensor:))
         }
-        
+        //.ignoresSafeArea()
     }
     
     var animalView: some View{
@@ -74,14 +74,14 @@ struct AnimalDetailsView: View {
                     .font(.subheadline)
                 HStack{
                     if let dob = animal.DOB{
-                        Text("DOB: \(dob)")
+                        Text("DOB: \(dob.formatted(date: .numeric, time: .omitted))")
                     }
                     Spacer()
                     Text("Gender: \(animal.gender)")
                 }
                 Spacer()
                 if let accDate = animal.AcceptanceDate{
-                    Text("Acc Date: \(accDate)")
+                    Text("Acc Date: \(accDate.formatted(date: .numeric, time: .omitted))")
                 }
                 Button(action: {
                     isAnimalEditShown = true
@@ -89,8 +89,16 @@ struct AnimalDetailsView: View {
                     Text("Edit")
                 })
             }
-            .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .clipped()
+            .background {
+                // Background Shape
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color(.secondarySystemGroupedBackground))
+                    .shadow(color: Color(.sRGB, red: 0/255, green: 0/255, blue: 0/255).opacity(0.06), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal)
     }
     
     
@@ -104,19 +112,19 @@ struct AnimalDetailsView: View {
                         .font(.subheadline)
                 }
                 HStack{
-                    Text("Min water: \(formatFloatToString(aviaryCondition.minWater))")
+                    Text("Min water:\n\(formatFloatToString(aviaryCondition.minWater))")
                     Spacer()
-                    Text("Food: \(formatFloatToString(aviaryCondition.food))")
+                    Text("Food:\n\(formatFloatToString(aviaryCondition.food))")
                 }.padding()
                 HStack{
-                    Text("Min temp: \(formatFloatToString(aviaryCondition.minTemperature))")
+                    Text("Min temp:\n\(formatFloatToString(aviaryCondition.minTemperature))")
                     Spacer()
-                    Text("Max temp: \(formatFloatToString(aviaryCondition.maxTemperature))")
+                    Text("Max temp:\n\(formatFloatToString(aviaryCondition.maxTemperature))")
                 }.padding()
                 HStack{
-                    Text("Min humid: \(formatFloatToString(aviaryCondition.minHumidity))")
+                    Text("Min humid:\n\(formatFloatToString(aviaryCondition.minHumidity))")
                     Spacer()
-                    Text("Max humid: \(formatFloatToString(aviaryCondition.maxHumidity))")
+                    Text("Max humid:\n\(formatFloatToString(aviaryCondition.maxHumidity))")
                 }.padding()
                 
                 Button(action: {
@@ -125,8 +133,16 @@ struct AnimalDetailsView: View {
                     Text("Edit")
                 })
             }
-            .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .clipped()
+            .background {
+                
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color(.secondarySystemGroupedBackground))
+                    .shadow(color: Color(.sRGB, red: 0/255, green: 0/255, blue: 0/255).opacity(0.06), radius: 8, x: 0, y: 4)
+            }
+            .padding(.horizontal)
             
     }
     
@@ -136,7 +152,7 @@ struct AnimalDetailsView: View {
             if sensor.id != 0{
                 Text("Sensor #\(sensor.id)")
                 Text(sensor.notes ?? " ")
-                Text("Frequency: \(sensor.frequency/3600)")
+                Text("Frequency: \(sensor.frequency/60000)")
                 Spacer()
                 HStack{
                     Button(action: {
@@ -156,8 +172,15 @@ struct AnimalDetailsView: View {
                 Text("No sensor connected to aviary")
             }
         }
-        .border(Color.black, width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
         .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .clipped()
+        .background {
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(Color(.secondarySystemGroupedBackground))
+                .shadow(color: Color(.sRGB, red: 0/255, green: 0/255, blue: 0/255).opacity(0.06), radius: 8, x: 0, y: 4)
+        }
+        .padding(.horizontal)
     }
     
     func formatFloatToString(_ number:Float) -> String {

@@ -32,8 +32,6 @@
 		D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426792C0227F900C02630 /* SensorEditor.swift */; };
 		D6B4267C2C024E5900C02630 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4267B2C024E5900C02630 /* SensorData.swift */; };
 		D6B4267E2C0251F500C02630 /* Diagrams.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4267D2C0251F500C02630 /* Diagrams.swift */; };
-		D6B426812C02541300C02630 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426802C02541300C02630 /* DGCharts */; };
-		D6B426832C02541300C02630 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426822C02541300C02630 /* DGChartsDynamic */; };
 		D6B426852C03271B00C02630 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426842C03271B00C02630 /* Storage.swift */; };
 		D6B426872C0329E100C02630 /* StorageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426862C0329E100C02630 /* StorageVM.swift */; };
 		D6B426892C032AC400C02630 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426882C032AC400C02630 /* StorageView.swift */; };
@@ -78,8 +76,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6B426832C02541300C02630 /* DGChartsDynamic in Frameworks */,
-				D6B426812C02541300C02630 /* DGCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +183,6 @@
 			);
 			name = SmartShelter_Mobile;
 			packageProductDependencies = (
-				D6B426802C02541300C02630 /* DGCharts */,
-				D6B426822C02541300C02630 /* DGChartsDynamic */,
 			);
 			productName = SmartShelter_Mobile;
 			productReference = D6B4263F2BFB179B00C02630 /* SmartShelter_Mobile.app */;
@@ -488,19 +482,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D6B426802C02541300C02630 /* DGCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
-		D6B426822C02541300C02630 /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D6B426372BFB179B00C02630 /* Project object */;
 }
