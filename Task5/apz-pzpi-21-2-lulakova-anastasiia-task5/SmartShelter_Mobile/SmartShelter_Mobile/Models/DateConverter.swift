@@ -34,9 +34,9 @@ class DateConverter{
         }
     }
     
-    public static func fromServerDateToString(dateString:String) -> String{
+    public static func fromServerDateToString(dateString:String, time:Date.FormatStyle.TimeStyle) -> String{
         if let date = createDateFromString(from: dateString){
-            return date.formatted(date: .numeric, time: .omitted)
+            return date.formatted(date: .numeric, time: time)
         }
         return dateString
     }
@@ -53,7 +53,16 @@ class DateConverter{
     
     
     public static func swiftDateStringToServerString(_ dateString:String) -> String{
-        var date = fromSwiftDateStringToDate(from: dateString)
+        let date = fromSwiftDateStringToDate(from: dateString)
         return DateConverter.formatDateToString(date!)
+    }
+    
+    public static func fromSwiftDateStringToDateWithTime(from dateString:String) -> Date?{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
+        //dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+       //dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        return dateFormatter.date(from: dateString)
     }
 }

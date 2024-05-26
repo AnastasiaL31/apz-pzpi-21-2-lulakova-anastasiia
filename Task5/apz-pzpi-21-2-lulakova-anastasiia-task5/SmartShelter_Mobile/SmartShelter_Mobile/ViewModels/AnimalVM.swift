@@ -82,4 +82,8 @@ class AnimalVM: ObservableObject {
             }
         }
     }
+    
+    public func getSensorData(sensorId:Int, completion:  @escaping (Result<Array<SensorData>, Error>) -> Void){
+        SensorData.getSensorData(sensorId: sensorId, completion: completion)
+    }
 }

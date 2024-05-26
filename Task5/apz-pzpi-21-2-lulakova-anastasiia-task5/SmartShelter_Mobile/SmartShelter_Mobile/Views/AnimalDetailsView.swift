@@ -12,10 +12,13 @@ struct AnimalDetailsView: View {
     @State var isAnimalEditShown = false
     @State var isAviaryEditShown = false
     @State var isSensorEditShown = false
+    @State var isSensorDataShown = false
     var animalVM:AnimalVM
     @State var animalAviary:Aviary = Aviary(id: 0, aviaryCondition: AviaryCondition(id: 0))
     @State var aviaryCondition:AviaryCondition = AviaryCondition(id: 0)
     @State var sensor:Sensor = Sensor(id:0, frequency: 0)
+    @State var sensorData: [SensorData] = []
+    
     
     var body: some View {
         Form{
@@ -42,6 +45,9 @@ struct AnimalDetailsView: View {
             Spacer()
             sensorView
         }
+        .navigationDestination(isPresented: $isSensorDataShown){
+            Diagrams(sensorData: sensorData)
+        }
         .sheet(isPresented: $isAnimalEditShown){
             let date = animal.DOB ?? Date()
             AnimalEditorView(animal: $animal,
@@ -56,6 +62,7 @@ struct AnimalDetailsView: View {
         .sheet(isPresented: $isSensorEditShown){
             SensorEditor(sensor: $sensor, updateInDB: animalVM.updateSensor(sensor:))
         }
+        
     }
     
     var animalView: some View{
@@ -131,11 +138,20 @@ struct AnimalDetailsView: View {
                 Text(sensor.notes ?? " ")
                 Text("Frequency: \(sensor.frequency/3600)")
                 Spacer()
-                Button(action: {
-                    isSensorEditShown = true
-                }, label: {
-                    Text("Edit")
-                })
+                HStack{
+                    Button(action: {
+                        isSensorEditShown = true
+                    }, label: {
+                        Text("Edit")
+                    })
+                    Spacer()
+                    Button(action: {
+                        getSensorData()
+                        isSensorDataShown = true
+                    }, label: {
+                        Text("Sensor Data")
+                    })
+                }
             }else{
                 Text("No sensor connected to aviary")
             }
@@ -156,6 +172,22 @@ struct AnimalDetailsView: View {
                 if let unwrappedSensor = sensor{
                     self.sensor = unwrappedSensor
                 }
+            default:
+                break
+            }
+        }
+    }
+    
+    func getSensorData(){
+        animalVM.getSensorData(sensorId: sensor.id){ result in
+            switch result{
+            case .success(var sensorData):
+                for i in 0..<sensorData.count{
+                    sensorData[i].date = DateConverter
+                        .fromServerDateToString(dateString: sensorData[i].date, time: .shortened)
+                }
+                print("Sensor Data: \n \(sensorData)")
+                self.sensorData = sensorData
             default:
                 break
             }

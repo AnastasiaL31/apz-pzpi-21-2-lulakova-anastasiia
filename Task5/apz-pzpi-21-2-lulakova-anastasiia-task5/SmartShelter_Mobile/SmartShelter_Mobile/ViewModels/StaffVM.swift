@@ -22,10 +22,10 @@ class StaffVM:ObservableObject{
             case .success(var staff):
                 DispatchQueue.main.async {
                     for number in 0..<staff.count {
-                        staff[number].dob = DateConverter.fromServerDateToString(dateString: staff[number].dob)
-                        staff[number].acceptanceDate = DateConverter.fromServerDateToString(dateString: staff[number].acceptanceDate)
+                        staff[number].dob = DateConverter.fromServerDateToString(dateString: staff[number].dob, time: .omitted)
+                        staff[number].acceptanceDate = DateConverter.fromServerDateToString(dateString: staff[number].acceptanceDate, time: .omitted)
                         if(staff[number].dismissialDate != nil){
-                            staff[number].dismissialDate = DateConverter.fromServerDateToString(dateString: staff[number].dismissialDate!)
+                            staff[number].dismissialDate = DateConverter.fromServerDateToString(dateString: staff[number].dismissialDate!, time: .omitted)
                         }
                     }
                     print(staff)

@@ -30,6 +30,10 @@
 		D6B426762C00A06F00C02630 /* DateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426752C00A06F00C02630 /* DateConverter.swift */; };
 		D6B426782C02222800C02630 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426772C02222800C02630 /* Sensor.swift */; };
 		D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426792C0227F900C02630 /* SensorEditor.swift */; };
+		D6B4267C2C024E5900C02630 /* SensorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4267B2C024E5900C02630 /* SensorData.swift */; };
+		D6B4267E2C0251F500C02630 /* Diagrams.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4267D2C0251F500C02630 /* Diagrams.swift */; };
+		D6B426812C02541300C02630 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426802C02541300C02630 /* DGCharts */; };
+		D6B426832C02541300C02630 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = D6B426822C02541300C02630 /* DGChartsDynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +61,8 @@
 		D6B426752C00A06F00C02630 /* DateConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverter.swift; sourceTree = "<group>"; };
 		D6B426772C02222800C02630 /* Sensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
 		D6B426792C0227F900C02630 /* SensorEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorEditor.swift; sourceTree = "<group>"; };
+		D6B4267B2C024E5900C02630 /* SensorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorData.swift; sourceTree = "<group>"; };
+		D6B4267D2C0251F500C02630 /* Diagrams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagrams.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B426832C02541300C02630 /* DGChartsDynamic in Frameworks */,
+				D6B426812C02541300C02630 /* DGCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +125,7 @@
 				D6B4266D2C0067E200C02630 /* Staff.swift */,
 				D6B426752C00A06F00C02630 /* DateConverter.swift */,
 				D6B426772C02222800C02630 /* Sensor.swift */,
+				D6B4267B2C024E5900C02630 /* SensorData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -144,6 +153,7 @@
 				D6B426712C006AEF00C02630 /* AllStaffView.swift */,
 				D6B426732C00758C00C02630 /* StaffEditor.swift */,
 				D6B426792C0227F900C02630 /* SensorEditor.swift */,
+				D6B4267D2C0251F500C02630 /* Diagrams.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +174,10 @@
 			dependencies = (
 			);
 			name = SmartShelter_Mobile;
+			packageProductDependencies = (
+				D6B426802C02541300C02630 /* DGCharts */,
+				D6B426822C02541300C02630 /* DGChartsDynamic */,
+			);
 			productName = SmartShelter_Mobile;
 			productReference = D6B4263F2BFB179B00C02630 /* SmartShelter_Mobile.app */;
 			productType = "com.apple.product-type.application";
@@ -192,6 +206,9 @@
 				Base,
 			);
 			mainGroup = D6B426362BFB179B00C02630;
+			packageReferences = (
+				D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = D6B426402BFB179B00C02630 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -220,11 +237,13 @@
 			files = (
 				D6B4267A2C0227F900C02630 /* SensorEditor.swift in Sources */,
 				D6B4266E2C0067E200C02630 /* Staff.swift in Sources */,
+				D6B4267E2C0251F500C02630 /* Diagrams.swift in Sources */,
 				D6B426782C02222800C02630 /* Sensor.swift in Sources */,
 				D6B426522BFB1D6000C02630 /* LoginUser.swift in Sources */,
 				D6B426602BFE1CE800C02630 /* Animal.swift in Sources */,
 				D6B426572BFB27DF00C02630 /* UserVM.swift in Sources */,
 				D6B4266A2BFF7ABB00C02630 /* Aviary.swift in Sources */,
+				D6B4267C2C024E5900C02630 /* SensorData.swift in Sources */,
 				D6B426622BFE1F5E00C02630 /* AllAnimalsView.swift in Sources */,
 				D6B4265A2BFC727400C02630 /* StaffRegisterView.swift in Sources */,
 				D6B426722C006AEF00C02630 /* AllStaffView.swift in Sources */,
@@ -442,6 +461,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6B426802C02541300C02630 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		D6B426822C02541300C02630 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D6B4267F2C02541300C02630 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D6B426372BFB179B00C02630 /* Project object */;
 }
