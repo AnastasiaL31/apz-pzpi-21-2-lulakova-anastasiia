@@ -26,10 +26,10 @@ struct AnimalEditorView: View {
                 VStack{
                     DatePicker(selection: $dob, displayedComponents: .date){
                         Text("DOB")
-                        TextField("Weight", value: $animal.weight, formatter: formatter)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding()
                     }
+                    TextField("Weight", value: $animal.weight, formatter: formatter)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
                 }
                 
             }

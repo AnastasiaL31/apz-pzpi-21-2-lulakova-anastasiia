@@ -11,6 +11,14 @@ class HttpClient {
     public static var backendAddress = "http://192.168.1.5:5139/"
     public static var token = ""
     public static var role = ""
+    static var isCelsius: Bool {
+           get {
+               UserDefaults.standard.bool(forKey: "isCelsius")
+           }
+           set {
+               UserDefaults.standard.set(newValue, forKey: "isCelsius")
+           }
+       }
     
     public enum HTTPMethod: String {
         case GET

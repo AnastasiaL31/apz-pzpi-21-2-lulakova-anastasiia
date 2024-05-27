@@ -18,6 +18,9 @@ struct AnimalDetailsView: View {
     @State var aviaryCondition:AviaryCondition = AviaryCondition(id: 0)
     @State var sensor:Sensor = Sensor(id:0, frequency: 0)
     @State var sensorData: [SensorData] = []
+    @State var isCels = HttpClient.isCelsius
+    let zeroKoef:Float = 32
+    let slopeKoef:Float = 1.8
     
     
     var body: some View {
@@ -34,6 +37,9 @@ struct AnimalDetailsView: View {
                                 aviaryCondition = AviaryCondition(id: 0)
                             }else{
                                 aviaryCondition = GotAviary.aviaryCondition!
+                                if(!isCels){
+                                    convertConditionToFahrengeit()
+                                }
                             }
                         case .failure(let error):
                             print(error)
@@ -56,12 +62,13 @@ struct AnimalDetailsView: View {
         }
         .sheet(isPresented: $isAviaryEditShown){
             AviaryEditor(aviary: $animalAviary,
-                         updateInDB: animalVM.updateAviary(aviary:),
+                         updateInDB: animalVM.updateAviary(aviary:isCels:),
                          aviaryCondition: $aviaryCondition)
         }
         .sheet(isPresented: $isSensorEditShown){
             SensorEditor(sensor: $sensor, updateInDB: animalVM.updateSensor(sensor:))
         }
+        
         //.ignoresSafeArea()
     }
     
@@ -146,6 +153,14 @@ struct AnimalDetailsView: View {
             
     }
     
+    func convertConditionToFahrengeit(){
+        aviaryCondition.minTemperature = convertToFahrengeit(aviaryCondition.minTemperature)
+        aviaryCondition.maxTemperature = convertToFahrengeit(aviaryCondition.maxTemperature)
+    }
+    
+    func convertToFahrengeit(_ num:Float)->Float{
+        return num * slopeKoef + zeroKoef
+    }
     
     var sensorView: some View{
         VStack{

@@ -110,8 +110,8 @@
             filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
             landmarkName = "serializeObject(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "createRequest(url:method:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -558,8 +558,8 @@
             filePath = "SmartShelter_Mobile/Models/HttpClient.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "deserializeObject(_:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -574,8 +574,8 @@
             filePath = "SmartShelter_Mobile/Views/AnimalDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -590,8 +590,8 @@
             filePath = "SmartShelter_Mobile/Views/AnimalDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -796,8 +796,8 @@
             filePath = "SmartShelter_Mobile/Views/AviaryEditor.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -830,54 +830,6 @@
                   startingLineNumber = "40"
                   endingLineNumber = "40"
                   offsetFromSymbolStart = "313">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "751AC7EE-A463-4631-9BE8-D6F0D1C2825D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SmartShelter_Mobile/ViewModels/AnimalVM.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "updateAviary(aviary:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "751AC7EE-A463-4631-9BE8-D6F0D1C2825D - 66c927c8a51a6155"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SmartShelter_Mobile.AnimalVM.updateAviary(aviary: SmartShelter_Mobile.Aviary) -&gt; ()"
-                  moduleName = "SmartShelter_Mobile"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/ViewModels/AnimalVM.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "638">
-               </Location>
-               <Location
-                  uuid = "751AC7EE-A463-4631-9BE8-D6F0D1C2825D - 2a09e0a49d0be04e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Int, Swift.Error&gt;) -&gt; () in SmartShelter_Mobile.AnimalVM.updateAviary(aviary: SmartShelter_Mobile.Aviary) -&gt; ()"
-                  moduleName = "SmartShelter_Mobile"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/ViewModels/AnimalVM.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "93">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -1388,8 +1340,8 @@
             filePath = "SmartShelter_Mobile/Views/Diagrams.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1420,8 +1372,8 @@
             filePath = "SmartShelter_Mobile/Views/AnimalDetailsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1436,10 +1388,106 @@
             filePath = "SmartShelter_Mobile/ViewModels/AnimalVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "updateAnimal(animal:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "050B8688-48A8-48F7-993B-BB829F949E9A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Views/SettingsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "050B8688-48A8-48F7-993B-BB829F949E9A - c8d9c1e8ee384632"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SmartShelter_Mobile.SettingsView.body.getter : some"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Views/SettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "643">
+               </Location>
+               <Location
+                  uuid = "050B8688-48A8-48F7-993B-BB829F949E9A - dc23c1c3646a607a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in SmartShelter_Mobile.SettingsView.body.getter : some"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Views/SettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "34">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "250019EA-19AB-4368-9060-AB005FC0B410"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SmartShelter_Mobile/Views/SettingsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "temperatureSettings"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "250019EA-19AB-4368-9060-AB005FC0B410 - c5d56ada1b44d2ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, initial: Swift.Bool, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in SmartShelter_Mobile.SettingsView.temperatureSettings.getter : some"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Views/SettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "218">
+               </Location>
+               <Location
+                  uuid = "250019EA-19AB-4368-9060-AB005FC0B410 - 87bdc93e76f81cac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.Text in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onChange&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Equatable&gt;(of: &#x3c4;_1_0, initial: Swift.Bool, _: () -&gt; ()) -&gt; some&gt;&gt;.0 in SmartShelter_Mobile.SettingsView.temperatureSettings.getter : some"
+                  moduleName = "SmartShelter_Mobile"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anastasialulakova/Desktop/Swift/apz-pzpi-21-2-lulakova-anastasiia/Task5/apz-pzpi-21-2-lulakova-anastasiia-task5/SmartShelter_Mobile/SmartShelter_Mobile/Views/SettingsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "91">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

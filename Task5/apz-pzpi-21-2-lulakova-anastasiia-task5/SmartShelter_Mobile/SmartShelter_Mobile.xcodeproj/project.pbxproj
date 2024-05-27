@@ -36,6 +36,7 @@
 		D6B426872C0329E100C02630 /* StorageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426862C0329E100C02630 /* StorageVM.swift */; };
 		D6B426892C032AC400C02630 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B426882C032AC400C02630 /* StorageView.swift */; };
 		D6B4268B2C03374700C02630 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4268A2C03374700C02630 /* Order.swift */; };
+		D6B4268D2C04BAA800C02630 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4268C2C04BAA800C02630 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		D6B426862C0329E100C02630 /* StorageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageVM.swift; sourceTree = "<group>"; };
 		D6B426882C032AC400C02630 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
 		D6B4268A2C03374700C02630 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		D6B4268C2C04BAA800C02630 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				D6B426792C0227F900C02630 /* SensorEditor.swift */,
 				D6B4267D2C0251F500C02630 /* Diagrams.swift */,
 				D6B426882C032AC400C02630 /* StorageView.swift */,
+				D6B4268C2C04BAA800C02630 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				D6B426452BFB179B00C02630 /* ContentView.swift in Sources */,
 				D6B426662BFE3BF700C02630 /* AnimalDetailsView.swift in Sources */,
 				D6B4265C2BFC811100C02630 /* FunctionListView.swift in Sources */,
+				D6B4268D2C04BAA800C02630 /* SettingsView.swift in Sources */,
 				D6B426542BFB1EEE00C02630 /* HttpClient.swift in Sources */,
 				D6B426682BFF6B5400C02630 /* AnimalEditorView.swift in Sources */,
 				D6B426642BFE20DF00C02630 /* AnimalVM.swift in Sources */,

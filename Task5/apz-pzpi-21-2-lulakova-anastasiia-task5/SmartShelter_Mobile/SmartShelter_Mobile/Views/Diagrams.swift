@@ -12,6 +12,10 @@ import Charts
 struct Diagrams: View {
     //@Binding
     var sensorData:Array<SensorData>
+    @State var isCels = HttpClient.isCelsius
+    var zeroKoef:Float = 32
+    var slopeKoef:Float = 1.8
+    
     
     var body: some View {
         VStack{
@@ -24,9 +28,10 @@ struct Diagrams: View {
                             DateConverter.fromSwiftDateStringToDateWithTime(from:data.date)!)}
                     ) ? Date.FormatStyle.DateStyle.numeric : Date.FormatStyle.DateStyle.omitted
                     if let date = DateConverter.fromSwiftDateStringToDateWithTime(from: data.date){
-                        BarMark(x: .value("Date", date, unit: .minute), y: .value("Temp", data.temperature), width: 50)
+                        var temperature = isCels ? data.temperature : data.temperature*slopeKoef + zeroKoef
+                        BarMark(x: .value("Date", date, unit: .minute), y: .value("Temp", temperature), width: 50)
                             .annotation(position:.overlay){
-                                Text(formatFloatToString(data.temperature) + "\n\(date.formatted(date:dataFormat , time: .shortened))")
+                                Text(formatFloatToString(temperature) + "\n\(date.formatted(date:dataFormat , time: .shortened))")
                                     .font(.caption2)
                             }
                     }

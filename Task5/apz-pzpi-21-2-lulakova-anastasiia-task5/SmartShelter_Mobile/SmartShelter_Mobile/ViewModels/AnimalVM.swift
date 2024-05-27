@@ -10,7 +10,8 @@ import Foundation
 class AnimalVM: ObservableObject {
 
     @Published public var animalList:Array<Animal> = []
-    
+    let zeroKoef:Float = 32
+    let slopeKoef:Float = 5/9
     
     init(){
         AnimalVM.getAllAnimals { result in
@@ -48,22 +49,38 @@ class AnimalVM: ObservableObject {
         Aviary.getAnimalAviary(animalId: animalId, completion: completion)
         }
     
-    public func updateAviary(aviary:Aviary){
-        if(aviary.aviaryCondition != nil && aviary.aviaryCondition?.id == 0){
+
+    
+    public func updateAviary(aviary:Aviary, isCels:Bool){
+        if(aviary.aviaryCondition != nil){
             var aviaryToUpdate = aviary
-            aviary.addAviaryCondition {result in
-                switch result{
-                case .success(let id):
-                    aviaryToUpdate.aviaryConditionId = id
-                    aviaryToUpdate.aviaryCondition = nil
-                    self.performUpdate(aviary: aviaryToUpdate)
-                default:
-                    return
-                }
+            if(!isCels){
+                convertConditionToCelsius(aviaryCondition: &aviaryToUpdate.aviaryCondition!)
             }
-        }else{
-            self.performUpdate(aviary: aviary)
+            if(aviary.aviaryCondition?.id == 0){
+                aviary.addAviaryCondition {result in
+                    switch result{
+                    case .success(let id):
+                        aviaryToUpdate.aviaryConditionId = id
+                        aviaryToUpdate.aviaryCondition = nil
+                        self.performUpdate(aviary: aviaryToUpdate)
+                    default:
+                        return
+                    }
+                }
+            }else{
+                self.performUpdate(aviary: aviaryToUpdate)
+            }
         }
+    }
+    
+    func convertConditionToCelsius(aviaryCondition: inout AviaryCondition){
+        aviaryCondition.minTemperature = convertToCels(aviaryCondition.minTemperature)
+        aviaryCondition.maxTemperature = convertToCels(aviaryCondition.maxTemperature)
+    }
+    
+    func convertToCels(_ num:Float)->Float{
+        return (num - zeroKoef)*slopeKoef
     }
     
     private func performUpdate(aviary: Aviary) {

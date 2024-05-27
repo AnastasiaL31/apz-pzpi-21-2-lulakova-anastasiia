@@ -9,9 +9,12 @@ import SwiftUI
 
 struct AviaryEditor: View {
     @Binding var aviary:Aviary
-    var updateInDB: (Aviary) -> Void
+    var updateInDB: (Aviary, Bool) -> Void
     @State var description = ""
     @Binding var aviaryCondition:AviaryCondition
+    @State var isCels = HttpClient.isCelsius
+    
+    
     
     var body: some View {
         Form {
@@ -65,7 +68,7 @@ struct AviaryEditor: View {
         .onDisappear {
             aviary.description = description
             aviary.aviaryCondition = aviaryCondition
-            updateInDB(aviary)
+            updateInDB(aviary, isCels)
         }
     }
     
@@ -80,5 +83,11 @@ struct AviaryEditor: View {
             formatter.numberStyle = .decimal
             return formatter
         }()
+    
+    
+    
+//    func convertToCelsius(_ num:Float)->Float{
+//        
+//    }
 }
 

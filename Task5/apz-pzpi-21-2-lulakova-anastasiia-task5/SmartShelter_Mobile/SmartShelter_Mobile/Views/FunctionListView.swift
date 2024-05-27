@@ -20,6 +20,9 @@ struct FunctionListView: View {
                 NavigationLink(destination: AllStaffView()){
                     Text("Staff")
                 }
+                NavigationLink(destination: SettingsView()){
+                    Text("Settings")
+                }
             }
             .navigationTitle("All Functions")
             .navigationBarBackButtonHidden(true)
