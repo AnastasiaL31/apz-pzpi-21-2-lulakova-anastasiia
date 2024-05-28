@@ -11,14 +11,21 @@ struct FunctionListView: View {
     var body: some View {
         NavigationStack{
             List{
-                NavigationLink(destination: AllAnimalsView()){
-                    Text("Animals")
+                if HttpClient.role == "Admin" || HttpClient.role == "Doctor"{
+                    NavigationLink(destination: AllAnimalsView()){
+                        Text("Animals")
+                    }
                 }
-                NavigationLink(destination: StorageView()){
-                    Text("Store")
+                if HttpClient.role == "Admin" || HttpClient.role == "Storekeeper"{
+                    NavigationLink(destination: StorageView()){
+                        Text("Store")
+                    }
                 }
-                NavigationLink(destination: AllStaffView()){
-                    Text("Staff")
+                if HttpClient.role == "Admin"{
+                    
+                    NavigationLink(destination: AllStaffView()){
+                        Text("Staff")
+                    }
                 }
                 NavigationLink(destination: SettingsView()){
                     Text("Settings")

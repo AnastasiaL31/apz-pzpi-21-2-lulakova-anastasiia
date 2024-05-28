@@ -39,14 +39,14 @@ struct AllStaffView: View {
                 Text(staff.name)
                     .font(.title)
                 HStack {
-                    Text("Position: \n" + staff.position)
+                    Text("Position: \n\(staff.position)")
                     Spacer()
-                    Text("Phone: \n" + staff.phone)
+                    Text("Phone: \n\(staff.phone)")
                 }
                 HStack {
-                    Text("DOB: \n" + staff.dob)
+                    Text("DOB: \n\(staff.dob)")
                     Spacer()
-                    Text("Acc date: \n" + staff.acceptanceDate)
+                    Text("Acc date: \n\(staff.acceptanceDate)")
                 }
             Button(action: {
                 staffVM.selectedStaffIndex = index

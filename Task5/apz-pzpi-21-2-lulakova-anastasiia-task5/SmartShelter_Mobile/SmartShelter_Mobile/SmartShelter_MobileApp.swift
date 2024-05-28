@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct SmartShelter_MobileApp: App {
+    @State var languageSettings = LanguageSetting()
+    
     init() {
            HttpClient.isCelsius = UserDefaults.standard.bool(forKey: "isCelsius")
        }
@@ -17,6 +19,8 @@ struct SmartShelter_MobileApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(languageSettings)
+                .environment(\.locale, languageSettings.locale)
         }
     }
 }

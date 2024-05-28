@@ -41,13 +41,12 @@ struct ContentView: View {
                 
                 
                 VStack(spacing:3){
-                    Text(sectionName)
+                    Text(sectionName == "Login" ? "Login" : "Register")
                         .font(.title3)
                         .fontWeight(.bold)
                         .padding()
                         .foregroundStyle(.cyan)
                     login
-                        //.scrollContentBackground(.hidden)
                        .padding(0)
                 }
                 .background {
@@ -79,7 +78,7 @@ struct ContentView: View {
                         }
                     }
                 }, label: {
-                    Text(sectionName)
+                    Text(sectionName == "Login" ? "Login" : "Register")
                         
                 })
                 .padding()
@@ -112,7 +111,7 @@ struct ContentView: View {
                 }
                
                 Section{
-                    TextField("Password",
+                    SecureField("Password",
                               text: $userModel.password)
                 }
             }

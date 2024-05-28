@@ -38,7 +38,7 @@ struct AllAnimalsView: View {
                     Text(animal.name)
                         .fontWeight(.bold)
                     Text(animal.breed)
-                    Text("Acc Date: " + animal.acceptanceDate)
+                    Text("Acc Date: \(animal.acceptanceDate)")
                 }
         }
         
