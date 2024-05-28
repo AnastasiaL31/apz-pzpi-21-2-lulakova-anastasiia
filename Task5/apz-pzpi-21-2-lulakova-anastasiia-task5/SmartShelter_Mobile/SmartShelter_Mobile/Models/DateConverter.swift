@@ -60,8 +60,7 @@ class DateConverter{
     public static func fromSwiftDateStringToDateWithTime(from dateString:String) -> Date?{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
-        //dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-       //dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.timeZone = TimeZone.current
 
         return dateFormatter.date(from: dateString)
     }

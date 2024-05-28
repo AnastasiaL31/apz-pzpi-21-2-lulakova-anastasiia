@@ -19,6 +19,8 @@ struct Diagrams: View {
     
     var body: some View {
         VStack{
+            Text("Temperature")
+                .padding()
             Chart{
                 ForEach(sensorData) {data in
                     let dataFormat = sensorData.firstIndex(where: {$0.id == data.id})

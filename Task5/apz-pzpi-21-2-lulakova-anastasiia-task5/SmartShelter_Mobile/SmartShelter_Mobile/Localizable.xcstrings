@@ -671,6 +671,16 @@
         }
       }
     },
+    "Temperature" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Температура"
+          }
+        }
+      }
+    },
     "Temperature Unit" : {
       "localizations" : {
         "uk" : {
