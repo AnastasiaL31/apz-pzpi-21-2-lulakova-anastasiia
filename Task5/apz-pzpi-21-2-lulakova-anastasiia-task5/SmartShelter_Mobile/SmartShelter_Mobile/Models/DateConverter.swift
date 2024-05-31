@@ -64,4 +64,8 @@ class DateConverter{
 
         return dateFormatter.date(from: dateString)
     }
+    
+    public static func isDaylightSavingTime(for date: Date, in timeZone: TimeZone = TimeZone.current) -> Bool {
+        return timeZone.isDaylightSavingTime(for: date)
+    }
 }

@@ -35,6 +35,7 @@ struct Diagrams: View {
                             .annotation(position:.overlay){
                                 Text(formatFloatToString(temperature) + "\n\(date.formatted(date:dataFormat , time: .shortened))")
                                     .font(.caption2)
+                                    .foregroundStyle(DateConverter.isDaylightSavingTime(for: date) ? Color.red : Color.white)
                             }
                     }
                 }
